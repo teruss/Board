@@ -14,13 +14,13 @@ namespace Board
             this.opposed = opposed;
         }
 
-        public void Accept(Piece piece)
+        public void Accept(IPiece piece)
         {
             pieces.Add(piece);
             UpdatePosition();
         }
 
-        public void Drop(Piece piece)
+        public void Drop(IPiece piece)
         {
             pieces.Remove(piece);
             UpdatePosition();
