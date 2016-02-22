@@ -14,5 +14,6 @@ namespace Board
         bool captured { get; set; }
         void SetPromoted(bool p);
         void UpdateSprite();
+        PieceType type { get; set; }
     }
 }
