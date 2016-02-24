@@ -16,5 +16,6 @@ namespace Board
         void UpdateSprite();
         PieceType type { get; set; }
         IMovableCell CreateCell(int column, int row);
+        void Destroy();
     }
 }
