@@ -46,6 +46,7 @@
                     return;
             }
             var cell = piece.CreateCell(column, row);
+            controller.AddMovableCell(cell);
             cell.Set(column, row, piece);
         }
 

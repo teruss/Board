@@ -6,5 +6,7 @@ namespace Board
     {
         Komadai GetKomadai(bool opposed);
         IList<IPiece> Pieces();
+        void DestroyMovableCells();
+        void AddMovableCell(IMovableCell cell);
     }
 }
