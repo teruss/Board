@@ -4,7 +4,7 @@
     {
         int file, rank;
 
-        public MoveCommand(IPiece piece, int file, int rank) : base(piece)
+        public MoveCommand(PieceModel piece, int file, int rank) : base(piece)
         {
             this.piece = piece;
             this.file = file;

@@ -2,7 +2,7 @@
 {
     public class Pawn : Move
     {
-        public override void CreateMovable(IGameController controller, IPiece piece)
+        public override void CreateMovable(IGameController controller, PieceModel piece)
         {
             if (piece.opposed)
             {
@@ -14,7 +14,7 @@
             }
         }
 
-        public override bool IsValid(IGameController gameController, IPiece piece, int file, int rank)
+        public override bool IsValid(IGameController gameController, PieceModel piece, int file, int rank)
         {
             if (!base.IsValid(gameController, piece, file, rank))
                 return false;

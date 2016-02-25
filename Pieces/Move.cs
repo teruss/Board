@@ -34,9 +34,9 @@
             return new GoldGeneral();
         }
 
-        public abstract void CreateMovable(IGameController controller, IPiece piece);
+        public abstract void CreateMovable(IGameController controller, PieceModel piece);
 
-        public void Create(IGameController controller, int column, int row, IPiece piece)
+        public void Create(IGameController controller, int column, int row, PieceModel piece)
         {
             if (column < 1 || column > 9 || row < 1 || row > 9)
                 return;
@@ -62,7 +62,7 @@
             return false;
         }
 
-        public virtual bool IsValid(IGameController gameController, IPiece piece, int column, int row)
+        public virtual bool IsValid(IGameController gameController, PieceModel piece, int column, int row)
         {
             foreach (var p in gameController.Pieces())
             {

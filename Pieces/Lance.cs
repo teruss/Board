@@ -2,7 +2,7 @@
 {
     public class Lance : Move
     {
-        public override void CreateMovable(IGameController controller, IPiece piece)
+        public override void CreateMovable(IGameController controller, PieceModel piece)
         {
             if (piece.opposed)
             {
@@ -30,7 +30,7 @@
             }
         }
 
-        public override bool IsValid(IGameController gameController, IPiece piece, int column, int row)
+        public override bool IsValid(IGameController gameController, PieceModel piece, int column, int row)
         {
             if (!base.IsValid(gameController, piece, column, row))
                 return false;

@@ -7,20 +7,20 @@ namespace Board
     {
         bool opposed;
 
-        List<IPiece> pieces = new List<IPiece>();
+        List<PieceModel> pieces = new List<PieceModel>();
 
         public Komadai(bool opposed)
         {
             this.opposed = opposed;
         }
 
-        public void Accept(IPiece piece)
+        public void Accept(PieceModel piece)
         {
             pieces.Add(piece);
             UpdatePosition();
         }
 
-        public void Drop(IPiece piece)
+        public void Drop(PieceModel piece)
         {
             pieces.Remove(piece);
             UpdatePosition();
@@ -35,7 +35,7 @@ namespace Board
             }
         }
 
-        Vector3 Position(IPiece piece, int i)
+        Vector3 Position(PieceModel piece, int i)
         {
             var x = CalcX(piece, i);
             var y = CalcY(piece, i);
@@ -44,7 +44,7 @@ namespace Board
             return piece.Position(x, y);
         }
 
-        float CalcX(IPiece piece, int i)
+        float CalcX(PieceModel piece, int i)
         {
             if (pieces.Count <= 9)
                 return 2.8f - i % 3;
@@ -53,7 +53,7 @@ namespace Board
             return 0.2f + i / 4;
         }
 
-        float CalcY(IPiece piece, int i)
+        float CalcY(PieceModel piece, int i)
         {
             if (pieces.Count <= 9)
                 return 11.2f + i / 3;

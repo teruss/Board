@@ -2,7 +2,7 @@
 {
     public class SilverGeneral : Move
     {
-        public override void CreateMovable(IGameController controller, IPiece piece)
+        public override void CreateMovable(IGameController controller, PieceModel piece)
         {
             if (piece.opposed)
                 Create(controller, piece.column, piece.row + 1, piece);

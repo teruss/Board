@@ -13,13 +13,13 @@ namespace Board
             this.controller = controller;
         }
 
-        public void Move(IPiece piece, int file, int rank)
+        public void Move(PieceModel piece, int file, int rank)
         {
             undidCommands.Clear();
             Execute(CreateMoveCommand(controller, piece, file, rank));
         }
 
-        public void MoveAndPromote(IGameController controller, IPiece piece, int file, int rank)
+        public void MoveAndPromote(IGameController controller, PieceModel piece, int file, int rank)
         {
             undidCommands.Clear();
             var multi = new MultiCommand();
@@ -28,7 +28,7 @@ namespace Board
             Execute(multi);
         }
 
-        Command CreateMoveCommand(IGameController controller, IPiece piece, int file, int rank)
+        Command CreateMoveCommand(IGameController controller, PieceModel piece, int file, int rank)
         {
             var move = new MoveCommand(piece, file, rank);
 
@@ -54,12 +54,12 @@ namespace Board
             return move;
         }
 
-        void Capture(IPiece piece)
+        void Capture(PieceModel piece)
         {
             Execute(new Capture(piece, controller));
         }
 
-        void Drop(IPiece piece)
+        void Drop(PieceModel piece)
         {
             Execute(new Drop(piece, controller));
         }

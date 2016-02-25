@@ -4,7 +4,7 @@
     {
         IGameController controller;
 
-        public Drop(IPiece piece, IGameController controller) : base(piece)
+        public Drop(PieceModel piece, IGameController controller) : base(piece)
         {
             this.controller = controller;
         }

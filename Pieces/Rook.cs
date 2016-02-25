@@ -2,7 +2,7 @@
 {
     public class Rook : Move
     {
-        public override void CreateMovable(IGameController controller, IPiece piece)
+        public override void CreateMovable(IGameController controller, PieceModel piece)
         {
             for (int i = 0; i < 8; i++)
             {

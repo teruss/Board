@@ -2,7 +2,7 @@
 {
     public interface IMovableCell
     {
-        void Set(int column, int row, IPiece piece);
+        void Set(int column, int row, PieceModel piece);
         void Destroy();
     }
 }

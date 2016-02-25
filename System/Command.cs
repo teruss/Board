@@ -4,7 +4,7 @@ namespace Board
 {
     public abstract class Command
     {
-        protected IPiece piece;
+        protected PieceModel piece;
 
         int prevFile, prevRank;
         bool prevCaptured, prevPromoted, prevOpposed;
@@ -16,7 +16,7 @@ namespace Board
         {
         }
 
-        public Command(IPiece piece)
+        public Command(PieceModel piece)
         {
             this.piece = piece;
             prevFile = piece.column;

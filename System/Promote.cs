@@ -2,7 +2,7 @@
 {
     public class Promote : Command
     {
-        public Promote(IPiece piece) : base(piece)
+        public Promote(PieceModel piece) : base(piece)
         {
         }
 

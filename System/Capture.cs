@@ -4,7 +4,7 @@
     {
         IGameController controller;
 
-        public Capture(IPiece piece, IGameController controller) : base(piece)
+        public Capture(PieceModel piece, IGameController controller) : base(piece)
         {
             this.controller = controller;
         }

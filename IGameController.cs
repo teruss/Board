@@ -5,7 +5,7 @@ namespace Board
     public interface IGameController
     {
         Komadai GetKomadai(bool opposed);
-        IList<IPiece> Pieces();
+        IList<PieceModel> Pieces();
         void DestroyMovableCells();
         void AddMovableCell(IMovableCell cell);
     }
