@@ -60,5 +60,18 @@ namespace Board
         {
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize, -1);
         }
+
+        public void CreateMovable(IGameController controller)
+        {
+            var p = piece.spriteController.GetPiece(type);
+            if (captured)
+            {
+                p.Drop(controller, this);
+                return;
+            }
+
+            p.CreateMovable(controller, this);
+        }
+
     }
 }
