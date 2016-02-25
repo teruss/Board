@@ -6,9 +6,9 @@
         {
         }
 
-        public override void Execute()
+        public override void Execute(SpriteController spriteController)
         {
-            piece.SetPromoted(true);
+            piece.SetPromoted(spriteController, true);
         }
     }
 }

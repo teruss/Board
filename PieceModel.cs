@@ -17,7 +17,7 @@ namespace Board
         public Vector3 target { get { return piece.target; } set { piece.target = value; } }
         public PieceType type { get { return piece.type; } set { piece.type = value; } }
 
-        public PieceModel(Piece piece, int column, int row, PieceType type, bool opposed)
+        public PieceModel(Piece piece, SpriteController spriteController, int column, int row, PieceType type, bool opposed)
         {
             this.piece = piece;
             this.column = column;
@@ -25,7 +25,7 @@ namespace Board
             this.type = type;
             this.opposed = opposed;
 
-            piece.spriteRenderer.sprite = piece.spriteController.Get(type, promoted, opposed);
+            piece.spriteRenderer.sprite = spriteController.Get(type, promoted, opposed);
             piece.transform.parent = piece.board.transform;
             target = Position(column, row);
         }
@@ -35,15 +35,15 @@ namespace Board
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize);
         }
 
-        public void SetPromoted(bool p)
+        public void SetPromoted(SpriteController spriteController, bool p)
         {
             promoted = p;
-            UpdateSprite();
+            UpdateSprite(spriteController);
         }
 
-        public void UpdateSprite()
+        public void UpdateSprite(SpriteController spriteController)
         {
-            piece.spriteRenderer.sprite = piece.spriteController.Get(type, promoted, opposed);
+            piece.spriteRenderer.sprite = spriteController.Get(type, promoted, opposed);
         }
 
         public void Destroy()
@@ -60,18 +60,5 @@ namespace Board
         {
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize, -1);
         }
-
-        public void CreateMovable(IGameController controller)
-        {
-            var p = piece.spriteController.GetPiece(type);
-            if (captured)
-            {
-                p.Drop(controller, this);
-                return;
-            }
-
-            p.CreateMovable(controller, this);
-        }
-
     }
 }

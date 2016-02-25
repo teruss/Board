@@ -13,10 +13,10 @@ namespace Board
             this.controller = controller;
         }
 
-        public void Move(PieceModel piece, int file, int rank)
+        public void Move(SpriteController spriteController, PieceModel piece, int file, int rank)
         {
             undidCommands.Clear();
-            Execute(CreateMoveCommand(controller, piece, file, rank));
+            Execute(spriteController, CreateMoveCommand(controller, piece, file, rank));
         }
 
         public void MoveAndPromote(IGameController controller, PieceModel piece, int file, int rank)
@@ -25,7 +25,7 @@ namespace Board
             var multi = new MultiCommand();
             multi.Add(CreateMoveCommand(controller, piece, file, rank));
             multi.Add(new Promote(piece));
-            Execute(multi);
+            Execute(controller.SpriteController, multi);
         }
 
         Command CreateMoveCommand(IGameController controller, PieceModel piece, int file, int rank)
@@ -56,17 +56,17 @@ namespace Board
 
         void Capture(PieceModel piece)
         {
-            Execute(new Capture(piece, controller));
+            Execute(controller.SpriteController, new Capture(piece, controller));
         }
 
         void Drop(PieceModel piece)
         {
-            Execute(new Drop(piece, controller));
+            Execute(controller.SpriteController, new Drop(piece, controller));
         }
 
-        void Execute(Command command)
+        void Execute(SpriteController spriteController, Command command)
         {
-            command.Execute();
+            command.Execute(spriteController);
             commands.Push(command);
         }
 
@@ -76,7 +76,7 @@ namespace Board
                 return;
 
             var command = commands.Pop();
-            command.Undo();
+            command.Undo(controller.SpriteController);
             undidCommands.Push(command);
         }
 
@@ -93,7 +93,7 @@ namespace Board
             if (undidCommands.Count == 0)
                 return;
 
-            Execute(undidCommands.Pop());
+            Execute(controller.SpriteController, undidCommands.Pop());
         }
 
         public void RedoAll()

@@ -8,5 +8,6 @@ namespace Board
         IList<PieceModel> Pieces();
         void DestroyMovableCells();
         void AddMovableCell(IMovableCell cell);
+        SpriteController SpriteController { get; }
     }
 }
