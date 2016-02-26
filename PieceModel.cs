@@ -103,5 +103,16 @@ namespace Board
 
             CreateMovable(controller);
         }
+
+        public void DropOrCreateMovable(IGameController controller)
+        {
+            if (captured)
+            {
+                Drop(controller);
+                return;
+            }
+
+            DestroyAndCreateMovable(controller);
+        }
     }
 }
