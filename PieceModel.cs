@@ -7,6 +7,7 @@ namespace Board
         public const float rowSize = 0.64f, columnSize = 0.6f;
 
         Piece piece;
+        Move move;
 
         public int column { get; set; }
         public int row { get; set; }
@@ -17,8 +18,9 @@ namespace Board
         public Vector3 target { get { return piece.target; } set { piece.target = value; } }
         public PieceType type { get { return piece.type; } set { piece.type = value; } }
 
-        public PieceModel(Piece piece, SpriteController spriteController, int column, int row, PieceType type, bool opposed)
+        public PieceModel(Piece piece, SpriteController spriteController, Move move, int column, int row, PieceType type, bool opposed)
         {
+            this.move = move;
             this.piece = piece;
             this.column = column;
             this.row = row;
@@ -59,6 +61,21 @@ namespace Board
         public Vector3 UpperPosition(float c, float r)
         {
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize, -1);
+        }
+
+        public void CreateMovable(IGameController controller)
+        {
+            move.CreateMovable(controller, this);
+        }
+
+        public bool IsValid(IGameController controller, int row, int column)
+        {
+            return move.IsValid(controller, this, column, row);
+        }
+
+        public void Create(IGameController controller, int row, int column)
+        {
+            move.Create(controller, column, row, this);
         }
     }
 }
