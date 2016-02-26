@@ -14,7 +14,17 @@ namespace Board
         public bool opposed { get; set; }
         public bool captured { get; set; }
         public bool promoted { get; set; }
-        public bool activated { get { return piece.activated; } set { piece.activated = value; } }
+        bool _activated;
+        public bool sleep { get; set; }
+        public bool activated
+        {
+            get { return _activated; }
+            set
+            {
+                _activated = value;
+                sleep = true;
+            }
+        }
         public Vector3 target { get { return piece.target; } set { piece.target = value; } }
         public PieceType type { get { return piece.type; } set { piece.type = value; } }
 
@@ -64,48 +74,48 @@ namespace Board
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize, -1);
         }
 
-        public void CreateMovable(World controller)
+        public void CreateMovable(World world)
         {
             if (promoted)
             {
-                promotedMove.CreateMovable(controller, this);
+                promotedMove.CreateMovable(world, this);
             }
             else
             {
-                move.CreateMovable(controller, this);
+                move.CreateMovable(world, this);
             }
         }
 
-        public bool IsValid(World controller, int row, int column)
+        public bool IsValid(World world, int row, int column)
         {
-            return move.IsValid(controller, this, column, row);
+            return move.IsValid(world, this, column, row);
         }
 
-        public void Create(World controller, int row, int column)
+        public void Create(World world, int row, int column)
         {
-            move.Create(controller, column, row, this);
+            move.Create(world, column, row, this);
         }
-        public void Drop(World controller)
+        public void Drop(World world)
         {
             for (int r = 1; r <= 9; r++)
             {
                 for (int c = 1; c <= 9; c++)
                 {
-                    if (IsValid(controller, r, c))
-                        Create(controller, r, c);
+                    if (IsValid(world, r, c))
+                        Create(world, r, c);
                 }
             }
         }
 
-        public void DropOrCreateMovable(World controller)
+        public void DropOrCreateMovable(World world)
         {
             if (captured)
             {
-                Drop(controller);
+                Drop(world);
                 return;
             }
 
-            CreateMovable(controller);
+            CreateMovable(world);
         }
     }
 }
