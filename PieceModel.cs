@@ -85,5 +85,23 @@ namespace Board
         {
             move.Create(controller, column, row, this);
         }
+        public void Drop(IGameController controller)
+        {
+            for (int r = 1; r <= 9; r++)
+            {
+                for (int c = 1; c <= 9; c++)
+                {
+                    if (IsValid(controller, r, c))
+                        Create(controller, r, c);
+                }
+            }
+        }
+
+        public void DestroyAndCreateMovable(IGameController controller)
+        {
+            controller.DestroyMovableCells();
+
+            CreateMovable(controller);
+        }
     }
 }
