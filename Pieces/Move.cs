@@ -34,9 +34,9 @@
             return new GoldGeneral();
         }
 
-        public abstract void CreateMovable(IGameController controller, PieceModel piece);
+        public abstract void CreateMovable(World controller, PieceModel piece);
 
-        public void Create(IGameController controller, int column, int row, PieceModel piece)
+        public void Create(World controller, int column, int row, PieceModel piece)
         {
             if (column < 1 || column > 9 || row < 1 || row > 9)
                 return;
@@ -50,7 +50,7 @@
             cell.Set(column, row, piece);
         }
 
-        protected bool HasPiece(IGameController controller, int c, int r)
+        protected bool HasPiece(World controller, int c, int r)
         {
             foreach (var p in controller.Pieces())
             {
@@ -62,7 +62,7 @@
             return false;
         }
 
-        public virtual bool IsValid(IGameController gameController, PieceModel piece, int column, int row)
+        public virtual bool IsValid(World gameController, PieceModel piece, int column, int row)
         {
             foreach (var p in gameController.Pieces())
             {

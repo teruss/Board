@@ -2,7 +2,7 @@
 {
     public class GoldGeneral : Move
     {
-        public override void CreateMovable(IGameController controller, PieceModel piece)
+        public override void CreateMovable(World controller, PieceModel piece)
         {
             Create(controller, piece.column, piece.row + 1, piece);
             if (piece.opposed)

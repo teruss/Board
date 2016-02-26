@@ -6,9 +6,9 @@ namespace Board
     {
         Stack<Command> commands = new Stack<Command>();
         Stack<Command> undidCommands = new Stack<Command>();
-        IGameController controller;
+        World controller;
 
-        public MoveController(IGameController controller)
+        public MoveController(World controller)
         {
             this.controller = controller;
         }
@@ -19,7 +19,7 @@ namespace Board
             Execute(spriteController, CreateMoveCommand(controller, piece, file, rank));
         }
 
-        public void MoveAndPromote(IGameController controller, PieceModel piece, int file, int rank)
+        public void MoveAndPromote(World controller, PieceModel piece, int file, int rank)
         {
             undidCommands.Clear();
             var multi = new MultiCommand();
@@ -28,7 +28,7 @@ namespace Board
             Execute(controller.SpriteController, multi);
         }
 
-        Command CreateMoveCommand(IGameController controller, PieceModel piece, int file, int rank)
+        Command CreateMoveCommand(World controller, PieceModel piece, int file, int rank)
         {
             var move = new MoveCommand(piece, file, rank);
 

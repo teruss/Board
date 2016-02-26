@@ -2,9 +2,9 @@
 {
     public class Capture : Command
     {
-        IGameController controller;
+        World controller;
 
-        public Capture(PieceModel piece, IGameController controller) : base(piece)
+        public Capture(PieceModel piece, World controller) : base(piece)
         {
             this.controller = controller;
         }

@@ -2,9 +2,9 @@
 {
     public class Drop : Command
     {
-        IGameController controller;
+        World controller;
 
-        public Drop(PieceModel piece, IGameController controller) : base(piece)
+        public Drop(PieceModel piece, World controller) : base(piece)
         {
             this.controller = controller;
         }

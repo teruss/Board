@@ -64,7 +64,7 @@ namespace Board
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize, -1);
         }
 
-        public void CreateMovable(IGameController controller)
+        public void CreateMovable(World controller)
         {
             if (promoted)
             {
@@ -76,16 +76,16 @@ namespace Board
             }
         }
 
-        public bool IsValid(IGameController controller, int row, int column)
+        public bool IsValid(World controller, int row, int column)
         {
             return move.IsValid(controller, this, column, row);
         }
 
-        public void Create(IGameController controller, int row, int column)
+        public void Create(World controller, int row, int column)
         {
             move.Create(controller, column, row, this);
         }
-        public void Drop(IGameController controller)
+        public void Drop(World controller)
         {
             for (int r = 1; r <= 9; r++)
             {
@@ -97,14 +97,7 @@ namespace Board
             }
         }
 
-        public void DestroyAndCreateMovable(IGameController controller)
-        {
-            controller.DestroyMovableCells();
-
-            CreateMovable(controller);
-        }
-
-        public void DropOrCreateMovable(IGameController controller)
+        public void DropOrCreateMovable(World controller)
         {
             if (captured)
             {
@@ -112,7 +105,7 @@ namespace Board
                 return;
             }
 
-            DestroyAndCreateMovable(controller);
+            CreateMovable(controller);
         }
     }
 }
