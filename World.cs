@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Board
 {
+    public class LocationEventArgs : EventArgs
+    {
+        public Location Location { get;set;}
+    }
     public class World
     {
         List<PieceModel> pieces = new List<PieceModel>();
@@ -58,7 +63,7 @@ namespace Board
             return false;
         }
 
-        public void Create(Location l, PieceModel piece)
+        public void CreateTransversableCell(Location l, PieceModel piece)
         {
             if (l.Column < 1 || l.Column > 9 || l.Row < 1 || l.Row > 9)
                 return;
@@ -67,9 +72,7 @@ namespace Board
                 if (!p.captured && p != piece && piece.opposed == p.opposed && l.Row == p.row && l.Column == p.column)
                     return;
             }
-            var cell = GameObject.Instantiate(piece.Piece.movable, piece.UpperPosition(l.Column, l.Row), Quaternion.identity) as MovableCell;
-            AddMovableCell(cell.Model);
-            cell.Model.Set(l.Column, l.Row, piece);
+            piece.CreateTraversableCell(l);
         }
     }
 }

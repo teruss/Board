@@ -9,7 +9,7 @@
                 for (int i = 0; i < 8; i++)
                 {
                     int c = piece.column, r = piece.row + i + 1;
-                    world.Create(new Location(r, c), piece);
+                    world.CreateTransversableCell(new Location(r, c), piece);
                     if (world.HasPiece(c, r))
                     {
                         break;
@@ -21,7 +21,7 @@
                 for (int i = 0; i < 8; i++)
                 {
                     int c = piece.column, r = piece.row - i - 1;
-                    world.Create(new Location(r, c), piece);
+                    world.CreateTransversableCell(new Location(r, c), piece);
                     if (world.HasPiece(c, r))
                     {
                         break;

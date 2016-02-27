@@ -10,6 +10,7 @@ namespace Board
         Move move, promotedMove;
         public event EventHandler OnUpdateSprite;
         public event EventHandler OnDestroy;
+        public event EventHandler OnCreateTransversableCell;
 
         public int column { get; set; }
         public int row { get; set; }
@@ -67,7 +68,7 @@ namespace Board
                 OnDestroy(this, EventArgs.Empty);
         }
 
-        public Vector3 UpperPosition(float c, float r)
+        public static Vector3 UpperPosition(float c, float r)
         {
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize, -1);
         }
@@ -91,7 +92,7 @@ namespace Board
                 for (int c = 1; c <= 9; c++)
                 {
                     if (move.IsValid(world, this, c, r))
-                        world.Create(new Location(r, c), this);
+                        world.CreateTransversableCell(new Location(r, c), this);
                 }
             }
         }
@@ -105,6 +106,12 @@ namespace Board
             }
 
             CreateMovable(world);
+        }
+
+        public void CreateTraversableCell(Location l)
+        {
+            if (OnCreateTransversableCell != null)
+                OnCreateTransversableCell(this, new LocationEventArgs() { Location = l });
         }
     }
 }

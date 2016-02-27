@@ -6,11 +6,11 @@
         {
             if (piece.opposed)
             {
-                world.Create(new Location(piece.row + 1, piece.column), piece);
+                world.CreateTransversableCell(new Location(piece.row + 1, piece.column), piece);
             }
             else
             {
-                world.Create(new Location(piece.row - 1, piece.column), piece);
+                world.CreateTransversableCell(new Location(piece.row - 1, piece.column), piece);
             }
         }
 

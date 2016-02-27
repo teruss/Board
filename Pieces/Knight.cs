@@ -6,13 +6,13 @@
         {
             if (!piece.opposed)
             {
-                world.Create(new Location(piece.row - 2, piece.column + 1), piece);
-                world.Create(new Location(piece.row - 2, piece.column - 1), piece);
+                world.CreateTransversableCell(new Location(piece.row - 2, piece.column + 1), piece);
+                world.CreateTransversableCell(new Location(piece.row - 2, piece.column - 1), piece);
             }
             else
             {
-                world.Create(new Location(piece.row + 2, piece.column + 1), piece);
-                world.Create(new Location(piece.row + 2, piece.column - 1), piece);
+                world.CreateTransversableCell(new Location(piece.row + 2, piece.column + 1), piece);
+                world.CreateTransversableCell(new Location(piece.row + 2, piece.column - 1), piece);
             }
         }
 
