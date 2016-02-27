@@ -30,11 +30,9 @@ namespace Board
         }
         public Vector3 target { get; set; }
         public PieceType type { get; set; }
-        public Piece Piece { get; private set; }
 
-        public PieceModel(Piece piece, SpriteController spriteController, Move move, Move promotedMove, int column, int row, PieceType type, bool opposed)
+        public PieceModel(Move move, Move promotedMove, int column, int row, PieceType type, bool opposed)
         {
-            Piece = piece;
             this.move = move;
             this.promotedMove = promotedMove;
             this.column = column;
