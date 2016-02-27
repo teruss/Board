@@ -29,11 +29,11 @@ namespace Board
         }
         public Vector3 target { get; set; }
         public PieceType type { get; set; }
-        Piece piece;
+        public Piece Piece { get; private set; }
 
         public PieceModel(Piece piece, SpriteController spriteController, Move move, Move promotedMove, int column, int row, PieceType type, bool opposed)
         {
-            this.piece = piece;
+            Piece = piece;
             this.move = move;
             this.promotedMove = promotedMove;
             this.column = column;
@@ -65,12 +65,6 @@ namespace Board
         {
             if (OnDestroy != null)
                 OnDestroy(this, EventArgs.Empty);
-        }
-
-        public TraversableCell CreateCell(int column, int row)
-        {
-            var cell = GameObject.Instantiate(piece.movable, UpperPosition(column, row), Quaternion.identity) as MovableCell;
-            return cell.Model;
         }
 
         public Vector3 UpperPosition(float c, float r)

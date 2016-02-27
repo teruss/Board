@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Board
 {
@@ -66,10 +67,9 @@ namespace Board
                 if (!p.captured && p != piece && piece.opposed == p.opposed && row == p.row && column == p.column)
                     return;
             }
-            var cell = piece.CreateCell(column, row);
-            AddMovableCell(cell);
-            cell.Set(column, row, piece);
+            var cell = GameObject.Instantiate(piece.Piece.movable, piece.UpperPosition(column, row), Quaternion.identity) as MovableCell;
+            AddMovableCell(cell.Model);
+            cell.Model.Set(column, row, piece);
         }
-
     }
 }
