@@ -9,18 +9,18 @@ namespace Board
         Komadai opposedKomadai = new Komadai(true);
 
         public SpriteController SpriteController { get; set; }
-        public IList<IMovableCell> MovableCells { get; private set; }
+        public IList<TraversableCell> MovableCells { get; private set; }
 
         public World()
         {
-            MovableCells = new List<IMovableCell>();
+            MovableCells = new List<TraversableCell>();
         }
         public IList<PieceModel> Pieces()
         {
             return pieces.AsReadOnly();
         }
 
-        public void AddMovableCell(IMovableCell cell)
+        public void AddMovableCell(TraversableCell cell)
         {
             MovableCells.Add(cell);
         }

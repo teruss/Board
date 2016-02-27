@@ -67,9 +67,10 @@ namespace Board
                 OnDestroy(this, EventArgs.Empty);
         }
 
-        public IMovableCell CreateCell(int column, int row)
+        public TraversableCell CreateCell(int column, int row)
         {
-            return GameObject.Instantiate(piece.movable, UpperPosition(column, row), Quaternion.identity) as MovableCell;
+            var cell = GameObject.Instantiate(piece.movable, UpperPosition(column, row), Quaternion.identity) as MovableCell;
+            return cell.Model;
         }
 
         public Vector3 UpperPosition(float c, float r)
