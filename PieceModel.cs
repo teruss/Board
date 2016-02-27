@@ -111,5 +111,16 @@ namespace Board
             if (OnCreateTransversableCell != null)
                 OnCreateTransversableCell(this, new LocationEventArgs() { Location = l });
         }
+
+        public void GetCaptured(World world, SpriteController spriteController)
+        {
+            opposed = !opposed;
+            captured = true;
+            row = column = 0;
+            promoted = false;
+            world.GetKomadai(opposed).Accept(this);
+            UpdateSprite(spriteController);
+            activated = true;
+        }
     }
 }

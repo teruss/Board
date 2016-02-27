@@ -2,27 +2,21 @@
 {
     public class Capture : Command
     {
-        World controller;
+        World world;
 
-        public Capture(PieceModel piece, World controller) : base(piece)
+        public Capture(PieceModel piece, World world) : base(piece)
         {
-            this.controller = controller;
+            this.world = world;
         }
 
         public override void Execute(SpriteController spriteController)
         {
-            piece.opposed = !piece.opposed;
-            piece.captured = true;
-            piece.row = piece.column = 0;
-            piece.promoted = false;
-            controller.GetKomadai(piece.opposed).Accept(piece);
-            piece.UpdateSprite(spriteController);
-            piece.activated = true;
+            piece.GetCaptured(world, spriteController);
         }
 
         public override void Undo(SpriteController spriteController)
         {
-            controller.GetKomadai(piece.opposed).Drop(piece);
+            world.GetKomadai(piece.opposed).Drop(piece);
             base.Undo(spriteController);
         }
     }
