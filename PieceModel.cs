@@ -97,7 +97,7 @@ namespace Board
 
         public void Create(World world, int row, int column)
         {
-            move.Create(world, column, row, this);
+            world.Create(column, row, this);
         }
         public void Drop(World world)
         {

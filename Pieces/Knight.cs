@@ -2,17 +2,17 @@
 {
     public class Knight : Move
     {
-        public override void CreateMovable(World controller, PieceModel piece)
+        public override void CreateMovable(World world, PieceModel piece)
         {
             if (!piece.opposed)
             {
-                Create(controller, piece.column + 1, piece.row - 2, piece);
-                Create(controller, piece.column - 1, piece.row - 2, piece);
+                world.Create(piece.column + 1, piece.row - 2, piece);
+                world.Create(piece.column - 1, piece.row - 2, piece);
             }
             else
             {
-                Create(controller, piece.column + 1, piece.row + 2, piece);
-                Create(controller, piece.column - 1, piece.row + 2, piece);
+                world.Create(piece.column + 1, piece.row + 2, piece);
+                world.Create(piece.column - 1, piece.row + 2, piece);
             }
         }
 

@@ -36,20 +36,6 @@
 
         public abstract void CreateMovable(World controller, PieceModel piece);
 
-        public void Create(World controller, int column, int row, PieceModel piece)
-        {
-            if (column < 1 || column > 9 || row < 1 || row > 9)
-                return;
-            foreach (var p in controller.Pieces())
-            {
-                if (!p.captured && p != piece && piece.opposed == p.opposed && row == p.row && column == p.column)
-                    return;
-            }
-            var cell = piece.CreateCell(column, row);
-            controller.AddMovableCell(cell);
-            cell.Set(column, row, piece);
-        }
-
         public virtual bool IsValid(World gameController, PieceModel piece, int column, int row)
         {
             foreach (var p in gameController.Pieces())

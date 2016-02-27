@@ -57,5 +57,19 @@ namespace Board
             return false;
         }
 
+        public void Create(int column, int row, PieceModel piece)
+        {
+            if (column < 1 || column > 9 || row < 1 || row > 9)
+                return;
+            foreach (var p in Pieces())
+            {
+                if (!p.captured && p != piece && piece.opposed == p.opposed && row == p.row && column == p.column)
+                    return;
+            }
+            var cell = piece.CreateCell(column, row);
+            AddMovableCell(cell);
+            cell.Set(column, row, piece);
+        }
+
     }
 }
