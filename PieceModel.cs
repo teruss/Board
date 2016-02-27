@@ -95,10 +95,6 @@ namespace Board
             return move.IsValid(world, this, column, row);
         }
 
-        public void Create(World world, int row, int column)
-        {
-            world.Create(column, row, this);
-        }
         public void Drop(World world)
         {
             for (int r = 1; r <= 9; r++)
@@ -106,7 +102,7 @@ namespace Board
                 for (int c = 1; c <= 9; c++)
                 {
                     if (IsValid(world, r, c))
-                        Create(world, r, c);
+                        world.Create(c, r, this);
                 }
             }
         }
