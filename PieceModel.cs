@@ -6,7 +6,7 @@ namespace Board
     public class PieceModel
     {
         public const float rowSize = 0.64f, columnSize = 0.6f;
-        
+
         Move move, promotedMove;
         public event EventHandler OnUpdateSprite;
         public event EventHandler OnDestroy;
@@ -90,18 +90,13 @@ namespace Board
             }
         }
 
-        public bool IsValid(World world, int row, int column)
-        {
-            return move.IsValid(world, this, column, row);
-        }
-
         public void Drop(World world)
         {
             for (int r = 1; r <= 9; r++)
             {
                 for (int c = 1; c <= 9; c++)
                 {
-                    if (IsValid(world, r, c))
+                    if (move.IsValid(world, this, c, r))
                         world.Create(c, r, this);
                 }
             }
