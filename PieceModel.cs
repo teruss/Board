@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Board
 {
     public class PieceModel
     {
         public const float rowSize = 0.64f, columnSize = 0.6f;
-
-        Piece piece;
+        
         Move move, promotedMove;
+        public event EventHandler OnUpdateSprite;
+        public event EventHandler OnDestroy;
 
         public int column { get; set; }
         public int row { get; set; }
@@ -25,21 +27,20 @@ namespace Board
                 sleep = true;
             }
         }
-        public Vector3 target { get { return piece.target; } set { piece.target = value; } }
-        public PieceType type { get { return piece.type; } set { piece.type = value; } }
+        public Vector3 target { get; set; }
+        public PieceType type { get; set; }
+        Piece piece;
 
         public PieceModel(Piece piece, SpriteController spriteController, Move move, Move promotedMove, int column, int row, PieceType type, bool opposed)
         {
+            this.piece = piece;
             this.move = move;
             this.promotedMove = promotedMove;
-            this.piece = piece;
             this.column = column;
             this.row = row;
             this.type = type;
             this.opposed = opposed;
 
-            piece.spriteRenderer.sprite = spriteController.Get(type, promoted, opposed);
-            piece.transform.parent = piece.board.transform;
             target = Position(column, row);
         }
 
@@ -56,12 +57,14 @@ namespace Board
 
         public void UpdateSprite(SpriteController spriteController)
         {
-            piece.spriteRenderer.sprite = spriteController.Get(type, promoted, opposed);
+            if (OnUpdateSprite != null)
+                OnUpdateSprite(this, EventArgs.Empty);
         }
 
         public void Destroy()
         {
-            piece.Destroy();
+            if (OnDestroy != null)
+                OnDestroy(this, EventArgs.Empty);
         }
 
         public IMovableCell CreateCell(int column, int row)
