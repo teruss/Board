@@ -10,6 +10,11 @@
             Column = column;
         }
 
+        public static Location Create(int file, int rank)
+        {
+            return new Location(rank, file);
+        }
+
         public void Clear()
         {
             Row = Column = 0;
