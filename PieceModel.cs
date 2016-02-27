@@ -41,7 +41,7 @@ namespace Board
             target = Position(location.Column, location.Row);
         }
 
-        public Vector3 Position(float c, float r)
+        public static Vector3 Position(float c, float r)
         {
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize);
         }

@@ -12,7 +12,7 @@
 
         public override void Execute()
         {
-            piece.target = piece.Position(location.Column, location.Row);
+            piece.target = PieceModel.Position(location.Column, location.Row);
             piece.Location = location;
             piece.activated = true;
         }

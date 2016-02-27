@@ -40,8 +40,8 @@ namespace Board
             var x = CalcX(piece, i);
             var y = CalcY(piece, i);
             if (opposed)
-                return piece.Position(10 - x, 10 - y);
-            return piece.Position(x, y);
+                return PieceModel.Position(10 - x, 10 - y);
+            return PieceModel.Position(x, y);
         }
 
         float CalcX(PieceModel piece, int i)
