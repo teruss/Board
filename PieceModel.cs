@@ -91,7 +91,7 @@ namespace Board
                 for (int c = 1; c <= 9; c++)
                 {
                     if (move.IsValid(world, this, c, r))
-                        world.Create(c, r, this);
+                        world.Create(new Location(r, c), this);
                 }
             }
         }

@@ -58,18 +58,18 @@ namespace Board
             return false;
         }
 
-        public void Create(int column, int row, PieceModel piece)
+        public void Create(Location l, PieceModel piece)
         {
-            if (column < 1 || column > 9 || row < 1 || row > 9)
+            if (l.Column < 1 || l.Column > 9 || l.Row < 1 || l.Row > 9)
                 return;
             foreach (var p in Pieces())
             {
-                if (!p.captured && p != piece && piece.opposed == p.opposed && row == p.row && column == p.column)
+                if (!p.captured && p != piece && piece.opposed == p.opposed && l.Row == p.row && l.Column == p.column)
                     return;
             }
-            var cell = GameObject.Instantiate(piece.Piece.movable, piece.UpperPosition(column, row), Quaternion.identity) as MovableCell;
+            var cell = GameObject.Instantiate(piece.Piece.movable, piece.UpperPosition(l.Column, l.Row), Quaternion.identity) as MovableCell;
             AddMovableCell(cell.Model);
-            cell.Model.Set(column, row, piece);
+            cell.Model.Set(l.Column, l.Row, piece);
         }
     }
 }

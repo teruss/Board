@@ -6,11 +6,11 @@
         {
             if (piece.opposed)
             {
-                world.Create(piece.column, piece.row + 1, piece);
+                world.Create(new Location(piece.row + 1, piece.column), piece);
             }
             else
             {
-                world.Create(piece.column, piece.row - 1, piece);
+                world.Create(new Location(piece.row - 1, piece.column), piece);
             }
         }
 
