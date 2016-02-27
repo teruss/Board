@@ -9,15 +9,15 @@
             this.world = world;
         }
 
-        public override void Execute(SpriteController spriteController)
+        public override void Execute()
         {
             piece.GetDropped(world);
         }
 
-        public override void Undo(SpriteController spriteController)
+        public override void Undo()
         {
             world.GetKomadai(piece.opposed).Accept(piece);
-            base.Undo(spriteController);
+            base.Undo();
         }
     }
 }

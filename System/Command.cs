@@ -10,7 +10,7 @@ namespace Board
         bool prevCaptured, prevPromoted, prevOpposed;
         Vector3 prevTarget;
 
-        public abstract void Execute(SpriteController spriteController);
+        public abstract void Execute();
 
         public Command()
         {
@@ -27,14 +27,14 @@ namespace Board
             prevTarget = piece.target;
         }
 
-        public virtual void Undo(SpriteController spriteController)
+        public virtual void Undo()
         {
             piece.row = prevRank;
             piece.column = prevFile;
             piece.target = prevTarget;
             piece.opposed = prevOpposed;
             piece.captured = prevCaptured;
-            piece.SetPromoted(spriteController, prevPromoted);
+            piece.SetPromoted(prevPromoted);
             piece.activated = true;
         }
     }

@@ -11,16 +11,16 @@ namespace Board
             commands.Add(command);
         }
 
-        public override void Execute(SpriteController spriteController)
+        public override void Execute()
         {
             foreach (var command in commands)
-                command.Execute(spriteController);
+                command.Execute();
         }
 
-        public override void Undo(SpriteController spriteController)
+        public override void Undo()
         {
             foreach (var command in commands)
-                command.Undo(spriteController);
+                command.Undo();
         }
     }
 }

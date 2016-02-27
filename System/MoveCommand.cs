@@ -11,7 +11,7 @@
             this.rank = rank;
         }
 
-        public override void Execute(SpriteController spriteController)
+        public override void Execute()
         {
             piece.target = piece.Position(file, rank);
             piece.row = rank;

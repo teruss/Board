@@ -13,10 +13,10 @@ namespace Board
             this.controller = controller;
         }
 
-        public void Move(SpriteController spriteController, PieceModel piece, int file, int rank)
+        public void Move(PieceModel piece, int file, int rank)
         {
             undidCommands.Clear();
-            Execute(spriteController, CreateMoveCommand(controller, piece, file, rank));
+            Execute(CreateMoveCommand(controller, piece, file, rank));
         }
 
         public void MoveAndPromote(World controller, PieceModel piece, int file, int rank)
@@ -25,7 +25,7 @@ namespace Board
             var multi = new MultiCommand();
             multi.Add(CreateMoveCommand(controller, piece, file, rank));
             multi.Add(new Promote(piece));
-            Execute(controller.SpriteController, multi);
+            Execute(multi);
         }
 
         Command CreateMoveCommand(World controller, PieceModel piece, int file, int rank)
@@ -56,17 +56,17 @@ namespace Board
 
         void Capture(PieceModel piece)
         {
-            Execute(controller.SpriteController, new Capture(piece, controller));
+            Execute(new Capture(piece, controller));
         }
 
         void Drop(PieceModel piece)
         {
-            Execute(controller.SpriteController, new Drop(piece, controller));
+            Execute(new Drop(piece, controller));
         }
 
-        void Execute(SpriteController spriteController, Command command)
+        void Execute(Command command)
         {
-            command.Execute(spriteController);
+            command.Execute();
             commands.Push(command);
         }
 
@@ -76,7 +76,7 @@ namespace Board
                 return;
 
             var command = commands.Pop();
-            command.Undo(controller.SpriteController);
+            command.Undo();
             undidCommands.Push(command);
         }
 
@@ -93,7 +93,7 @@ namespace Board
             if (undidCommands.Count == 0)
                 return;
 
-            Execute(controller.SpriteController, undidCommands.Pop());
+            Execute(undidCommands.Pop());
         }
 
         public void RedoAll()

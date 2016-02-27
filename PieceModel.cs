@@ -48,7 +48,7 @@ namespace Board
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize);
         }
 
-        public void SetPromoted(SpriteController spriteController, bool p)
+        public void SetPromoted(bool p)
         {
             promoted = p;
             UpdateSprite();
@@ -106,7 +106,7 @@ namespace Board
                 OnCreateTransversableCell(this, new LocationEventArgs() { Location = l });
         }
 
-        public void GetCaptured(World world, SpriteController spriteController)
+        public void GetCaptured(World world)
         {
             opposed = !opposed;
             captured = true;
