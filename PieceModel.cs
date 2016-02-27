@@ -12,8 +12,7 @@ namespace Board
         public event EventHandler OnDestroy;
         public event EventHandler OnCreateTransversableCell;
 
-        public int column { get; set; }
-        public int row { get; set; }
+        public Location Location { get; set; }
         public bool opposed { get; set; }
         public bool captured { get; set; }
         public bool promoted { get; set; }
@@ -31,16 +30,15 @@ namespace Board
         public Vector3 target { get; set; }
         public PieceType type { get; set; }
 
-        public PieceModel(Move move, Move promotedMove, int column, int row, PieceType type, bool opposed)
+        public PieceModel(Move move, Move promotedMove, Location location, PieceType type, bool opposed)
         {
             this.move = move;
             this.promotedMove = promotedMove;
-            this.column = column;
-            this.row = row;
+            Location = location;
             this.type = type;
             this.opposed = opposed;
 
-            target = Position(column, row);
+            target = Position(location.Column, location.Row);
         }
 
         public Vector3 Position(float c, float r)
@@ -83,7 +81,7 @@ namespace Board
             {
                 for (int c = 1; c <= 9; c++)
                 {
-                    if (move.IsValid(world, this, c, r))
+                    if (move.IsValid(world, this, new Location(r, c)))
                         world.CreateTransversableCell(new Location(r, c), this);
                 }
             }
@@ -110,7 +108,7 @@ namespace Board
         {
             opposed = !opposed;
             captured = true;
-            row = column = 0;
+            Location.Clear();
             promoted = false;
             world.GetKomadai(opposed).Accept(this);
             activated = true;

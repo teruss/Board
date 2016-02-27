@@ -4,29 +4,30 @@
     {
         public override void CreateMovable(World world, PieceModel piece)
         {
+            var l = piece.Location;
             if (!piece.opposed)
             {
-                world.CreateTransversableCell(new Location(piece.row - 2, piece.column + 1), piece);
-                world.CreateTransversableCell(new Location(piece.row - 2, piece.column - 1), piece);
+                world.CreateTransversableCell(new Location(l.Row - 2, l.Column + 1), piece);
+                world.CreateTransversableCell(new Location(l.Row - 2, l.Column - 1), piece);
             }
             else
             {
-                world.CreateTransversableCell(new Location(piece.row + 2, piece.column + 1), piece);
-                world.CreateTransversableCell(new Location(piece.row + 2, piece.column - 1), piece);
+                world.CreateTransversableCell(new Location(l.Row + 2, l.Column + 1), piece);
+                world.CreateTransversableCell(new Location(l.Row + 2, l.Column - 1), piece);
             }
         }
 
-        public override bool IsValid(World gameController, PieceModel piece, int column, int row)
+        public override bool IsValid(World gameController, PieceModel piece, Location location)
         {
-            if (!base.IsValid(gameController, piece, column, row))
+            if (!base.IsValid(gameController, piece, location))
                 return false;
 
             if (piece.opposed)
             {
-                return row <= 7;
+                return location.Row <= 7;
             }
             else
-                return row >= 3;
+                return location.Row >= 3;
         }
     }
 }

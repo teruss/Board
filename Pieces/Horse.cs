@@ -6,44 +6,48 @@
         {
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.column + i + 1, r = piece.row + i + 1;
-                world.CreateTransversableCell(new Location(r, c), piece);
-                if (world.HasPiece(c, r))
+                int c = piece.Location.Column + i + 1, r = piece.Location.Row + i + 1;
+                var l = new Location(r, c);
+                world.CreateTransversableCell(l, piece);
+                if (world.HasPiece(l))
                 {
                     break;
                 }
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.column + i + 1, r = piece.row - i - 1;
-                world.CreateTransversableCell(new Location(r, c), piece);
-                if (world.HasPiece(c, r))
+                int c = piece.Location.Column + i + 1, r = piece.Location.Row - i - 1;
+                var l = new Location(r, c);
+                world.CreateTransversableCell(l, piece);
+                if (world.HasPiece(l))
                 {
                     break;
                 }
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.column - i - 1, r = piece.row + i + 1;
-                world.CreateTransversableCell(new Location(r, c), piece);
-                if (world.HasPiece(c, r))
+                int c = piece.Location.Column - i - 1, r = piece.Location.Row + i + 1;
+                var l = new Location(r, c);
+                world.CreateTransversableCell(l, piece);
+                if (world.HasPiece(l))
                 {
                     break;
                 }
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.column - i - 1, r = piece.row - i - 1;
-                world.CreateTransversableCell(new Location(r, c), piece);
-                if (world.HasPiece(c, r))
+                int c = piece.Location.Column - i - 1, r = piece.Location.Row - i - 1;
+                var l = new Location(r, c);
+                world.CreateTransversableCell(l, piece);
+                if (world.HasPiece(l))
                 {
                     break;
                 }
             }
-            world.CreateTransversableCell(new Location(piece.row, piece.column + 1), piece);
-            world.CreateTransversableCell(new Location(piece.row + 1, piece.column), piece);
-            world.CreateTransversableCell(new Location(piece.row, piece.column - 1), piece);
-            world.CreateTransversableCell(new Location(piece.row - 1, piece.column), piece);
+            world.CreateTransversableCell(new Location(piece.Location.Row, piece.Location.Column + 1), piece);
+            world.CreateTransversableCell(new Location(piece.Location.Row + 1, piece.Location.Column), piece);
+            world.CreateTransversableCell(new Location(piece.Location.Row, piece.Location.Column - 1), piece);
+            world.CreateTransversableCell(new Location(piece.Location.Row - 1, piece.Location.Column), piece);
         }
     }
 }

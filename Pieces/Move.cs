@@ -36,11 +36,11 @@
 
         public abstract void CreateMovable(World controller, PieceModel piece);
 
-        public virtual bool IsValid(World gameController, PieceModel piece, int column, int row)
+        public virtual bool IsValid(World gameController, PieceModel piece, Location location)
         {
             foreach (var p in gameController.Pieces())
             {
-                if (p != piece && !p.captured && p.column == column && p.row == row)
+                if (p != piece && !p.captured && p.Location == location)
                     return false;
             }
             return true;

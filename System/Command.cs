@@ -6,7 +6,7 @@ namespace Board
     {
         protected PieceModel piece;
 
-        int prevFile, prevRank;
+        Location location;
         bool prevCaptured, prevPromoted, prevOpposed;
         Vector3 prevTarget;
 
@@ -19,8 +19,7 @@ namespace Board
         public Command(PieceModel piece)
         {
             this.piece = piece;
-            prevFile = piece.column;
-            prevRank = piece.row;
+            location = piece.Location;
             prevCaptured = piece.captured;
             prevPromoted = piece.promoted;
             prevOpposed = piece.opposed;
@@ -29,8 +28,7 @@ namespace Board
 
         public virtual void Undo()
         {
-            piece.row = prevRank;
-            piece.column = prevFile;
+            piece.Location = location;
             piece.target = prevTarget;
             piece.opposed = prevOpposed;
             piece.captured = prevCaptured;

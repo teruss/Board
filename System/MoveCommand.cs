@@ -2,20 +2,18 @@
 {
     public class MoveCommand : Command
     {
-        int file, rank;
+        Location location;
 
-        public MoveCommand(PieceModel piece, int file, int rank) : base(piece)
+        public MoveCommand(PieceModel piece, Location location) : base(piece)
         {
             this.piece = piece;
-            this.file = file;
-            this.rank = rank;
+            this.location = location;
         }
 
         public override void Execute()
         {
-            piece.target = piece.Position(file, rank);
-            piece.row = rank;
-            piece.column = file;
+            piece.target = piece.Position(location.Column, location.Row);
+            piece.Location = location;
             piece.activated = true;
         }
     }

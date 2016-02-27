@@ -13,24 +13,24 @@ namespace Board
             this.controller = controller;
         }
 
-        public void Move(PieceModel piece, int file, int rank)
+        public void Move(PieceModel piece, Location location)
         {
             undidCommands.Clear();
-            Execute(CreateMoveCommand(controller, piece, file, rank));
+            Execute(CreateMoveCommand(controller, piece, location));
         }
 
-        public void MoveAndPromote(World controller, PieceModel piece, int file, int rank)
+        public void MoveAndPromote(World controller, PieceModel piece, Location location)
         {
             undidCommands.Clear();
             var multi = new MultiCommand();
-            multi.Add(CreateMoveCommand(controller, piece, file, rank));
+            multi.Add(CreateMoveCommand(controller, piece, location));
             multi.Add(new Promote(piece));
             Execute(multi);
         }
 
-        Command CreateMoveCommand(World controller, PieceModel piece, int file, int rank)
+        Command CreateMoveCommand(World controller, PieceModel piece, Location location)
         {
-            var move = new MoveCommand(piece, file, rank);
+            var move = new MoveCommand(piece, location);
 
             if (piece.captured)
             {
@@ -42,7 +42,7 @@ namespace Board
 
             foreach (var p in controller.Pieces())
             {
-                if (p != piece && p.opposed != piece.opposed && !p.captured && p.row == rank && p.column == file)
+                if (p != piece && p.opposed != piece.opposed && !p.captured && p.Location == location)
                 {
                     var multi = new MultiCommand();
                     multi.Add(new Capture(p, controller));

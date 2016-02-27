@@ -6,7 +6,7 @@ namespace Board
 {
     public class LocationEventArgs : EventArgs
     {
-        public Location Location { get;set;}
+        public Location Location { get; set; }
     }
     public class World
     {
@@ -51,11 +51,11 @@ namespace Board
             pieces.Add(piece);
         }
 
-        public bool HasPiece(int c, int r)
+        public bool HasPiece(Location location)
         {
             foreach (var p in Pieces())
             {
-                if (!p.captured && p.column == c && p.row == r)
+                if (!p.captured && p.Location == location)
                 {
                     return true;
                 }
@@ -69,7 +69,7 @@ namespace Board
                 return;
             foreach (var p in Pieces())
             {
-                if (!p.captured && p != piece && piece.opposed == p.opposed && l.Row == p.row && l.Column == p.column)
+                if (!p.captured && p != piece && piece.opposed == p.opposed && l == p.Location)
                     return;
             }
             piece.CreateTraversableCell(l);

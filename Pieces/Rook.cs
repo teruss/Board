@@ -4,38 +4,43 @@
     {
         public override void CreateMovable(World world, PieceModel piece)
         {
+            var l = piece.Location;
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.column + i + 1, r = piece.row;
-                world.CreateTransversableCell(new Location(r, c), piece);
-                if (world.HasPiece(c, r))
+                int c = l.Column + i + 1, r = l.Row;
+                var loc = new Location(r, c);
+                world.CreateTransversableCell(loc, piece);
+                if (world.HasPiece(loc))
                 {
                     break;
                 }
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.column, r = piece.row - i - 1;
-                world.CreateTransversableCell(new Location(r, c), piece);
-                if (world.HasPiece(c, r))
+                int c = l.Column, r = l.Row - i - 1;
+                var loc = new Location(r, c);
+                world.CreateTransversableCell(loc, piece);
+                if (world.HasPiece(loc))
                 {
                     break;
                 }
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.column - i - 1, r = piece.row;
-                world.CreateTransversableCell(new Location(r, c), piece);
-                if (world.HasPiece(c, r))
+                int c = l.Column - i - 1, r = l.Row;
+                var loc = new Location(r, c);
+                world.CreateTransversableCell(loc, piece);
+                if (world.HasPiece(loc))
                 {
                     break;
                 }
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.column, r = piece.row + i + 1;
-                world.CreateTransversableCell(new Location(r, c), piece);
-                if (world.HasPiece(c, r))
+                int c = l.Column, r = l.Row + i + 1;
+                var loc = new Location(r, c);
+                world.CreateTransversableCell(loc, piece);
+                if (world.HasPiece(loc))
                 {
                     break;
                 }
