@@ -50,18 +50,6 @@
             cell.Set(column, row, piece);
         }
 
-        protected bool HasPiece(World controller, int c, int r)
-        {
-            foreach (var p in controller.Pieces())
-            {
-                if (!p.captured && p.column == c && p.row == r)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public virtual bool IsValid(World gameController, PieceModel piece, int column, int row)
         {
             foreach (var p in gameController.Pieces())

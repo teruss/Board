@@ -2,15 +2,15 @@
 {
     public class Lance : Move
     {
-        public override void CreateMovable(World controller, PieceModel piece)
+        public override void CreateMovable(World world, PieceModel piece)
         {
             if (piece.opposed)
             {
                 for (int i = 0; i < 8; i++)
                 {
                     int c = piece.column, r = piece.row + i + 1;
-                    Create(controller, c, r, piece);
-                    if (HasPiece(controller, c, r))
+                    Create(world, c, r, piece);
+                    if (world.HasPiece(c, r))
                     {
                         break;
                     }
@@ -21,8 +21,8 @@
                 for (int i = 0; i < 8; i++)
                 {
                     int c = piece.column, r = piece.row - i - 1;
-                    Create(controller, c, r, piece);
-                    if (HasPiece(controller, c, r))
+                    Create(world, c, r, piece);
+                    if (world.HasPiece(c, r))
                     {
                         break;
                     }

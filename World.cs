@@ -44,5 +44,18 @@ namespace Board
         {
             pieces.Add(piece);
         }
+
+        public bool HasPiece(int c, int r)
+        {
+            foreach (var p in Pieces())
+            {
+                if (!p.captured && p.column == c && p.row == r)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
