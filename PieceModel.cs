@@ -51,13 +51,7 @@ namespace Board
         public void SetPromoted(SpriteController spriteController, bool p)
         {
             promoted = p;
-            UpdateSprite(spriteController);
-        }
-
-        public void UpdateSprite(SpriteController spriteController)
-        {
-            if (OnUpdateSprite != null)
-                OnUpdateSprite(this, EventArgs.Empty);
+            UpdateSprite();
         }
 
         public void Destroy()
@@ -119,8 +113,23 @@ namespace Board
             row = column = 0;
             promoted = false;
             world.GetKomadai(opposed).Accept(this);
-            UpdateSprite(spriteController);
             activated = true;
+            UpdateSprite();
+        }
+
+        void UpdateSprite()
+        {
+            if (OnUpdateSprite != null)
+                OnUpdateSprite(this, EventArgs.Empty);
+        }
+
+        public void GetDropped(World world)
+        {
+            captured = false;
+            promoted = false;
+            world.GetKomadai(opposed).Drop(this);
+            activated = true;
+            UpdateSprite();
         }
     }
 }

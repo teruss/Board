@@ -2,25 +2,21 @@
 {
     public class Drop : Command
     {
-        World controller;
+        World world;
 
-        public Drop(PieceModel piece, World controller) : base(piece)
+        public Drop(PieceModel piece, World world) : base(piece)
         {
-            this.controller = controller;
+            this.world = world;
         }
 
         public override void Execute(SpriteController spriteController)
         {
-            piece.captured = false;
-            piece.promoted = false;
-            controller.GetKomadai(piece.opposed).Drop(piece);
-            piece.UpdateSprite(spriteController);
-            piece.activated = true;
+            piece.GetDropped(world);
         }
 
         public override void Undo(SpriteController spriteController)
         {
-            controller.GetKomadai(piece.opposed).Accept(piece);
+            world.GetKomadai(piece.opposed).Accept(piece);
             base.Undo(spriteController);
         }
     }
