@@ -15,12 +15,12 @@ namespace Board
         MoveDictionary moveDictionary = new MoveDictionary();
 
         public SpriteController SpriteController { get; set; }
-        public IList<TraversableCell> MovableCells { get; private set; }
+        public IList<TraversableCell> TraversableCells { get; private set; }
         public MoveController MoveController { get; private set; }
 
         public World()
         {
-            MovableCells = new List<TraversableCell>();
+            TraversableCells = new List<TraversableCell>();
             MoveController = new MoveController();
         }
         public IList<PieceModel> Pieces()
@@ -30,7 +30,7 @@ namespace Board
 
         public void AddMovableCell(TraversableCell cell)
         {
-            MovableCells.Add(cell);
+            TraversableCells.Add(cell);
         }
         public Komadai GetKomadai(bool opposed)
         {
@@ -91,6 +91,15 @@ namespace Board
                 MoveAndPromote(cell);
             else
                 Move(cell);
+        }
+
+        public void DestroyTraversableCells()
+        {
+            foreach (var cell in TraversableCells)
+            {
+                cell.Destroy();
+            }
+            TraversableCells.Clear();
         }
     }
 }
