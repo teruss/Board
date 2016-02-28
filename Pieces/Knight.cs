@@ -7,13 +7,13 @@
             var l = piece.Location;
             if (!piece.opposed)
             {
-                world.CreateTransversableCell(new Location(l.Row - 2, l.Column + 1), piece);
-                world.CreateTransversableCell(new Location(l.Row - 2, l.Column - 1), piece);
+                piece.CreateTraversableCell(world, Location.Create(l.Column + 1, l.Row - 2));
+                piece.CreateTraversableCell(world, Location.Create(l.Column - 1, l.Row - 2));
             }
             else
             {
-                world.CreateTransversableCell(new Location(l.Row + 2, l.Column + 1), piece);
-                world.CreateTransversableCell(new Location(l.Row + 2, l.Column - 1), piece);
+                piece.CreateTraversableCell(world, Location.Create(l.Column + 1, l.Row + 2));
+                piece.CreateTraversableCell(world, Location.Create(l.Column - 1, l.Row + 2));
             }
         }
 

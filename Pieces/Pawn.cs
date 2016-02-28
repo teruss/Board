@@ -7,11 +7,11 @@
             var l = piece.Location;
             if (piece.opposed)
             {
-                world.CreateTransversableCell(new Location(l.Row + 1, l.Column), piece);
+                piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row + 1));
             }
             else
             {
-                world.CreateTransversableCell(new Location(l.Row - 1, l.Column), piece);
+                piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row - 1));
             }
         }
 

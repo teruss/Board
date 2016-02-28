@@ -6,9 +6,8 @@
         {
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.Location.Column + i + 1, r = piece.Location.Row + i + 1;
-                var l = new Location(r, c);
-                world.CreateTransversableCell(l, piece);
+                var l = Location.Create(piece.Location.Column + i + 1, piece.Location.Row + i + 1);
+                piece.CreateTraversableCell(world, l);
                 if (world.HasPiece(l))
                 {
                     break;
@@ -16,9 +15,8 @@
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.Location.Column + i + 1, r = piece.Location.Row - i - 1;
-                var l = new Location(r, c);
-                world.CreateTransversableCell(l, piece);
+                var l = Location.Create(piece.Location.Column + i + 1, piece.Location.Row - i - 1);
+                piece.CreateTraversableCell(world, l);
                 if (world.HasPiece(l))
                 {
                     break;
@@ -26,9 +24,8 @@
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.Location.Column - i - 1, r = piece.Location.Row + i + 1;
-                var l = new Location(r, c);
-                world.CreateTransversableCell(l, piece);
+                var l = Location.Create(piece.Location.Column - i - 1, piece.Location.Row + i + 1);
+                piece.CreateTraversableCell(world, l);
                 if (world.HasPiece(l))
                 {
                     break;
@@ -36,9 +33,8 @@
             }
             for (int i = 0; i < 8; i++)
             {
-                int c = piece.Location.Column - i - 1, r = piece.Location.Row - i - 1;
-                var l = new Location(r, c);
-                world.CreateTransversableCell(l, piece);
+                var l = Location.Create(piece.Location.Column - i - 1, piece.Location.Row - i - 1);
+                piece.CreateTraversableCell(world, l);
                 if (world.HasPiece(l))
                 {
                     break;

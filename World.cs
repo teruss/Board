@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Board
 {
-    public class LocationEventArgs : EventArgs
+    public class TraversalCellEventArgs : EventArgs
     {
-        public Location Location { get; set; }
+        public TraversableCell TraversableCell { get; set; }
     }
     public class World
     {
         List<PieceModel> pieces = new List<PieceModel>();
         Komadai komadai = new Komadai(false);
         Komadai opposedKomadai = new Komadai(true);
+        MoveDictionary moveDictionary = new MoveDictionary();
 
         public SpriteController SpriteController { get; set; }
         public IList<TraversableCell> MovableCells { get; private set; }
@@ -63,16 +63,9 @@ namespace Board
             return false;
         }
 
-        public void CreateTransversableCell(Location l, PieceModel piece)
+        public PieceModel CreatePieceModel(Location location, PieceType type, bool opposed)
         {
-            if (l.Column < 1 || l.Column > 9 || l.Row < 1 || l.Row > 9)
-                return;
-            foreach (var p in Pieces())
-            {
-                if (!p.captured && p != piece && piece.opposed == p.opposed && l == p.Location)
-                    return;
-            }
-            piece.CreateTraversableCell(l);
+            return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, opposed);
         }
     }
 }

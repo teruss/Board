@@ -9,9 +9,8 @@
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    int c = l.Column, r = l.Row + i + 1;
-                    var loc = new Location(r, c);
-                    world.CreateTransversableCell(loc, piece);
+                    var loc = Location.Create(l.Column, l.Row + i + 1);
+                    piece.CreateTraversableCell(world, loc);
                     if (world.HasPiece(loc))
                     {
                         break;
@@ -22,9 +21,8 @@
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    int c = l.Column, r = l.Row - i - 1;
-                    var loc = new Location(r, c);
-                    world.CreateTransversableCell(loc, piece);
+                    var loc = Location.Create(l.Column, l.Row - i - 1);
+                    piece.CreateTraversableCell(world, loc);
                     if (world.HasPiece(loc))
                     {
                         break;

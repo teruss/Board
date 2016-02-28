@@ -8,6 +8,11 @@ namespace Board
 
         public PieceModel Piece { get; private set; }
         public Location Location { get; private set; }
+
+        public TraversableCell(Location location)
+        {
+            Location = location;
+        }
         public bool IsPromotable
         {
             get
@@ -60,9 +65,8 @@ namespace Board
                 return false;
             }
         }
-        public void Set(Location location, PieceModel piece)
+        public void Set(PieceModel piece)
         {
-            Location = location;
             Piece = piece;
         }
         public void Destroy()

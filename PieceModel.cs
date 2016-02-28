@@ -81,8 +81,9 @@ namespace Board
             {
                 for (int c = 1; c <= 9; c++)
                 {
-                    if (move.IsValid(world, this, new Location(r, c)))
-                        world.CreateTransversableCell(new Location(r, c), this);
+                    var l = Location.Create(c, r);
+                    if (move.IsValid(world, this, l))
+                        CreateTraversableCell(world, l);
                 }
             }
         }
@@ -98,10 +99,19 @@ namespace Board
             CreateMovable(world);
         }
 
-        public void CreateTraversableCell(Location l)
+        public void CreateTraversableCell(World world, Location l)
         {
+            if (l.Column < 1 || l.Column > 9 || l.Row < 1 || l.Row > 9)
+                return;
+            foreach (var p in world.Pieces())
+            {
+                if (!p.captured && p != this && opposed == p.opposed && l == p.Location)
+                    return;
+            }
+            var t = new TraversableCell(l);
+
             if (OnCreateTransversableCell != null)
-                OnCreateTransversableCell(this, new LocationEventArgs() { Location = l });
+                OnCreateTransversableCell(this, new TraversalCellEventArgs() { TraversableCell = t });
         }
 
         public void GetCaptured(World world)
