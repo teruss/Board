@@ -85,12 +85,14 @@ namespace Board
             if (cell.IsPromotable)
             {
                 onPromotable();
-                return;
             }
-            if (cell.MustPromoted)
-                MoveAndPromote(cell);
-            else
-                Move(cell);
+            else {
+                if (cell.MustPromoted)
+                    MoveAndPromote(cell);
+                else
+                    Move(cell);
+            }
+            DestroyTraversableCells();
         }
 
         public void DestroyTraversableCells()
