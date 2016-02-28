@@ -8,7 +8,7 @@
 
         public override void Execute()
         {
-            piece.SetPromoted(true);
+            Piece.SetPromoted(true);
         }
     }
 }

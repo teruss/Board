@@ -11,12 +11,12 @@
 
         public override void Execute()
         {
-            piece.GetDropped(world);
+            Piece.GetDropped(world);
         }
 
         public override void Undo()
         {
-            world.GetKomadai(piece.opposed).Accept(piece);
+            world.GetKomadai(Piece.opposed).Accept(Piece);
             base.Undo();
         }
     }

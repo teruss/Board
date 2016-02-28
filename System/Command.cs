@@ -4,21 +4,17 @@ namespace Board
 {
     public abstract class Command
     {
-        protected PieceModel piece;
-
         Location location;
         bool prevCaptured, prevPromoted, prevOpposed;
         Vector3 prevTarget;
 
+        public PieceModel Piece { get; private set; }
         public abstract void Execute();
-
-        public Command()
-        {
-        }
+        public Command() { }
 
         public Command(PieceModel piece)
         {
-            this.piece = piece;
+            Piece = piece;
             location = piece.Location;
             prevCaptured = piece.captured;
             prevPromoted = piece.promoted;
@@ -28,12 +24,12 @@ namespace Board
 
         public virtual void Undo()
         {
-            piece.Location = location;
-            piece.target = prevTarget;
-            piece.opposed = prevOpposed;
-            piece.captured = prevCaptured;
-            piece.SetPromoted(prevPromoted);
-            piece.activated = true;
+            Piece.Location = location;
+            Piece.target = prevTarget;
+            Piece.opposed = prevOpposed;
+            Piece.captured = prevCaptured;
+            Piece.SetPromoted(prevPromoted);
+            Piece.activated = true;
         }
     }
 }

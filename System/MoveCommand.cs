@@ -6,15 +6,14 @@
 
         public MoveCommand(PieceModel piece, Location location) : base(piece)
         {
-            this.piece = piece;
             this.location = location;
         }
 
         public override void Execute()
         {
-            piece.target = PieceModel.Position(location.Column, location.Row);
-            piece.Location = location;
-            piece.activated = true;
+            Piece.target = PieceModel.Position(location.Column, location.Row);
+            Piece.Location = location;
+            Piece.activated = true;
         }
     }
 }
