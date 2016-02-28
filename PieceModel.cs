@@ -10,7 +10,7 @@ namespace Board
         Move move, promotedMove;
         public event EventHandler OnUpdateSprite;
         public event EventHandler OnDestroy;
-        public event EventHandler OnCreateTransversableCell;
+        public event EventHandler OnCreateTraversableCell;
 
         public Location Location { get; set; }
         public bool opposed { get; set; }
@@ -109,9 +109,10 @@ namespace Board
                     return;
             }
             var t = new TraversableCell(l);
+            world.AddMovableCell(t);
 
-            if (OnCreateTransversableCell != null)
-                OnCreateTransversableCell(this, new TraversalCellEventArgs() { TraversableCell = t });
+            if (OnCreateTraversableCell != null)
+                OnCreateTraversableCell(this, new TraversalCellEventArgs() { TraversableCell = t });
         }
 
         public void GetCaptured(World world)

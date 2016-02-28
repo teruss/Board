@@ -16,10 +16,12 @@ namespace Board
 
         public SpriteController SpriteController { get; set; }
         public IList<TraversableCell> MovableCells { get; private set; }
+        public MoveController MoveController { get; private set; }
 
         public World()
         {
             MovableCells = new List<TraversableCell>();
+            MoveController = new MoveController(this);
         }
         public IList<PieceModel> Pieces()
         {
