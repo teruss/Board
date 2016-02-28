@@ -19,6 +19,7 @@ namespace Board
         public IList<TraversableCell> TraversableCells { get; private set; }
         public MoveController MoveController { get; private set; }
         public Player CurrentPlayer { get; private set; }
+        public ChoiceDialog ChoiseDialog { get; private set; }
 
         public World()
         {
@@ -77,6 +78,7 @@ namespace Board
         public void MoveAndPromote(TraversableCell cell)
         {
             MoveController.MoveAndPromote(this, cell.Piece, cell.Location);
+            CurrentPlayer = cell.Piece.Player.Opposed();
         }
 
         public void Move(TraversableCell cell)
@@ -89,6 +91,7 @@ namespace Board
         {
             if (cell.IsPromotable)
             {
+                ChoiseDialog = new ChoiceDialog(this, cell);
                 onPromotable();
             }
             else {
