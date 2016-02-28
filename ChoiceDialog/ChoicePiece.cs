@@ -1,7 +1,11 @@
-﻿namespace Board
+﻿using System;
+
+namespace Board
 {
     public class ChoicePiece
     {
+        public event EventHandler Executed;
+
         World world;
         TraversableCell cell;
         bool promoted;
@@ -18,6 +22,8 @@
                 world.MoveAndPromote(cell);
             else
                 world.Move(cell);
+            if (Executed != null)
+                Executed(this, EventArgs.Empty);
         }
     }
 }
