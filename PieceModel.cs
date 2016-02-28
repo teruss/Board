@@ -108,7 +108,7 @@ namespace Board
                 if (!p.captured && p != this && opposed == p.opposed && l == p.Location)
                     return;
             }
-            var t = new TraversableCell(l);
+            var t = new TraversableCell(this, l);
             world.AddMovableCell(t);
 
             if (OnCreateTraversableCell != null)
