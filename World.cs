@@ -69,5 +69,28 @@ namespace Board
         {
             return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, opposed);
         }
+
+        public void MoveAndPromote(TraversableCell cell)
+        {
+            MoveController.MoveAndPromote(this, cell.Piece, cell.Location);
+        }
+
+        public void Move(TraversableCell cell)
+        {
+            MoveController.Move(this, cell.Piece, cell.Location);
+        }
+
+        public void Select(TraversableCell cell, Action onPromotable)
+        {
+            if (cell.IsPromotable)
+            {
+                onPromotable();
+                return;
+            }
+            if (cell.MustPromoted)
+                MoveAndPromote(cell);
+            else
+                Move(cell);
+        }
     }
 }
