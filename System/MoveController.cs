@@ -6,17 +6,15 @@ namespace Board
     {
         Stack<Command> commands = new Stack<Command>();
         Stack<Command> undidCommands = new Stack<Command>();
-        World controller;
 
-        public MoveController(World controller)
+        public MoveController()
         {
-            this.controller = controller;
         }
 
-        public void Move(PieceModel piece, Location location)
+        public void Move(World world, PieceModel piece, Location location)
         {
             undidCommands.Clear();
-            Execute(CreateMoveCommand(controller, piece, location));
+            Execute(CreateMoveCommand(world, piece, location));
         }
 
         public void MoveAndPromote(World controller, PieceModel piece, Location location)
@@ -54,14 +52,14 @@ namespace Board
             return move;
         }
 
-        void Capture(PieceModel piece)
+        void Capture(World world, PieceModel piece)
         {
-            Execute(new Capture(piece, controller));
+            Execute(new Capture(piece, world));
         }
 
-        void Drop(PieceModel piece)
+        void Drop(World world, PieceModel piece)
         {
-            Execute(new Drop(piece, controller));
+            Execute(new Drop(piece, world));
         }
 
         void Execute(Command command)

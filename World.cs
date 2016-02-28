@@ -21,7 +21,7 @@ namespace Board
         public World()
         {
             MovableCells = new List<TraversableCell>();
-            MoveController = new MoveController(this);
+            MoveController = new MoveController();
         }
         public IList<PieceModel> Pieces()
         {
