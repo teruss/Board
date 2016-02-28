@@ -24,33 +24,33 @@ namespace Board
             Execute(CreateMoveCommand(world, piece, location));
         }
 
-        public void MoveAndPromote(World controller, PieceModel piece, Location location)
+        public void MoveAndPromote(World world, PieceModel piece, Location location)
         {
             undidCommands.Clear();
             var multi = new MultiCommand();
-            multi.Add(CreateMoveCommand(controller, piece, location));
-            multi.Add(new Promote(piece));
+            multi.Add(CreateMoveCommand(world, piece, location));
+            multi.Add(new Promote(world, piece));
             Execute(multi);
         }
 
-        Command CreateMoveCommand(World controller, PieceModel piece, Location location)
+        Command CreateMoveCommand(World world, PieceModel piece, Location location)
         {
-            var move = new MoveCommand(piece, location);
+            var move = new MoveCommand(world, piece, location);
 
             if (piece.captured)
             {
                 var multi = new MultiCommand();
-                multi.Add(new Drop(piece, controller));
+                multi.Add(new Drop(piece, world));
                 multi.Add(move);
                 return multi;
             }
 
-            foreach (var p in controller.Pieces())
+            foreach (var p in world.Pieces())
             {
                 if (p != piece && p.Player != piece.Player && !p.captured && p.Location == location)
                 {
                     var multi = new MultiCommand();
-                    multi.Add(new Capture(p, controller));
+                    multi.Add(new Capture(p, world));
                     multi.Add(move);
                     return multi;
                 }

@@ -18,7 +18,7 @@ namespace Board
         public SpriteController SpriteController { get; set; }
         public IList<TraversableCell> TraversableCells { get; private set; }
         public MoveController MoveController { get; private set; }
-        public Player CurrentPlayer { get; private set; }
+        public Player CurrentPlayer { get; set; }
         public ChoiceDialog ChoiseDialog { get; private set; }
 
         public World()

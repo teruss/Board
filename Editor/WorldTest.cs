@@ -24,4 +24,21 @@ public class WorldTest
         world.ChoiseDialog.Promoted.Execute();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
     }
+
+    [Test]
+    public void UndoTest()
+    {
+        var world = new World();
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
+        var bishop = world.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
+        bishop.DropOrCreateMovable(world);
+        var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
+        Assert.That(cell.Piece.Player, Is.EqualTo(Player.Black));
+        world.Select(cell, () => { });
+        world.ChoiseDialog.Promoted.Execute();
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
+
+        world.MoveController.Undo();
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
+    }
 }

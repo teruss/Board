@@ -4,7 +4,7 @@
     {
         Location location;
 
-        public MoveCommand(PieceModel piece, Location location) : base(piece)
+        public MoveCommand(World world, PieceModel piece, Location location) : base(world, piece)
         {
             this.location = location;
         }

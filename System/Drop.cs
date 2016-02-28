@@ -4,7 +4,7 @@
     {
         World world;
 
-        public Drop(PieceModel piece, World world) : base(piece)
+        public Drop(PieceModel piece, World world) : base(world, piece)
         {
             this.world = world;
         }

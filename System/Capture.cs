@@ -4,7 +4,7 @@
     {
         World world;
 
-        public Capture(PieceModel piece, World world) : base(piece)
+        public Capture(PieceModel piece, World world) : base(world, piece)
         {
             this.world = world;
         }

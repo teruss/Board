@@ -4,7 +4,6 @@ using System.Linq;
 
 public class ChoicePieceTest
 {
-
     [Test]
     public void ExecuteTest()
     {
