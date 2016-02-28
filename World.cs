@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace Board
 {
@@ -17,11 +18,13 @@ namespace Board
         public SpriteController SpriteController { get; set; }
         public IList<TraversableCell> TraversableCells { get; private set; }
         public MoveController MoveController { get; private set; }
+        public Player CurrentPlayer { get; private set; }
 
         public World()
         {
             TraversableCells = new List<TraversableCell>();
             MoveController = new MoveController();
+            CurrentPlayer = Player.Gray;
         }
         public IList<PieceModel> Pieces()
         {
@@ -32,9 +35,10 @@ namespace Board
         {
             TraversableCells.Add(cell);
         }
-        public Komadai GetKomadai(bool opposed)
+        public Komadai GetKomadai(Player player)
         {
-            if (opposed)
+            Assert.AreNotEqual(Player.Gray, player);
+            if (player == Player.Black)
                 return opposedKomadai;
             return komadai;
         }
@@ -65,9 +69,9 @@ namespace Board
             return false;
         }
 
-        public PieceModel CreatePieceModel(Location location, PieceType type, bool opposed)
+        public PieceModel CreatePieceModel(Location location, PieceType type, Player player)
         {
-            return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, opposed);
+            return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, player);
         }
 
         public void MoveAndPromote(TraversableCell cell)

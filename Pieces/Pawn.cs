@@ -1,17 +1,23 @@
-﻿namespace Board
+﻿using UnityEngine.Assertions;
+
+namespace Board
 {
     public class Pawn : Move
     {
         public override void CreateMovable(World world, PieceModel piece)
         {
             var l = piece.Location;
-            if (piece.opposed)
+            switch (piece.Player)
             {
-                piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row + 1));
-            }
-            else
-            {
-                piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row - 1));
+                case Player.Black:
+                    piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row + 1));
+                    break;
+                case Player.White:
+                    piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row - 1));
+                    break;
+                default:
+                    Assert.AreNotEqual(Player.Gray, piece.Player);
+                    break;
             }
         }
 
@@ -22,16 +28,20 @@
 
             foreach (var p in gameController.Pieces())
             {
-                if (p != piece && !p.captured && !p.promoted && p.type == PieceType.Pawn && piece.opposed == p.opposed && p.Location.Column == location.Column)
+                if (p != piece && !p.captured && !p.promoted && p.type == PieceType.Pawn && piece.Player == p.Player && p.Location.Column == location.Column)
                     return false;
             }
 
-            if (piece.opposed)
+            switch (piece.Player)
             {
-                return location.Row <= 8;
+                case Player.Black:
+                    return location.Row <= 8;
+                case Player.White:
+                    return location.Row >= 2;
+                default:
+                    Assert.AreNotEqual(Player.Gray, piece.Player);
+                    return false;
             }
-            else
-                return location.Row >= 2;
         }
     }
 }

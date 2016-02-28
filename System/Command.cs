@@ -5,7 +5,8 @@ namespace Board
     public abstract class Command
     {
         Location location;
-        bool prevCaptured, prevPromoted, prevOpposed;
+        bool prevCaptured, prevPromoted;
+        Player prevPlayer;
         Vector3 prevTarget;
 
         public PieceModel Piece { get; private set; }
@@ -18,7 +19,7 @@ namespace Board
             location = piece.Location;
             prevCaptured = piece.captured;
             prevPromoted = piece.promoted;
-            prevOpposed = piece.opposed;
+            prevPlayer = piece.Player;
             prevTarget = piece.target;
         }
 
@@ -26,7 +27,7 @@ namespace Board
         {
             Piece.Location = location;
             Piece.target = prevTarget;
-            Piece.opposed = prevOpposed;
+            Piece.Player = prevPlayer;
             Piece.captured = prevCaptured;
             Piece.SetPromoted(prevPromoted);
             Piece.activated = true;

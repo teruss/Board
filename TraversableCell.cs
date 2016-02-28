@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine.Assertions;
 
 namespace Board
 {
@@ -20,21 +21,22 @@ namespace Board
             {
                 if (Piece.captured || Piece.promoted || Piece.type == PieceType.King || Piece.type == PieceType.GoldGeneral)
                     return false;
+                Assert.AreNotEqual(Player.Gray, Piece.Player);
                 if (Piece.type == PieceType.Knight)
                 {
-                    if (Piece.opposed)
+                    if (Piece.Player == Player.Black)
                         return Location.Row == 7;
                     else
                         return Location.Row == 3;
                 }
                 if (Piece.type == PieceType.Pawn || Piece.type == PieceType.Lance)
                 {
-                    if (Piece.opposed)
+                    if (Piece.Player == Player.Black)
                         return Location.Row == 7 || Location.Row == 8;
                     else
                         return Location.Row == 3 || Location.Row == 2;
                 }
-                if (Piece.opposed)
+                if (Piece.Player == Player.Black)
                 {
                     return Location.Row >= 7 || Piece.Location.Row >= 7;
                 }
@@ -49,16 +51,17 @@ namespace Board
         {
             get
             {
+                Assert.AreNotEqual(Player.Gray, Piece.Player);
                 if (Piece.type == PieceType.Knight)
                 {
-                    if (Piece.opposed)
+                    if (Piece.Player == Player.Black)
                         return Location.Row >= 8;
                     else
                         return Location.Row <= 2;
                 }
                 if (Piece.type == PieceType.Pawn || Piece.type == PieceType.Lance)
                 {
-                    if (Piece.opposed)
+                    if (Piece.Player == Player.Black)
                         return Location.Row == 9;
                     else
                         return Location.Row == 1;

@@ -16,7 +16,7 @@
 
         public override void Undo()
         {
-            world.GetKomadai(Piece.opposed).Drop(Piece);
+            world.GetKomadai(Piece.Player).Drop(Piece);
             base.Undo();
         }
     }

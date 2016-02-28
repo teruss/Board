@@ -1,11 +1,13 @@
-﻿namespace Board
+﻿using UnityEngine.Assertions;
+
+namespace Board
 {
     public class Knight : Move
     {
         public override void CreateMovable(World world, PieceModel piece)
         {
             var l = piece.Location;
-            if (!piece.opposed)
+            if (piece.Player == Player.White)
             {
                 piece.CreateTraversableCell(world, Location.Create(l.Column + 1, l.Row - 2));
                 piece.CreateTraversableCell(world, Location.Create(l.Column - 1, l.Row - 2));
@@ -22,12 +24,16 @@
             if (!base.IsValid(gameController, piece, location))
                 return false;
 
-            if (piece.opposed)
+            switch (piece.Player)
             {
-                return location.Row <= 7;
+                case Player.Black:
+                    return location.Row <= 7;
+                case Player.White:
+                    return location.Row >= 3;
+                default:
+                    Assert.AreNotEqual(Player.Gray, piece.Player);
+                    return false;
             }
-            else
-                return location.Row >= 3;
         }
     }
 }

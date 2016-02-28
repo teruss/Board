@@ -30,11 +30,12 @@ public class MoveTest
     public void SecondTouchIsIgnored()
     {
         var world = new World();
-        var myKing = world.CreatePieceModel(Location.Create(5, 9), PieceType.King, false);
+        var myKing = world.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
         world.AddPiece(myKing);
-        var yourKing = world.CreatePieceModel(Location.Create(5, 1), PieceType.King, true);
+        var yourKing = world.CreatePieceModel(Location.Create(5, 1), PieceType.King, Player.Black);
         world.AddPiece(yourKing);
 
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
         myKing.DropOrCreateMovable(world);
         Assert.That(world.TraversableCells.Count, Is.EqualTo(5));
 
@@ -42,6 +43,7 @@ public class MoveTest
         world.Select(cell, () => { });
 
         Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Black));
 
         myKing.DropOrCreateMovable(world);
         Assert.That(world.TraversableCells.Count, Is.EqualTo(0));

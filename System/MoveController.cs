@@ -47,7 +47,7 @@ namespace Board
 
             foreach (var p in controller.Pieces())
             {
-                if (p != piece && p.opposed != piece.opposed && !p.captured && p.Location == location)
+                if (p != piece && p.Player != piece.Player && !p.captured && p.Location == location)
                 {
                     var multi = new MultiCommand();
                     multi.Add(new Capture(p, controller));

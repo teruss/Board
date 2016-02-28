@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Board
 {
@@ -13,11 +14,11 @@ namespace Board
         public event EventHandler OnCreateTraversableCell;
 
         public Location Location { get; set; }
-        public bool opposed { get; set; }
         public bool captured { get; set; }
         public bool promoted { get; set; }
         bool _activated;
         public bool sleep { get; set; }
+        public Player Player { get; set; }
         public bool activated
         {
             get { return _activated; }
@@ -30,13 +31,13 @@ namespace Board
         public Vector3 target { get; set; }
         public PieceType type { get; set; }
 
-        public PieceModel(Move move, Move promotedMove, Location location, PieceType type, bool opposed)
+        public PieceModel(Move move, Move promotedMove, Location location, PieceType type, Player player)
         {
             this.move = move;
             this.promotedMove = promotedMove;
             Location = location;
             this.type = type;
-            this.opposed = opposed;
+            Player = player;
 
             target = Position(location.Column, location.Row);
         }
@@ -105,7 +106,7 @@ namespace Board
                 return;
             foreach (var p in world.Pieces())
             {
-                if (!p.captured && p != this && opposed == p.opposed && l == p.Location)
+                if (!p.captured && p != this && Player == p.Player && l == p.Location)
                     return;
             }
             var t = new TraversableCell(this, l);
@@ -117,11 +118,12 @@ namespace Board
 
         public void GetCaptured(World world)
         {
-            opposed = !opposed;
+            Assert.AreNotEqual(Player.Gray, Player);
+            Player =  Player.Opposed();
             captured = true;
             Location.Clear();
             promoted = false;
-            world.GetKomadai(opposed).Accept(this);
+            world.GetKomadai(Player).Accept(this);
             activated = true;
             UpdateSprite();
         }
@@ -136,7 +138,7 @@ namespace Board
         {
             captured = false;
             promoted = false;
-            world.GetKomadai(opposed).Drop(this);
+            world.GetKomadai(Player).Drop(this);
             activated = true;
             UpdateSprite();
         }
