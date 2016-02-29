@@ -14,6 +14,7 @@
             Piece.target = PieceModel.Position(location.Column, location.Row);
             Piece.Location = location;
             Piece.activated = true;
+            World.CurrentPlayer = Piece.Player.Opposed();
         }
     }
 }

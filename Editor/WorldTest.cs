@@ -41,4 +41,23 @@ public class WorldTest
         world.MoveController.Undo();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
     }
+
+    [Test]
+    public void RedoTest()
+    {
+        var world = new World();
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
+        var king = world.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.Black);
+        king.DropOrCreateMovable(world);
+        var cell = world.TraversableCells.Single(c => c.Location == Location.Create(5, 8));
+        Assert.That(cell.Piece.Player, Is.EqualTo(Player.Black));
+        world.Select(cell, () => { });
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
+
+        world.MoveController.Undo();
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
+
+        world.MoveController.Redo();
+        Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
+    }
 }

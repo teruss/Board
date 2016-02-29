@@ -78,13 +78,11 @@ namespace Board
         public void MoveAndPromote(TraversableCell cell)
         {
             MoveController.MoveAndPromote(this, cell.Piece, cell.Location);
-            CurrentPlayer = cell.Piece.Player.Opposed();
         }
 
         public void Move(TraversableCell cell)
         {
             MoveController.Move(this, cell.Piece, cell.Location);
-            CurrentPlayer = cell.Piece.Player.Opposed();
         }
 
         public void Select(TraversableCell cell, Action onPromotable)

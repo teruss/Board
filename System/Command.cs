@@ -9,7 +9,8 @@ namespace Board
         Player prevPlayer;
         Vector3 prevTarget;
         Player prevWorldPlayer;
-        World world;
+
+        public World World { get; private set; }
 
         public PieceModel Piece { get; private set; }
         public abstract void Execute();
@@ -17,7 +18,7 @@ namespace Board
 
         public Command(World world, PieceModel piece)
         {
-            this.world = world;
+            this.World = world;
             prevWorldPlayer = world.CurrentPlayer;
             Piece = piece;
             location = piece.Location;
@@ -29,7 +30,7 @@ namespace Board
 
         public virtual void Undo()
         {
-            world.CurrentPlayer = prevWorldPlayer;
+            World.CurrentPlayer = prevWorldPlayer;
             Piece.Location = location;
             Piece.target = prevTarget;
             Piece.Player = prevPlayer;
