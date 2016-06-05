@@ -60,4 +60,17 @@ public class WorldTest
         world.MoveController.Redo();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
     }
+
+    public void FinishOnKingKilledTest()
+    {
+        var world = new World();
+        bool b = false;
+        world.OnKingKilled += (sender, e) =>
+        {
+            b = true;
+        };
+        var king = world.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.Black);
+        king.GetCaptured(world);
+        Assert.That(b, Is.True);
+    }
 }

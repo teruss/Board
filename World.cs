@@ -20,6 +20,7 @@ namespace Board
         public MoveController MoveController { get; private set; }
         public Player CurrentPlayer { get; set; }
         public ChoiceDialog ChoiseDialog { get; private set; }
+        public event EventHandler OnKingKilled;
 
         public World()
         {
