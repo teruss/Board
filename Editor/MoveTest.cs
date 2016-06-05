@@ -29,7 +29,7 @@ public class MoveTest
     [Test]
     public void SecondTouchIsIgnored()
     {
-        var world = new World();
+        var world = new World(true);
         var myKing = world.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
         world.AddPiece(myKing);
         var yourKing = world.CreatePieceModel(Location.Create(5, 1), PieceType.King, Player.Black);

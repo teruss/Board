@@ -91,7 +91,7 @@ namespace Board
 
         public void DropOrCreateMovable(World world)
         {
-            if (GameController.alternate && world.CurrentPlayer != Player && world.CurrentPlayer != Player.Gray)
+            if (world.Alternate && world.CurrentPlayer != Player && world.CurrentPlayer != Player.Gray)
                 return;
 
             if (captured)

@@ -14,6 +14,7 @@ namespace Board
         Komadai komadai = new Komadai(false);
         Komadai opposedKomadai = new Komadai(true);
         MoveDictionary moveDictionary = new MoveDictionary();
+        public bool Alternate { get; private set; }
 
         public SpriteController SpriteController { get; set; }
         public IList<TraversableCell> TraversableCells { get; private set; }
@@ -22,12 +23,15 @@ namespace Board
         public ChoiceDialog ChoiseDialog { get; private set; }
         public event EventHandler OnKingKilled;
 
-        public World()
+        public World() : this(false) { }
+        public World(bool alternate)
         {
             TraversableCells = new List<TraversableCell>();
             MoveController = new MoveController();
             CurrentPlayer = Player.Gray;
+            Alternate = alternate;
         }
+
         public IList<PieceModel> Pieces()
         {
             return pieces.AsReadOnly();
@@ -93,7 +97,8 @@ namespace Board
                 ChoiseDialog = new ChoiceDialog(this, cell);
                 onPromotable();
             }
-            else {
+            else
+            {
                 if (cell.MustPromoted)
                     MoveAndPromote(cell);
                 else
