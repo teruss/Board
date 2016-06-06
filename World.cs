@@ -21,7 +21,7 @@ namespace Board
         public MoveController MoveController { get; private set; }
         public Player CurrentPlayer { get; set; }
         public ChoiceDialog ChoiseDialog { get; private set; }
-        public event EventHandler OnKingKilled;
+        public event EventHandler KingKilled;
 
         public World() : this(false) { }
         public World(bool alternate)
@@ -114,6 +114,20 @@ namespace Board
                 cell.Destroy();
             }
             TraversableCells.Clear();
+        }
+
+        public void Capture(PieceModel piece)
+        {
+            piece.GetCaptured();
+
+            GetKomadai(piece.Player).Accept(piece);
+            if (piece.type == PieceType.King)
+            {
+                if (KingKilled != null)
+                {
+                    KingKilled(this, EventArgs.Empty);
+                }
+            }
         }
     }
 }

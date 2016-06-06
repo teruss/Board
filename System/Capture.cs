@@ -11,7 +11,7 @@
 
         public override void Execute()
         {
-            Piece.GetCaptured(world);
+            world.Capture(Piece);
         }
 
         public override void Undo()

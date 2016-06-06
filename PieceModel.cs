@@ -119,14 +119,13 @@ namespace Board
                 OnCreateTraversableCell(this, new TraversalCellEventArgs() { TraversableCell = t });
         }
 
-        public void GetCaptured(World world)
+        public void GetCaptured()
         {
             Assert.AreNotEqual(Player.Gray, Player);
-            Player =  Player.Opposed();
+            Player = Player.Opposed();
             captured = true;
             Location.Clear();
             promoted = false;
-            world.GetKomadai(Player).Accept(this);
             activated = true;
             UpdateSprite();
         }
