@@ -15,11 +15,17 @@
                 return 1.8f;
             if (count == 2 || count == 4)
                 return 2.3f - i % 2;
+            if (count == 3)
+            {
+                if (i < 1)
+                    return CalcX(0, 1);
+                return CalcX(i - 1, 2);
+            }
             if (count == 5)
             {
                 if (i < 2)
                     return CalcX(i, 2);
-                return CalcX(i - 2, 3);
+                return CalcX(0, 1) - i + 3;
             }
             if (count <= 9)
                 return 2.8f - i % 3;
@@ -30,8 +36,14 @@
 
         static float CalcY(int i, int count)
         {
-            if (count <= 3)
+            if (count <= 2)
                 return 12.2f;
+            if (count == 3)
+            {
+                if (i == 0)
+                    return 11.7f;
+                return CalcY(0, 3) + 1;
+            }
             if (count <= 4)
                 return 11.7f + i / 2;
             if (count == 5)
