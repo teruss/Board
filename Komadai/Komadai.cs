@@ -7,7 +7,7 @@ namespace Board
     {
         bool opposed;
 
-        List<PieceModel> pieces = new List<PieceModel>();
+        PieceList pieces = new PieceList();
 
         public Komadai(bool opposed)
         {
@@ -30,8 +30,9 @@ namespace Board
         {
             for (int i = 0; i < pieces.Count; i++)
             {
-                pieces[i].target = Position(pieces[i], i);
-                pieces[i].activated = true;
+                var piece = pieces[i];
+                piece.target = Position(piece, i);
+                piece.activated = true;
             }
         }
 

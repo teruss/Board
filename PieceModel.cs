@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace Board
 {
-    public class PieceModel
+    public class PieceModel : IComparable
     {
         public const float rowSize = 0.64f, columnSize = 0.6f;
 
@@ -143,6 +143,17 @@ namespace Board
             world.GetKomadai(Player).Drop(this);
             activated = true;
             UpdateSprite();
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+            var otherPieceModel = obj as PieceModel;
+            if (otherPieceModel != null)
+                return type.CompareTo(otherPieceModel.type);
+            else
+                throw new ArgumentException("Object is not a PieceModel");
         }
     }
 }
