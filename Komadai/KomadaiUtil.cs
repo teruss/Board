@@ -11,6 +11,8 @@
 
         static float CalcX(int i, int count)
         {
+            if (count == 1)
+                return 1.8f;
             if (count <= 9)
                 return 2.8f - i % 3;
             if (count <= 16)
@@ -20,6 +22,8 @@
 
         static float CalcY(int i, int count)
         {
+            if (count == 1)
+                return 12.2f;
             if (count <= 9)
                 return 11.2f + i / 3;
             if (count <= 16)
