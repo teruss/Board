@@ -15,6 +15,12 @@
                 return 1.8f;
             if (count == 2 || count == 4)
                 return 2.3f - i % 2;
+            if (count == 5)
+            {
+                if (i < 2)
+                    return CalcX(i, 2);
+                return CalcX(i - 2, 3);
+            }
             if (count <= 9)
                 return 2.8f - i % 3;
             if (count <= 16)
@@ -26,8 +32,14 @@
         {
             if (count <= 3)
                 return 12.2f;
-            if (count == 4)
+            if (count <= 4)
                 return 11.7f + i / 2;
+            if (count == 5)
+            {
+                if (i < 2)
+                    return CalcY(i, 4);
+                return CalcY(2, 4);
+            }
             if (count <= 9)
                 return 11.2f + i / 3;
             if (count <= 16)

@@ -27,4 +27,12 @@ public class KomadaiUtilTest
         Assert.That(KomadaiUtil.Calc(0, 4), Is.EqualTo(KomadaiUtil.Calc(5, 16)));
         Assert.That(KomadaiUtil.Calc(2, 4), Is.EqualTo(KomadaiUtil.Calc(9, 16)));
     }
+
+    [Test]
+    public void FivePiecesTest()
+    {
+        Assert.That(KomadaiUtil.Calc(0, 5), Is.EqualTo(KomadaiUtil.Calc(5, 16)));
+        Assert.That(KomadaiUtil.Calc(2, 5), Is.EqualTo((KomadaiUtil.Calc(8, 16) + KomadaiUtil.Calc(9, 16)) / 2));
+        Assert.That(KomadaiUtil.Calc(4, 5), Is.EqualTo((KomadaiUtil.Calc(10, 16) + KomadaiUtil.Calc(11, 16)) / 2));
+    }
 }
