@@ -38,29 +38,10 @@ namespace Board
 
         Vector3 Position(PieceModel piece, int i)
         {
-            var x = CalcX(piece, i);
-            var y = CalcY(piece, i);
+            var v = KomadaiUtil.Calc(i, pieces.Count);
             if (opposed)
-                return PieceModel.Position(10 - x, 10 - y);
-            return PieceModel.Position(x, y);
-        }
-
-        float CalcX(PieceModel piece, int i)
-        {
-            if (pieces.Count <= 9)
-                return 2.8f - i % 3;
-            if (pieces.Count <= 16)
-                return 3.2f - i % 4;
-            return 0.2f + i / 4;
-        }
-
-        float CalcY(PieceModel piece, int i)
-        {
-            if (pieces.Count <= 9)
-                return 11.2f + i / 3;
-            if (pieces.Count <= 16)
-                return 10.5f + i / 4;
-            return 10.5f + i % 4;
+                return PieceModel.Position(10 - v.X, 10 - v.Y);
+            return PieceModel.Position(v.X, v.Y);
         }
     }
 }

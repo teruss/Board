@@ -47,6 +47,11 @@ namespace Board
             return new Vector3((5 - c) * columnSize, (5 - r) * rowSize);
         }
 
+        public static Vector3 Position(Vector2 v)
+        {
+            return Position(v.X, v.Y);
+        }
+
         public void SetPromoted(bool p)
         {
             promoted = p;
