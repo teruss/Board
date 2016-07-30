@@ -30,9 +30,9 @@ public class MoveTest
     public void SecondTouchIsIgnored()
     {
         var world = new World(true);
-        var myKing = world.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
         world.AddPiece(myKing);
-        var yourKing = world.CreatePieceModel(Location.Create(5, 1), PieceType.King, Player.Black);
+        var yourKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.King, Player.Black);
         world.AddPiece(yourKing);
 
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));

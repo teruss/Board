@@ -13,7 +13,6 @@ namespace Board
         List<PieceModel> pieces = new List<PieceModel>();
         Komadai komadai = new Komadai(false);
         Komadai opposedKomadai = new Komadai(true);
-        MoveDictionary moveDictionary = new MoveDictionary();
         public bool Alternate { get; private set; }
 
         public SpriteController SpriteController { get; set; }
@@ -73,11 +72,6 @@ namespace Board
                 }
             }
             return false;
-        }
-
-        public PieceModel CreatePieceModel(Location location, PieceType type, Player player)
-        {
-            return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, player);
         }
 
         public void MoveAndPromote(TraversableCell cell)

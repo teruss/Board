@@ -8,7 +8,7 @@ public class ChoicePieceTest
     public void ExecuteTest()
     {
         var world = new World();
-        var bishop = world.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
+        var bishop = PieceModelUtil.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
         bishop.DropOrCreateMovable(world);
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
         world.Select(cell, () => { });

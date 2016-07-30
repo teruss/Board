@@ -16,7 +16,7 @@ public class WorldTest
     {
         var world = new World();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
-        var bishop = world.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
+        var bishop = PieceModelUtil.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
         bishop.DropOrCreateMovable(world);
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
         Assert.That(cell.Piece.Player, Is.EqualTo(Player.Black));
@@ -30,7 +30,7 @@ public class WorldTest
     {
         var world = new World();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
-        var bishop = world.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
+        var bishop = PieceModelUtil.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
         bishop.DropOrCreateMovable(world);
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
         Assert.That(cell.Piece.Player, Is.EqualTo(Player.Black));
@@ -47,7 +47,7 @@ public class WorldTest
     {
         var world = new World();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.Gray));
-        var king = world.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.Black);
+        var king = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.Black);
         king.DropOrCreateMovable(world);
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(5, 8));
         Assert.That(cell.Piece.Player, Is.EqualTo(Player.Black));
@@ -70,7 +70,7 @@ public class WorldTest
         {
             b = true;
         };
-        var king = world.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.Black);
+        var king = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.Black);
         world.Capture(king);
         Assert.That(b, Is.True);
     }
