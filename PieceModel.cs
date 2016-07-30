@@ -155,5 +155,10 @@ namespace Board
             else
                 throw new ArgumentException("Object is not a PieceModel");
         }
+
+        public override string ToString()
+        {
+            return type.ToString();
+        }
     }
 }

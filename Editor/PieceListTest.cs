@@ -1,12 +1,16 @@
 ﻿using NUnit.Framework;
 using Board;
 
-public class PieceListTest {
-
+public class PieceListTest
+{
     [Test]
-	void SortedTest () {
+    public void SortedTest()
+    {
         var list = new PieceList();
-        //list.Add(new PieceModel())
-        //list.Add(new PieceModel())
-	}
+        list.Add(PieceModelUtil.CreatePieceModel(PieceType.Pawn));
+        var lance = PieceModelUtil.CreatePieceModel(PieceType.Lance);
+        list.Add(lance);
+
+        Assert.That(list[0], Is.EqualTo(lance));
+    }
 }

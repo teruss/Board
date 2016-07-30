@@ -18,7 +18,11 @@ namespace Board
 
         public void Add(PieceModel piece)
         {
-            pieces.Add(piece);
+            var index = pieces.BinarySearch(piece);
+            if (index < 0)
+                pieces.Insert(~index, piece);
+            else
+                pieces.Insert(index, piece);
         }
 
         public void Remove(PieceModel piece)

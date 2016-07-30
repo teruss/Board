@@ -11,5 +11,10 @@ namespace Board
         {
             return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, player);
         }
+
+        public static PieceModel CreatePieceModel(PieceType type)
+        {
+            return CreatePieceModel(new Location(), type, Player.Gray);
+        }
     }
 }
