@@ -40,6 +40,12 @@
                     return CalcY(i, 4);
                 return CalcY(2, 4);
             }
+            if (count == 6)
+            {
+                if (i < 3)
+                    return CalcY(0, 4);
+                return CalcY(2, 4);
+            }
             if (count <= 9)
                 return 11.2f + i / 3;
             if (count <= 16)
