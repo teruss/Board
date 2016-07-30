@@ -49,4 +49,12 @@ public class KomadaiUtilTest
         Assert.That(KomadaiUtil.Calc(0, 7), Is.EqualTo(KomadaiUtil.Calc(1, 9)));
         Assert.That(KomadaiUtil.Calc(1, 7), Is.EqualTo(KomadaiUtil.Calc(3, 9)));
     }
+
+    [Test]
+    public void EightPiecesTest()
+    {
+        Assert.That(KomadaiUtil.Calc(0, 8), Is.EqualTo((KomadaiUtil.Calc(0, 9) + KomadaiUtil.Calc(1, 9)) / 2));
+        Assert.That(KomadaiUtil.Calc(1, 8), Is.EqualTo((KomadaiUtil.Calc(1, 9) + KomadaiUtil.Calc(2, 9)) / 2));
+        Assert.That(KomadaiUtil.Calc(2, 8), Is.EqualTo(KomadaiUtil.Calc(3, 9)));
+    }
 }
