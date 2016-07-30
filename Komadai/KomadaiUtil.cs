@@ -24,7 +24,7 @@
 
         static float CalcY(int i, int count)
         {
-            if (count <= 2)
+            if (count <= 3)
                 return 12.2f;
             if (count <= 9)
                 return 11.2f + i / 3;

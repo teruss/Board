@@ -14,4 +14,10 @@ public class KomadaiUtilTest
     {
         Assert.That(KomadaiUtil.Calc(0, 2), Is.EqualTo((KomadaiUtil.Calc(3, 9) + KomadaiUtil.Calc(4, 9)) / 2));
     }
+
+    [Test]
+    public void ThreePiecesTest()
+    {
+        Assert.That(KomadaiUtil.Calc(0, 3), Is.EqualTo(KomadaiUtil.Calc(3, 9)));
+    }
 }
