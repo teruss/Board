@@ -78,4 +78,11 @@ public class KomadaiUtilTest
         Assert.That(KomadaiUtil.Calc(0, 12), Is.EqualTo((KomadaiUtil.Calc(0, 11) + new Vector2(0.5f, 0))));
         Assert.That(KomadaiUtil.Calc(3, 12), Is.EqualTo((KomadaiUtil.Calc(2, 11) - new Vector2(0.5f, 0))));
     }
+
+    [Test]
+    public void ThirteenPiecesTest()
+    {
+        Assert.That(KomadaiUtil.Calc(0, 13), Is.EqualTo((KomadaiUtil.Calc(1, 16) + KomadaiUtil.Calc(2, 16)) / 2));
+        Assert.That(KomadaiUtil.Calc(1, 13), Is.EqualTo(KomadaiUtil.Calc(4, 16)));
+    }
 }
