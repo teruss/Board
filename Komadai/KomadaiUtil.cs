@@ -53,17 +53,12 @@
                     return CalcX(i, 9);
                 return CalcX(i - 3, 16);
             }
-            if (count == 13)
+            if (13 <= count && count <= 15)
             {
-                if (i < 1)
-                    return CalcX(i, 7);
-                return CalcX(i - 1, 16);
-            }
-            if (count == 14)
-            {
-                if (i < 2)
-                    return CalcX(0, 1) + 0.5f - i;
-                return CalcX(i - 2, 16);
+                var r = count - 12;
+                if (i < r)
+                    return CalcX(0, 1) + 0.5f * (r - 1) - i;
+                return CalcX(i - r, 16);
             }
             if (count <= 16)
                 return 3.3f - i % 4;
@@ -117,7 +112,7 @@
                     return CalcY(0, 9);
                 return CalcY(0, 1) + (i - r) / 4;
             }
-            if (count == 13 || count == 14)
+            if (13 <= count && count <= 15)
             {
                 var r = count - 12;
                 if (i < r)
