@@ -41,6 +41,12 @@
             }
             if (count <= 9)
                 return 2.8f - i % 3;
+            if (count == 10)
+            {
+                if (i < 2)
+                    return CalcX(i, 2);
+                return CalcX(i - 2, 16);
+            }
             if (count <= 16)
                 return 3.3f - i % 4;
             return 0.3f + i / 4;
@@ -84,6 +90,12 @@
             }
             if (count <= 9)
                 return 11.2f + i / 3;
+            if (count == 10)
+            {
+                if (i < 2)
+                    return CalcY(i, 9);
+                return CalcY(0, 1) + (i - 2) / 4;
+            }
             if (count <= 16)
                 return 10.7f + i / 4;
             return 10.7f + i % 4;
