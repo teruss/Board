@@ -67,15 +67,15 @@
         static float CalcY(int i, int count)
         {
             if (count <= 2)
-                return 12.2f;
+                return 12;
             if (count == 3)
             {
                 if (i == 0)
-                    return 11.7f;
+                    return CalcY(4, 16);
                 return CalcY(0, 3) + 1;
             }
             if (count <= 4)
-                return 11.7f + i / 2;
+                return CalcY(4 * (1 + i / 2), 16);
             if (count == 5)
             {
                 if (i < 2)
@@ -101,7 +101,9 @@
                 return CalcY(i - 1, 7);
             }
             if (count <= 9)
-                return 11.2f + i / 3;
+            {
+                return CalcY(0, 1) - 1 + i / 3;
+            }
             if (10 <= count && count <= 12)
             {
                 var r = count - 8;
@@ -116,7 +118,7 @@
                 return CalcY((i - 1) + 4, 16);
             }
             if (count <= 16)
-                return 10.7f + i / 4;
+                return CalcY(0, 1) - 1.5f + i / 4;
             return 10.7f + i % 4;
         }
     }
