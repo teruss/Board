@@ -47,6 +47,12 @@
                     return CalcX(i, 2);
                 return CalcX(i - 2, 16);
             }
+            if (count == 11)
+            {
+                if (i < 3)
+                    return CalcX(i, 9);
+                return CalcX(i - 3, 16);
+            }
             if (count <= 16)
                 return 3.3f - i % 4;
             return 0.3f + i / 4;
@@ -95,6 +101,12 @@
                 if (i < 2)
                     return CalcY(i, 9);
                 return CalcY(0, 1) + (i - 2) / 4;
+            }
+            if (count == 11)
+            {
+                if (i < 3)
+                    return CalcY(i, 9);
+                return CalcY(0, 1) + (i - 3) / 4;
             }
             if (count <= 16)
                 return 10.7f + i / 4;
