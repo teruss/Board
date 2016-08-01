@@ -99,4 +99,65 @@ public class KomadaiUtilTest
         Assert.That(KomadaiUtil.Calc(0, 15), Is.EqualTo((KomadaiUtil.Calc(0, 16) + KomadaiUtil.Calc(1, 16)) / 2));
         Assert.That(KomadaiUtil.Calc(3, 15), Is.EqualTo(KomadaiUtil.Calc(4, 16)));
     }
+
+    [Test]
+    public void KingTest()
+    {
+        Assert.That(KomadaiUtil.Calc(PieceType.King, 0, 1), Is.EqualTo(KomadaiUtil.Calc(0, 16) - new Vector2(1.0f / 6, 0)));
+        Assert.That(KomadaiUtil.Calc(PieceType.King, 0, 2), Is.EqualTo(KomadaiUtil.Calc(0, 16)));
+    }
+
+    [Test]
+    public void RookTest()
+    {
+        Assert.That(KomadaiUtil.Calc(PieceType.Rook, 0, 1), Is.EqualTo((KomadaiUtil.Calc(1, 16) + KomadaiUtil.Calc(2, 16)) / 2));
+        Assert.That(KomadaiUtil.Calc(PieceType.Rook, 0, 2).X, Is.EqualTo((KomadaiUtil.Calc(0, 16) + new Vector2(0.5f - 1.0f - 1.0f / 3.0f - 0.5f, 0)).X).Within(1).Ulps);
+        Assert.That(KomadaiUtil.Calc(PieceType.Rook, 0, 2).Y, Is.EqualTo(KomadaiUtil.Calc(0, 16).Y));
+    }
+
+    [Test]
+    public void BishopTest()
+    {
+        var actual = KomadaiUtil.Calc(PieceType.Bishop, 0, 2);
+        var expected = KomadaiUtil.Calc(3, 16) + new Vector2(1.0f / 3.0f, 0);
+        Assert.That(actual.X, Is.EqualTo(expected.X).Within(1).Ulps);
+        Assert.That(actual.Y, Is.EqualTo(expected.Y));
+        Assert.That(KomadaiUtil.Calc(PieceType.Bishop, 1, 2), Is.EqualTo(KomadaiUtil.Calc(3, 16)));
+    }
+
+    [Test]
+    public void GoldGeneralTest()
+    {
+        Assert.That(KomadaiUtil.Calc(PieceType.GoldGeneral, 0, 4), Is.EqualTo(KomadaiUtil.Calc(4, 16)));
+        Assert.That(KomadaiUtil.Calc(PieceType.GoldGeneral, 1, 2), Is.EqualTo(KomadaiUtil.Calc(5, 16)));
+    }
+
+    [Test]
+    public void SilverGeneralTest()
+    {
+        Assert.That(KomadaiUtil.Calc(PieceType.SilverGeneral, 0, 4), Is.EqualTo(KomadaiUtil.Calc(6, 16)));
+        Assert.That(KomadaiUtil.Calc(PieceType.SilverGeneral, 1, 2), Is.EqualTo(KomadaiUtil.Calc(7, 16)));
+    }
+
+    [Test]
+    public void KnightTest()
+    {
+        Assert.That(KomadaiUtil.Calc(PieceType.Knight, 0, 4), Is.EqualTo(KomadaiUtil.Calc(8, 16)));
+        Assert.That(KomadaiUtil.Calc(PieceType.Knight, 1, 2), Is.EqualTo(KomadaiUtil.Calc(9, 16)));
+    }
+
+    [Test]
+    public void LanceTest()
+    {
+        Assert.That(KomadaiUtil.Calc(PieceType.Lance, 0, 4), Is.EqualTo(KomadaiUtil.Calc(10, 16)));
+        Assert.That(KomadaiUtil.Calc(PieceType.Lance, 1, 2), Is.EqualTo(KomadaiUtil.Calc(11, 16)));
+        Assert.That(KomadaiUtil.Calc(PieceType.Lance, 0, 1), Is.EqualTo((KomadaiUtil.Calc(10, 16) + KomadaiUtil.Calc(11, 16)) / 2));
+    }
+
+    [Test]
+    public void PawnTest()
+    {
+        Assert.That(KomadaiUtil.Calc(PieceType.Pawn, 0, 1), Is.EqualTo((KomadaiUtil.Calc(13, 16) + KomadaiUtil.Calc(14, 16)) / 2));
+        Assert.That(KomadaiUtil.Calc(PieceType.Pawn, 5, 6), Is.EqualTo(KomadaiUtil.Calc(15, 16)));
+    }
 }

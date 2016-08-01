@@ -29,5 +29,10 @@ namespace Board
         {
             pieces.Remove(piece);
         }
+
+        public IEnumerator<PieceModel> GetEnumerator()
+        {
+            return pieces.GetEnumerator();
+        }
     }
 }

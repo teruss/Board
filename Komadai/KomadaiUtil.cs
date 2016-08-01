@@ -1,11 +1,72 @@
-﻿namespace Board
+﻿using System;
+using UnityEngine;
+
+namespace Board
 {
     public class KomadaiUtil
     {
+        const float cornerX = 3.3f, cornerY = 10.5f;
+        public static void UpdatePosition(PieceList pieces, bool opposed)
+        {
+            if (pieces.Count <= 16)
+            {
+                for (int i = 0; i < pieces.Count; i++)
+                {
+                    var piece = pieces[i];
+                    piece.target = Position(pieces.Count, i, opposed);
+                    piece.activated = true;
+                }
+            }
+            else
+            {
+                var types = Enum.GetValues(typeof(PieceType));
+                var counts = new int[types.Length];
+                foreach (var piece in pieces)
+                {
+                    counts[(int)piece.type]++;
+                }
+                int j = 0;
+                foreach (PieceType type in types)
+                {
+                    var count = counts[(int)type];
+                    for (int i = 0; i < count; i++)
+                    {
+                        var piece = pieces[j++];
+                        piece.target = Position(type, i, count, opposed);
+                        piece.activated = true;
+                    }
+                    if (j == pieces.Count)
+                        break;
+                }
+            }
+        }
+
+        static Vector3 Position(PieceType type, int i, int count, bool opposed)
+        {
+            var v = Calc(type, i, count);
+            if (opposed)
+                return PieceModel.Position(10 - v.X, 10 - v.Y);
+            return PieceModel.Position(v.X, v.Y);
+        }
+
+        static Vector3 Position(int count, int i, bool opposed)
+        {
+            var v = Calc(i, count);
+            if (opposed)
+                return PieceModel.Position(10 - v.X, 10 - v.Y);
+            return PieceModel.Position(v.X, v.Y);
+        }
         public static Vector2 Calc(int i, int count)
         {
             var x = CalcX(i, count);
             var y = CalcY(i, count);
+            return new Vector2(x, y);
+        }
+
+        public static Vector2 Calc(PieceType type, int i, int count)
+        {
+            var x = CalcX(type, i, count);
+            var y = CalcY(type, i, count);
             return new Vector2(x, y);
         }
 
@@ -122,6 +183,37 @@
             if (count <= 16)
                 return CalcY(0, 1) - 1.5f + i / 4;
             return 10.7f + i % 4;
+        }
+
+        static float CalcX(PieceType type, int i, int count)
+        {
+            if (count == 1)
+                return (CalcX(type, 0, 2) + CalcX(type, 1, 2)) / 2;
+
+            if (type == PieceType.King)
+                return cornerX - i / 3.0f;
+            if (type == PieceType.Rook)
+                return cornerX - 1 - (i + 1) / 3.0f;
+            if (type == PieceType.Bishop)
+                return cornerX - 2 - (2 + i) / 3.0f;
+            if (type == PieceType.GoldGeneral)
+                return cornerX - i / (count - 1.0f);
+            if (type == PieceType.SilverGeneral || type == PieceType.Lance)
+                return cornerX - 2 - i / (count - 1.0f);
+            if (type == PieceType.Knight)
+                return cornerX - i / (count - 1.0f);
+            return cornerX - i * 3 / (count - 1.0f);
+        }
+
+        static float CalcY(PieceType type, int i, int count)
+        {
+            if (type == PieceType.King || type == PieceType.Rook || type == PieceType.Bishop)
+                return cornerY;
+            if (type == PieceType.GoldGeneral || type == PieceType.SilverGeneral)
+                return cornerY + 1;
+            if (type == PieceType.Knight || type == PieceType.Lance)
+                return cornerY + 2;
+            return cornerY + 3;
         }
     }
 }
