@@ -48,6 +48,7 @@ public class KomadaiUtilTest
     {
         Assert.That(KomadaiUtil.Calc(0, 7), Is.EqualTo(KomadaiUtil.Calc(1, 9)));
         Assert.That(KomadaiUtil.Calc(1, 7), Is.EqualTo(KomadaiUtil.Calc(3, 9)));
+        Assert.That(KomadaiUtil.Calc(4, 7), Is.EqualTo(KomadaiUtil.Calc(3, 9) + new Vector2(0, 1)));
     }
 
     [Test]
