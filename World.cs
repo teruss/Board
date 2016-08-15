@@ -20,7 +20,7 @@ namespace Board
         public MoveController MoveController { get; private set; }
         public Player CurrentPlayer { get; set; }
         public ChoiceDialog ChoiseDialog { get; private set; }
-        public event EventHandler KingKilled;
+        public event EventHandler KingKilled, ChoiseDialogAppeared, ChoiceDialogDisappeared;
 
         public World() : this(false) { }
         public World(bool alternate)
@@ -89,15 +89,21 @@ namespace Board
             if (cell.IsPromotable)
             {
                 ChoiseDialog = new ChoiceDialog();
+                if (ChoiseDialogAppeared != null)
+                {
+                    ChoiseDialogAppeared(this, EventArgs.Empty);
+                }
                 ChoiseDialog.Promoted.Executed += (sender, e) =>
                 {
                     MoveAndPromote(cell);
                     ChoiseDialog = null;
+                    OnChoiceDialogDisappeared();
                 };
                 ChoiseDialog.NotPromoted.Executed += (sender, e) =>
                 {
                     Move(cell);
                     ChoiseDialog = null;
+                    OnChoiceDialogDisappeared();
                 };
 
                 onPromotable();
@@ -110,6 +116,14 @@ namespace Board
                     Move(cell);
             }
             DestroyTraversableCells();
+        }
+
+        void OnChoiceDialogDisappeared()
+        {
+            if (ChoiceDialogDisappeared != null)
+            {
+                ChoiceDialogDisappeared(this, EventArgs.Empty);
+            }
         }
 
         public void DestroyTraversableCells()
