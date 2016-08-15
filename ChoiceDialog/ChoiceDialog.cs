@@ -5,10 +5,10 @@
         public ChoicePiece Promoted { get; private set; }
         public ChoicePiece NotPromoted { get; private set; }
 
-        public ChoiceDialog(World world, TraversableCell cell)
+        public ChoiceDialog()
         {
-            Promoted = new ChoicePiece(world, cell, true);
-            NotPromoted = new ChoicePiece(world, cell, false);
+            Promoted = new ChoicePiece();
+            NotPromoted = new ChoicePiece();
         }
     }
 }

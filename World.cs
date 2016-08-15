@@ -88,7 +88,18 @@ namespace Board
         {
             if (cell.IsPromotable)
             {
-                ChoiseDialog = new ChoiceDialog(this, cell);
+                ChoiseDialog = new ChoiceDialog();
+                ChoiseDialog.Promoted.Executed += (sender, e) =>
+                {
+                    MoveAndPromote(cell);
+                    ChoiseDialog = null;
+                };
+                ChoiseDialog.NotPromoted.Executed += (sender, e) =>
+                {
+                    Move(cell);
+                    ChoiseDialog = null;
+                };
+
                 onPromotable();
             }
             else

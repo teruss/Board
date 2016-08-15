@@ -8,6 +8,8 @@ public class ChoicePieceTest
     public void ExecuteTest()
     {
         var world = new World();
+        Assert.That(world.ChoiseDialog, Is.Null);
+
         var bishop = PieceModelUtil.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
         bishop.DropOrCreateMovable(world);
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
@@ -19,5 +21,6 @@ public class ChoicePieceTest
         Assert.That(b, Is.False);
         choicePiece.Execute();
         Assert.That(b, Is.True);
+        Assert.That(world.ChoiseDialog, Is.Null);
     }
 }
