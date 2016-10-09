@@ -59,11 +59,24 @@ public class MoveTest
         world.AddPiece(yourRook);
         var myPawn = PieceModelUtil.CreatePieceModel(Location.Create(7, 9), PieceType.Pawn, Player.White);
         world.AddPiece(myPawn);
+        
+        myPawn.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void NotPinnedPawnCanMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(9, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myPawn = PieceModelUtil.CreatePieceModel(Location.Create(7, 9), PieceType.Pawn, Player.White);
+        world.AddPiece(myPawn);
         var myPawn2 = PieceModelUtil.CreatePieceModel(Location.Create(1, 9), PieceType.Pawn, Player.White);
         world.AddPiece(myPawn2);
 
-        myPawn.DropOrCreateMovable(world);
-        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
         myPawn2.DropOrCreateMovable(world);
         Assert.That(world.TraversableCells.Count, Is.EqualTo(1));
     }

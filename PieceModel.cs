@@ -147,61 +147,46 @@ namespace Board
         {
             if (type == PieceType.Rook)
             {
-                for (int i = 0; i < 8; i++)
+                if (Location.Row != l.Row)
                 {
-                    var x = world.GetPiece(new Location(Location.Row, Location.Column + i + 1));
-
-                    if (x == null)
+                    if (Check(world, piece, (int i) => { return new Location(Location.Row, Location.Column + 1 + i); }))
                     {
-                        continue;
+                        return true;
                     }
-                    if (x == piece)
+                    if (Check(world, piece, (int i) => { return new Location(Location.Row, Location.Column - 1 - i); }))
                     {
-                        return Location.Row != l.Row;
-                    }
-                    if (x.type == PieceType.King)
-                    {
-                        return false;
-                    }
-                }
-                for (int i = 0; i < 8; i++)
-                {
-                    var x = world.GetPiece(new Location(Location.Row, Location.Column - i - 1));
-
-                    if (x == null)
-                    {
-                        continue;
-                    }
-                    if (x == piece)
-                    {
-                        return Location.Row != l.Row;
-                    }
-                    if (x.type == PieceType.King)
-                    {
-                        return false;
+                        return true;
                     }
                 }
 
-                if (Check(world, l, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column); }))
+                if (Location.Column != l.Column)
                 {
-                    return true;
-                }
+                    if (Check(world, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column); }))
+                    {
+                        return true;
+                    }
 
-                if (Check(world, l, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column); }))
-                {
-                    return true;
+                    if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column); }))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
-        bool Check(World world, Location l, PieceModel piece, Func<int, Location> f)
+        bool Check(World world, PieceModel piece, Func<int, Location> f)
         {
             int countBetweenKing = 0;
             bool foundKing = false;
             for (int i = 0; i < 8; i++)
             {
-                var x = world.GetPiece(f(i));
+                var location = f(i);
+                if (location.Row < 0 || location.Column<0 || location.Row > 9 || location.Column > 9)
+                {
+                    return false;
+                }
+                var x = world.GetPiece(location);
                 if (x == null)
                 {
                     continue;
@@ -211,13 +196,13 @@ namespace Board
                     foundKing = true;
                     break;
                 }
+                if (x != piece)
+                {
+                    return false;
+                }
                 countBetweenKing++;
             }
-            if (!foundKing || countBetweenKing != 1)
-            {
-                return false;
-            }
-            return Location.Column != l.Column;
+            return foundKing && countBetweenKing == 1;
         }
 
         public void GetCaptured()
