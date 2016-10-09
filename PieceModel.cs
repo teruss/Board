@@ -133,7 +133,15 @@ namespace Board
 
         private bool IsPinnedBy(World world, Location l, PieceModel piece)
         {
-            if (piece.type == PieceType.Rook && piece.Player != Player)
+            if (piece.type != PieceType.Rook && piece.type != PieceType.Lance && piece.type != PieceType.Bishop)
+            {
+                return false;
+            }
+            if (piece.type == PieceType.Lance && piece.promoted)
+            {
+                return false;
+            }
+            if (piece.Player != Player)
             {
                 if (piece.CanCheckAfterMove(world, l, this))
                 {
@@ -145,17 +153,20 @@ namespace Board
 
         public bool CanCheckAfterMove(World world, Location l, PieceModel piece)
         {
-            if (type == PieceType.Rook)
+            if (type == PieceType.Rook || type == PieceType.Lance)
             {
-                if (Location.Row != l.Row)
+                if (type == PieceType.Rook)
                 {
-                    if (Check(world, piece, (int i) => { return new Location(Location.Row, Location.Column + 1 + i); }))
+                    if (Location.Row != l.Row)
                     {
-                        return true;
-                    }
-                    if (Check(world, piece, (int i) => { return new Location(Location.Row, Location.Column - 1 - i); }))
-                    {
-                        return true;
+                        if (Check(world, piece, (int i) => { return new Location(Location.Row, Location.Column + 1 + i); }))
+                        {
+                            return true;
+                        }
+                        if (Check(world, piece, (int i) => { return new Location(Location.Row, Location.Column - 1 - i); }))
+                        {
+                            return true;
+                        }
                     }
                 }
 
@@ -167,6 +178,31 @@ namespace Board
                     }
 
                     if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column); }))
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (type == PieceType.Bishop)
+            {
+                if (Location.Column - Location.Row != l.Column - l.Row)
+                {
+                    if (Check(world, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column + 1 + i); }))
+                    {
+                        return true;
+                    }
+                    if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column - 1 - i); }))
+                    {
+                        return true;
+                    }
+                }
+                if (Location.Column + Location.Row != l.Column + l.Row)
+                {
+                    if (Check(world, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column - 1 - i); }))
+                    {
+                        return true;
+                    }
+                    if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column + 1 + i); }))
                     {
                         return true;
                     }

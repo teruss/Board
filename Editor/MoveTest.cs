@@ -172,4 +172,95 @@ public class MoveTest
         Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
     }
 
+    [Test]
+    public void PinnedByLanceCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourLance = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.Lance, Player.Black);
+        world.AddPiece(yourLance);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(5, 8), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void NotPinnedByPromotedLance()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourLance = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.Lance, Player.Black);
+        yourLance.promoted = true;
+        world.AddPiece(yourLance);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(5, 8), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void PinnedByBishopCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourBishop = PieceModelUtil.CreatePieceModel(Location.Create(1, 5), PieceType.Bishop, Player.Black);
+        world.AddPiece(yourBishop);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(3, 7), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void PinnedByBishopFromLeftForwardCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourBishop = PieceModelUtil.CreatePieceModel(Location.Create(9, 5), PieceType.Bishop, Player.Black);
+        world.AddPiece(yourBishop);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(7, 7), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void PinnedByBishopFromLeftBackwardCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourBishop = PieceModelUtil.CreatePieceModel(Location.Create(9, 5), PieceType.Bishop, Player.Black);
+        world.AddPiece(yourBishop);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(7, 3), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void PinnedByBishopFromRightBackwardCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourBishop = PieceModelUtil.CreatePieceModel(Location.Create(1, 5), PieceType.Bishop, Player.Black);
+        world.AddPiece(yourBishop);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(3, 3), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
 }
