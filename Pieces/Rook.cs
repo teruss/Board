@@ -1,7 +1,16 @@
-﻿namespace Board
+﻿using System;
+
+namespace Board
 {
     public class Rook : Move
     {
+        public override bool IsPinnable
+        {
+            get
+            {
+                return true;
+            }
+        }
         public override void CreateMovable(World world, PieceModel piece)
         {
             var l = piece.Location;

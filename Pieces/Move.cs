@@ -45,5 +45,10 @@
             }
             return true;
         }
+
+        public abstract bool IsPinnable
+        {
+            get;
+        }
     }
 }

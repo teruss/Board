@@ -131,13 +131,15 @@ namespace Board
             return !p.captured && p != this && Player == p.Player && l == p.Location;
         }
 
+        Move GetCurrentMove()
+        {
+            return promoted ? promotedMove : move;
+        }
+
         private bool IsPinnedBy(World world, Location l, PieceModel piece)
         {
-            if (piece.type != PieceType.Rook && piece.type != PieceType.Lance && piece.type != PieceType.Bishop)
-            {
-                return false;
-            }
-            if (piece.type == PieceType.Lance && piece.promoted)
+            var m = piece.GetCurrentMove();
+            if (!m.IsPinnable)
             {
                 return false;
             }
@@ -218,7 +220,7 @@ namespace Board
             for (int i = 0; i < 8; i++)
             {
                 var location = f(i);
-                if (location.Row < 0 || location.Column<0 || location.Row > 9 || location.Column > 9)
+                if (location.Row <= 0 || location.Column <= 0 || location.Row > 9 || location.Column > 9)
                 {
                     return false;
                 }

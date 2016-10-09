@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace Board
+﻿namespace Board
 {
     public class PieceModelUtil
     {

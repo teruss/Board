@@ -1,7 +1,16 @@
-﻿namespace Board
+﻿using System;
+
+namespace Board
 {
     public class King : Move
     {
+        public override bool IsPinnable
+        {
+            get
+            {
+                return false;
+            }
+        }
         public override void CreateMovable(World world, PieceModel piece)
         {
             piece.CreateTraversableCell(world, Location.Create(piece.Location.Column, piece.Location.Row + 1));
