@@ -48,4 +48,115 @@ public class MoveTest
         myKing.DropOrCreateMovable(world);
         Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
     }
+
+    [Test]
+    public void PinnedPawnCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(9, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myPawn = PieceModelUtil.CreatePieceModel(Location.Create(7, 9), PieceType.Pawn, Player.White);
+        world.AddPiece(myPawn);
+        var myPawn2 = PieceModelUtil.CreatePieceModel(Location.Create(1, 9), PieceType.Pawn, Player.White);
+        world.AddPiece(myPawn2);
+
+        myPawn.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+        myPawn2.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void PinnedOppositePawnCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(1, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myPawn = PieceModelUtil.CreatePieceModel(Location.Create(7, 9), PieceType.Pawn, Player.White);
+        world.AddPiece(myPawn);
+        var myPawn2 = PieceModelUtil.CreatePieceModel(Location.Create(3, 9), PieceType.Pawn, Player.White);
+        world.AddPiece(myPawn2);
+
+        myPawn2.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+        myPawn.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void PinnedPromotedPawnCannotMoveVertical()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(9, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myPawn = PieceModelUtil.CreatePieceModel(Location.Create(7, 9), PieceType.Pawn, Player.White);
+        myPawn.promoted = true;
+        world.AddPiece(myPawn);
+        var myPawn2 = PieceModelUtil.CreatePieceModel(Location.Create(1, 9), PieceType.Pawn, Player.White);
+        myPawn2.promoted = true;
+        world.AddPiece(myPawn2);
+
+        myPawn.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+        world.TraversableCells.Clear();
+        myPawn2.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(3));
+    }
+
+    [Test]
+    public void PinnedByColumnCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(5, 8), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void PinnedByRookInTheBackCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(5, 8), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void NotPinnedByRookInTheBackCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(5, 8), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+        var myKnight2 = PieceModelUtil.CreatePieceModel(Location.Create(5, 7), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight2);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+        world.TraversableCells.Clear();
+        myKnight2.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+    }
+
 }

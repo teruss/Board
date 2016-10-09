@@ -39,6 +39,11 @@
         {
             return Row << 16 | Column;
         }
+
+        public override string ToString()
+        {
+            return "[" + Row + "," + Column + "]";
+        }
     }
 
 }

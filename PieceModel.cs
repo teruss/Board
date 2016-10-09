@@ -114,7 +114,9 @@ namespace Board
                 return;
             foreach (var p in world.Pieces())
             {
-                if (!p.captured && p != this && Player == p.Player && l == p.Location)
+                if (IsFriendly(l, p))
+                    return;
+                if (IsPinnedBy(world, l, p))
                     return;
             }
             var t = new TraversableCell(this, l);
@@ -122,6 +124,100 @@ namespace Board
 
             if (OnCreateTraversableCell != null)
                 OnCreateTraversableCell(this, new TraversalCellEventArgs() { TraversableCell = t });
+        }
+
+        private bool IsFriendly(Location l, PieceModel p)
+        {
+            return !p.captured && p != this && Player == p.Player && l == p.Location;
+        }
+
+        private bool IsPinnedBy(World world, Location l, PieceModel piece)
+        {
+            if (piece.type == PieceType.Rook && piece.Player != Player)
+            {
+                if (piece.CanCheckAfterMove(world, l, this))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool CanCheckAfterMove(World world, Location l, PieceModel piece)
+        {
+            if (type == PieceType.Rook)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    var x = world.GetPiece(new Location(Location.Row, Location.Column + i + 1));
+
+                    if (x == null)
+                    {
+                        continue;
+                    }
+                    if (x == piece)
+                    {
+                        return Location.Row != l.Row;
+                    }
+                    if (x.type == PieceType.King)
+                    {
+                        return false;
+                    }
+                }
+                for (int i = 0; i < 8; i++)
+                {
+                    var x = world.GetPiece(new Location(Location.Row, Location.Column - i - 1));
+
+                    if (x == null)
+                    {
+                        continue;
+                    }
+                    if (x == piece)
+                    {
+                        return Location.Row != l.Row;
+                    }
+                    if (x.type == PieceType.King)
+                    {
+                        return false;
+                    }
+                }
+
+                if (Check(world, l, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column); }))
+                {
+                    return true;
+                }
+
+                if (Check(world, l, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column); }))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        bool Check(World world, Location l, PieceModel piece, Func<int, Location> f)
+        {
+            int countBetweenKing = 0;
+            bool foundKing = false;
+            for (int i = 0; i < 8; i++)
+            {
+                var x = world.GetPiece(f(i));
+                if (x == null)
+                {
+                    continue;
+                }
+                if (x.type == PieceType.King)
+                {
+                    foundKing = true;
+                    break;
+                }
+                countBetweenKing++;
+            }
+            if (!foundKing || countBetweenKing != 1)
+            {
+                return false;
+            }
+            return Location.Column != l.Column;
         }
 
         public void GetCaptured()

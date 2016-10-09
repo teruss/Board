@@ -73,6 +73,17 @@ namespace Board
             }
             return false;
         }
+        public PieceModel GetPiece(Location location)
+        {
+            foreach (var p in Pieces())
+            {
+                if (!p.captured && p.Location == location)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
 
         public void MoveAndPromote(TraversableCell cell)
         {
