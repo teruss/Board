@@ -10,7 +10,6 @@ namespace Board
     }
     public class World
     {
-        List<PieceModel> pieces = new List<PieceModel>();
         Komadai komadai = new Komadai(false);
         Komadai opposedKomadai = new Komadai(true);
         public bool Alternate { get; private set; }
@@ -22,6 +21,8 @@ namespace Board
         public ChoiceDialog ChoiseDialog { get; private set; }
         public event EventHandler KingKilled, ChoiseDialogAppeared, ChoiceDialogDisappeared;
 
+        public PieceManager PieceManager { get; private set; }
+
         public World() : this(false) { }
         public World(bool alternate)
         {
@@ -29,11 +30,12 @@ namespace Board
             MoveController = new MoveController();
             CurrentPlayer = Player.Gray;
             Alternate = alternate;
+            PieceManager = new PieceManager();
         }
 
         public IList<PieceModel> Pieces()
         {
-            return pieces.AsReadOnly();
+            return PieceManager.Pieces();
         }
 
         public void AddMovableCell(TraversableCell cell)
@@ -54,12 +56,12 @@ namespace Board
             {
                 p.Destroy();
             }
-            pieces.Clear();
+            PieceManager.Clear();
         }
 
         public void AddPiece(PieceModel piece)
         {
-            pieces.Add(piece);
+            PieceManager.Add(piece);
         }
 
         public bool HasPiece(Location location)
