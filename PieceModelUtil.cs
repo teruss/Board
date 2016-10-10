@@ -16,6 +16,8 @@
             }
             if (type == PieceType.Rook)
                 return new RookModel(location, player);
+            if (type == PieceType.Lance)
+                return new LanceModel(location, player);
             return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, player);
         }
 
