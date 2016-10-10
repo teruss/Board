@@ -6,6 +6,14 @@
 
         public static PieceModel CreatePieceModel(Location location, PieceType type, Player player)
         {
+            if (type == PieceType.King)
+            {
+                return new KingModel(location, player);
+            }
+            if (type == PieceType.Bishop)
+            {
+                return new BishopModel(location, player);
+            }
             return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, player);
         }
 

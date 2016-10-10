@@ -153,7 +153,7 @@ namespace Board
             return false;
         }
 
-        public bool CanCheckAfterMove(World world, Location l, PieceModel piece)
+        public virtual bool CanCheckAfterMove(World world, Location l, PieceModel piece)
         {
             if (type == PieceType.Rook || type == PieceType.Lance)
             {
@@ -185,35 +185,10 @@ namespace Board
                     }
                 }
             }
-            if (type == PieceType.Bishop)
-            {
-                if (Location.Column - Location.Row != l.Column - l.Row)
-                {
-                    if (Check(world, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column + 1 + i); }))
-                    {
-                        return true;
-                    }
-                    if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column - 1 - i); }))
-                    {
-                        return true;
-                    }
-                }
-                if (Location.Column + Location.Row != l.Column + l.Row)
-                {
-                    if (Check(world, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column - 1 - i); }))
-                    {
-                        return true;
-                    }
-                    if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column + 1 + i); }))
-                    {
-                        return true;
-                    }
-                }
-            }
             return false;
         }
 
-        bool Check(World world, PieceModel piece, Func<int, Location> f)
+        protected bool Check(World world, PieceModel piece, Func<int, Location> f)
         {
             int countBetweenKing = 0;
             bool foundKing = false;
