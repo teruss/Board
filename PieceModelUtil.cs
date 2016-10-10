@@ -14,6 +14,8 @@
             {
                 return new BishopModel(location, player);
             }
+            if (type == PieceType.Rook)
+                return new RookModel(location, player);
             return new PieceModel(moveDictionary.Get(type), moveDictionary.GetPromoted(type), location, type, player);
         }
 
