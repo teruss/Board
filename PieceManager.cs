@@ -31,7 +31,7 @@ namespace Board
 
         internal KingModel GetEnemyKing(PieceModel piece)
         {
-            return piece.Player == Player.Black ? BlackKing : WhiteKing;
+            return piece.Player == Player.Black ? WhiteKing : BlackKing;
         }
 
         public IList<PieceModel> Pieces()
@@ -47,6 +47,10 @@ namespace Board
                 if (p.Location.Column == lanceModel.Location.Column)
                 {
                     if (enemyKing.Location.Row < p.Location.Row && p.Location.Row < lanceModel.Location.Row)
+                    {
+                        list.Add(p);
+                    }
+                    if (lanceModel.Location.Row < p.Location.Row && p.Location.Row < enemyKing.Location.Row)
                     {
                         list.Add(p);
                     }

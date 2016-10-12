@@ -11,7 +11,7 @@
         {
             if (Player == Player.White)
             {
-                var enemyKing = world.PieceManager.WhiteKing;
+                var enemyKing = world.PieceManager.GetEnemyKing(this);
                 if (enemyKing.Location.Column != Location.Column)
                 {
                     return false;
@@ -36,18 +36,32 @@
                 }
                 return true;
             }
-
-            if (Location.Column != l.Column)
+            else if (Player == Player.Black)
             {
-                if (Check(world, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column); }))
+                var enemyKing = world.PieceManager.GetEnemyKing(this);
+                if (enemyKing.Location.Column != Location.Column)
                 {
-                    return true;
+                    return false;
+                }
+                if (enemyKing.Location.Row < Location.Row + 2)
+                {
+                    return false;
+                }
+                if (Location.Column == l.Column)
+                {
+                    return false;
                 }
 
-                if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column); }))
+                var piecesBetween = world.PieceManager.GetPiecesBetween(this, enemyKing);
+                if (piecesBetween.Count != 1)
                 {
-                    return true;
+                    return false;
                 }
+                if (piecesBetween[0] != piece)
+                {
+                    return false;
+                }
+                return true;
             }
             return false;
         }
