@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Board
 {
@@ -32,6 +31,40 @@ namespace Board
         internal KingModel GetEnemyKing(PieceModel piece)
         {
             return piece.Player == Player.Black ? WhiteKing : BlackKing;
+        }
+
+        internal IList<PieceModel> GetPiecesBetween(RookModel rookModel, PieceModel piece, Location target, KingModel enemyKing)
+        {
+            var list = new List<PieceModel>();
+            foreach (var p in pieces)
+            {
+                var l = p == piece ? target : p.Location;
+
+                if (l.Column == rookModel.Location.Column)
+                {
+                    if (enemyKing.Location.Row < l.Row && l.Row < rookModel.Location.Row)
+                    {
+                        list.Add(p);
+                    }
+                    if (rookModel.Location.Row < l.Row && l.Row < enemyKing.Location.Row)
+                    {
+                        list.Add(p);
+                    }
+                }
+
+                if (l.Row == rookModel.Location.Row)
+                {
+                    if (enemyKing.Location.Column < l.Column && l.Column < rookModel.Location.Column)
+                    {
+                        list.Add(p);
+                    }
+                    if (rookModel.Location.Column < l.Column && l.Column < enemyKing.Location.Column)
+                    {
+                        list.Add(p);
+                    }
+                }
+            }
+            return list;
         }
 
         public IList<PieceModel> Pieces()
