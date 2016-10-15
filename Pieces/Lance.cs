@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace Board
 {
@@ -7,34 +6,38 @@ namespace Board
     {
         public override void CreateMovable(World world, PieceModel piece)
         {
-            var l = piece.Location;
-            switch (piece.Player)
+            var d = world.PieceManager.GetPinnedDirection(piece);
+            if ((d & Direction.Vertical) != 0)
             {
-                case Player.Black:
-                    for (int i = 0; i < 8; i++)
-                    {
-                        var loc = Location.Create(l.Column, l.Row + i + 1);
-                        piece.CreateTraversableCell(world, loc);
-                        if (world.HasPiece(loc))
+                var l = piece.Location;
+                switch (piece.Player)
+                {
+                    case Player.Black:
+                        for (int i = 0; i < 8; i++)
                         {
-                            break;
+                            var loc = Location.Create(l.Column, l.Row + i + 1);
+                            piece.CreateTraversableCell(world, loc);
+                            if (world.HasPiece(loc))
+                            {
+                                break;
+                            }
                         }
-                    }
-                    break;
-                case Player.White:
-                    for (int i = 0; i < 8; i++)
-                    {
-                        var loc = Location.Create(l.Column, l.Row - i - 1);
-                        piece.CreateTraversableCell(world, loc);
-                        if (world.HasPiece(loc))
+                        break;
+                    case Player.White:
+                        for (int i = 0; i < 8; i++)
                         {
-                            break;
+                            var loc = Location.Create(l.Column, l.Row - i - 1);
+                            piece.CreateTraversableCell(world, loc);
+                            if (world.HasPiece(loc))
+                            {
+                                break;
+                            }
                         }
-                    }
-                    break;
-                default:
-                    Assert.AreNotEqual(Player.Gray, piece.Player);
-                    break;
+                        break;
+                    default:
+                        Assert.AreNotEqual(Player.Gray, piece.Player);
+                        break;
+                }
             }
         }
 

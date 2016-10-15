@@ -243,6 +243,22 @@ public class MoveTest
     }
 
     [Test]
+    public void PinnedLanceByHorseFromUpRightCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var blackHorse = PieceModelUtil.CreatePieceModel(Location.Create(1, 5), PieceType.Bishop, Player.Black);
+        blackHorse.promoted = true;
+        world.AddPiece(blackHorse);
+        var whiteLance = PieceModelUtil.CreatePieceModel(Location.Create(3, 7), PieceType.Lance, Player.White);
+        world.AddPiece(whiteLance);
+
+        whiteLance.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
     public void NotPinnedByRookInTheBackCannotMove()
     {
         var world = new World(true);
