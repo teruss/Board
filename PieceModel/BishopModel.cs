@@ -9,29 +9,8 @@
 
         public override bool CanCheckAfterMove(World world, Location l, PieceModel piece)
         {
-            if (Location.Column - Location.Row != l.Column - l.Row)
-            {
-                if (Check(world, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column + 1 + i); }))
-                {
-                    return true;
-                }
-                if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column - 1 - i); }))
-                {
-                    return true;
-                }
-            }
-            if (Location.Column + Location.Row != l.Column + l.Row)
-            {
-                if (Check(world, piece, (int i) => { return new Location(Location.Row + 1 + i, Location.Column - 1 - i); }))
-                {
-                    return true;
-                }
-                if (Check(world, piece, (int i) => { return new Location(Location.Row - 1 - i, Location.Column + 1 + i); }))
-                {
-                    return true;
-                }
-            }
-            return false;
+            var enemyKing = world.PieceManager.GetEnemyKing(this);
+            return world.PieceManager.GetPiecesBetween(this, piece, l, enemyKing);
         }
     }
 }
