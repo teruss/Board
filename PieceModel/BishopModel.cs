@@ -36,7 +36,7 @@
                     return Direction.UpLeft;
                 }
             }
-            return Direction.None;
+            return Direction.AnyWhere;
         }
     }
 }

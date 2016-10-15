@@ -20,14 +20,14 @@
                 {
                     if ((e.Row - l.Row) * (Location.Row - l.Row) < 0)
                     {
-                        return Direction.None;
+                        return Direction.AnyWhere;
                     }
                 }
                 if (e.Row == l.Row && Location.Row == l.Row)
                 {
                     if ((Location.Column - l.Column) * (e.Column - l.Column) < 0)
                     {
-                        return Direction.None;
+                        return Direction.AnyWhere;
                     }
                 }
             }
@@ -36,23 +36,19 @@
 
             if (e.Column == d.Column && Location.Column == d.Column)
             {
-                if (e.Row < Location.Row)
+                if ((Location.Row - d.Row) * (e.Row - d.Row) < 0)
                 {
-                    return Direction.Up;
-                }
-                if (e.Row > Location.Row)
-                {
-                    return Direction.Down;
+                    return Direction.Vertical;
                 }
             }
             if (e.Row == d.Row && Location.Row == d.Row)
             {
                 if ((Location.Column - d.Column) * (e.Column - d.Column) < 0)
                 {
-                    return Direction.Left | Direction.Right;
+                    return Direction.Horizontal;
                 }
             }
-            return Direction.None;
+            return Direction.AnyWhere;
         }
     }
 }

@@ -12,6 +12,8 @@ public class ChoicePieceTest
         world.AddPiece(PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.Black));
         var bishop = PieceModelUtil.CreatePieceModel(Location.Create(8, 8), PieceType.Bishop, Player.Black);
         bishop.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(10));
+
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
         world.Select(cell, () => { });
         var choicePiece = world.ChoiseDialog.Promoted;

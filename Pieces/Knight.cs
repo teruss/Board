@@ -14,7 +14,7 @@ namespace Board
         public override void CreateMovable(World world, PieceModel piece)
         {
             var d = world.PieceManager.GetPinnedDirection(piece);
-            if (d != Direction.None)
+            if (d != Direction.AnyWhere)
             {
                 return;
             }

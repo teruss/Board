@@ -12,7 +12,7 @@ namespace Board
         public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
             if (promoted)
-                return Direction.None;
+                return Direction.AnyWhere;
             return Direction.Up;
         }
 

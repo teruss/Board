@@ -15,7 +15,7 @@ namespace Board
         {
             var d = world.PieceManager.GetPinnedDirection(piece);
 
-            if ((d & (Direction.Left | Direction.Right)) == 0)
+            if ((d & Direction.Vertical) != 0)
             {
                 piece.CreateTraversableCell(world, Location.Create(piece.Location.Column, piece.Location.Row + 1));
                 piece.CreateTraversableCell(world, Location.Create(piece.Location.Column, piece.Location.Row - 1));
