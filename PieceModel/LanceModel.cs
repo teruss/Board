@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace Board
 {
-    public class LanceModel : PieceModel
+    public class LanceModel : PieceModel, IPinnableModel
     {
         public LanceModel(Location location, Player player) : base(Move.CreateInstance(PieceType.Lance), Move.CreateInstancePromoted(PieceType.Lance), location, PieceType.Lance, player)
         {
@@ -36,6 +35,13 @@ namespace Board
                 return false;
             }
             return true;
+        }
+
+        public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
+        {
+            if (promoted)
+                return Direction.None;
+            return Direction.Up;
         }
 
         private bool IsOnTheLine(KingModel enemyKing)
