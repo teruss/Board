@@ -59,7 +59,7 @@ public class MoveTest
         world.AddPiece(yourRook);
         var myPawn = PieceModelUtil.CreatePieceModel(Location.Create(7, 9), PieceType.Pawn, Player.White);
         world.AddPiece(myPawn);
-        
+
         myPawn.DropOrCreateMovable(world);
         Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
     }
@@ -256,6 +256,22 @@ public class MoveTest
 
         whiteLance.DropOrCreateMovable(world);
         Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void PinnedHorseByLanceCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var blackLance = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.Lance, Player.Black);
+        world.AddPiece(blackLance);
+        var whiteHorse = PieceModelUtil.CreatePieceModel(Location.Create(5, 7), PieceType.Bishop, Player.White);
+        whiteHorse.promoted = true;
+        world.AddPiece(whiteHorse);
+
+        whiteHorse.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
     }
 
     [Test]
