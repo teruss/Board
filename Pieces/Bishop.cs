@@ -12,42 +12,50 @@
 
         public override void CreateMovable(World world, PieceModel piece)
         {
-            for (int i = 0; i < 8; i++)
-            {
-                var l = Location.Create(piece.Location.Column + i + 1, piece.Location.Row + i + 1);
-                piece.CreateTraversableCell(world, l);
-                if (world.HasPiece(l))
+            var d = world.PieceManager.GetPinnedDirection(piece);
+            if ((d & PieceManager.Direction.DownLeft) == 0)
+                for (int i = 0; i < 8; i++)
                 {
-                    break;
+                    var l = Location.Create(piece.Location.Column + i + 1, piece.Location.Row + i + 1);
+                    piece.CreateTraversableCell(world, l);
+                    if (world.HasPiece(l))
+                    {
+                        break;
+                    }
                 }
-            }
-            for (int i = 0; i < 8; i++)
-            {
-                var l = Location.Create(piece.Location.Column + i + 1, piece.Location.Row - i - 1);
-                piece.CreateTraversableCell(world, l);
-                if (world.HasPiece(l))
+
+            if ((d & PieceManager.Direction.UpLeft) == 0)
+                for (int i = 0; i < 8; i++)
                 {
-                    break;
+                    var l = Location.Create(piece.Location.Column + i + 1, piece.Location.Row - i - 1);
+                    piece.CreateTraversableCell(world, l);
+                    if (world.HasPiece(l))
+                    {
+                        break;
+                    }
                 }
-            }
-            for (int i = 0; i < 8; i++)
-            {
-                var l = Location.Create(piece.Location.Column - i - 1, piece.Location.Row + i + 1);
-                piece.CreateTraversableCell(world, l);
-                if (world.HasPiece(l))
+
+            if ((d & PieceManager.Direction.DownRight) == 0)
+                for (int i = 0; i < 8; i++)
                 {
-                    break;
+                    var l = Location.Create(piece.Location.Column - i - 1, piece.Location.Row + i + 1);
+                    piece.CreateTraversableCell(world, l);
+                    if (world.HasPiece(l))
+                    {
+                        break;
+                    }
                 }
-            }
-            for (int i = 0; i < 8; i++)
-            {
-                var l = Location.Create(piece.Location.Column - i - 1, piece.Location.Row - i - 1);
-                piece.CreateTraversableCell(world, l);
-                if (world.HasPiece(l))
+
+            if ((d & PieceManager.Direction.UpRight) == 0)
+                for (int i = 0; i < 8; i++)
                 {
-                    break;
+                    var l = Location.Create(piece.Location.Column - i - 1, piece.Location.Row - i - 1);
+                    piece.CreateTraversableCell(world, l);
+                    if (world.HasPiece(l))
+                    {
+                        break;
+                    }
                 }
-            }
         }
     }
 }

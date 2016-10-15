@@ -9,6 +9,7 @@ namespace Board
         public KingModel WhiteKing, BlackKing;
 
         List<PieceModel> pieces = new List<PieceModel>();
+        List<PieceModel> pinnables = new List<PieceModel>();
 
         internal void Add(PieceModel piece)
         {
@@ -28,19 +29,69 @@ namespace Board
                     WhiteKing = piece as KingModel;
                 }
             }
+
+            if (piece.HasPinnableMove)
+            {
+                pinnables.Add(piece);
+            }
         }
 
-        enum Direction
+        internal Direction GetPinnedDirection(PieceModel piece)
         {
-            None,
-            Right,
-            Left,
-            Up,
-            Down,
-            UpRight,
-            UpLeft,
-            DownRight,
-            DownLeft
+            var king = GetFriendlyKing(piece);
+            var res = Direction.None;
+            foreach (var pinnable in pinnables)
+            {
+                var d = GetDirection(king, piece, pinnable);
+                res |= d;
+            }
+            return res;
+        }
+
+        private Direction GetDirection(KingModel king, PieceModel piece, PieceModel pinnable)
+        {
+            var e = king.Location;
+            var s = pinnable.Location;
+            var d = piece.Location;
+            var diff = s.Column - s.Row;
+            if (e.Column - e.Row == diff && d.Column - d.Row == diff)
+            {
+                if (e.Column < s.Column)
+                {
+                    return Direction.UpRight;
+                }
+                if (e.Column > s.Column)
+                {
+                    return Direction.DownLeft;
+                }
+            }
+            var sum = s.Column + s.Row;
+            if (e.Column + e.Row == sum && d.Column + d.Row == sum)
+            {
+                if (e.Column < s.Column)
+                {
+                    return Direction.DownRight;
+                }
+                if (e.Column > s.Column)
+                {
+                    return Direction.UpLeft;
+                }
+            }
+            return Direction.None;
+        }
+
+        [Flags]
+        internal enum Direction
+        {
+            None = 0,
+            Right = 1 << 1,
+            Left = 1 << 2,
+            Up = 1 << 3,
+            Down = 1 << 4,
+            UpRight = 1 << 5,
+            UpLeft = 1 << 6,
+            DownRight = 1 << 7,
+            DownLeft = 1 << 8
         }
 
         internal bool GetPiecesBetween(BishopModel bishopModel, PieceModel piece, Location target, KingModel enemyKing)
@@ -93,6 +144,11 @@ namespace Board
                 }
             }
             return Direction.None;
+        }
+
+        internal KingModel GetFriendlyKing(PieceModel piece)
+        {
+            return piece.Player == Player.Black ? BlackKing : WhiteKing;
         }
 
         internal KingModel GetEnemyKing(PieceModel piece)

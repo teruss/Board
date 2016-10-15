@@ -234,6 +234,21 @@ public class MoveTest
     }
 
     [Test]
+    public void NotPinnedByBishopCanMoveFromLeft()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourBishop = PieceModelUtil.CreatePieceModel(Location.Create(9, 5), PieceType.Bishop, Player.Black);
+        world.AddPiece(yourBishop);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(2, 9), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+    }
+
+    [Test]
     public void PinnedByBishopFromLeftForwardCannotMove()
     {
         var world = new World(true);
