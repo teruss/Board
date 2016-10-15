@@ -183,6 +183,36 @@ public class MoveTest
     }
 
     [Test]
+    public void PinnedGoldGeneralByRookFromRightCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(9, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(6, 9), PieceType.GoldGeneral, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void PinnedGoldGeneralByLanceFromUpCannotMoveHorizontally()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var blackLance = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.Lance, Player.Black);
+        world.AddPiece(blackLance);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(5, 7), PieceType.GoldGeneral, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+    }
+
+    [Test]
     public void NotPinnedByRookInTheBackCannotMove()
     {
         var world = new World(true);
