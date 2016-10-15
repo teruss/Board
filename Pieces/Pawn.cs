@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace Board
 {
@@ -8,22 +7,21 @@ namespace Board
         public override void CreateMovable(World world, PieceModel piece)
         {
             var d = world.PieceManager.GetPinnedDirection(piece);
-            if (d != Direction.AnyWhere)
-            {
-                return;
-            }
             var l = piece.Location;
-            switch (piece.Player)
+            if ((d & Direction.Vertical) != 0)
             {
-                case Player.Black:
-                    piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row + 1));
-                    break;
-                case Player.White:
-                    piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row - 1));
-                    break;
-                default:
-                    Assert.AreNotEqual(Player.Gray, piece.Player);
-                    break;
+                switch (piece.Player)
+                {
+                    case Player.Black:
+                        piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row + 1));
+                        break;
+                    case Player.White:
+                        piece.CreateTraversableCell(world, Location.Create(l.Column, l.Row - 1));
+                        break;
+                    default:
+                        Assert.AreNotEqual(Player.Gray, piece.Player);
+                        break;
+                }
             }
         }
 

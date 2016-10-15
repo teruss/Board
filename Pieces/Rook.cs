@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Board
+﻿namespace Board
 {
     public class Rook : Move
     {

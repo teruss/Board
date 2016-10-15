@@ -228,6 +228,21 @@ public class MoveTest
     }
 
     [Test]
+    public void PinnedPawnGeneralByLanceFromUpCanMoveVertically()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var blackLance = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.Lance, Player.Black);
+        world.AddPiece(blackLance);
+        var whitePawn = PieceModelUtil.CreatePieceModel(Location.Create(5, 7), PieceType.Pawn, Player.White);
+        world.AddPiece(whitePawn);
+
+        whitePawn.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(1));
+    }
+
+    [Test]
     public void NotPinnedByRookInTheBackCannotMove()
     {
         var world = new World(true);
