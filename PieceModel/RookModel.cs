@@ -25,18 +25,18 @@
                 var l = p.Location;
                 if (e.Column == l.Column && Location.Column == l.Column)
                 {
-                    if (e.Row < l.Row && l.Row < Location.Row)
+                    if ((e.Row - l.Row) * (Location.Row - l.Row) < 0)
                     {
                         return Direction.None;
                     }
                 }
-                //if (e.Row == l.Row && Location.Row == l.Row)
-                //{
-                //    if (Location.Column < l.Column && l.Column < e.Column)
-                //    {
-                //        return Direction.None;
-                //    }
-                //}
+                if (e.Row == l.Row && Location.Row == l.Row)
+                {
+                    if ((Location.Column - l.Column) * (e.Column - l.Column) < 0)
+                    {
+                        return Direction.None;
+                    }
+                }
             }
 
             var d = piece.Location;

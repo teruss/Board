@@ -173,6 +173,46 @@ public class MoveTest
     }
 
     [Test]
+    public void NotPinnedByRookInTheFrontCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(5, 1), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(5, 8), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+        var myKnight2 = PieceModelUtil.CreatePieceModel(Location.Create(5, 7), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight2);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+        world.TraversableCells.Clear();
+        myKnight2.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void NotPinnedByRookInTheRightCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(1, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(2, 9), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight);
+        var myKnight2 = PieceModelUtil.CreatePieceModel(Location.Create(3, 9), PieceType.Knight, Player.White);
+        world.AddPiece(myKnight2);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+        world.TraversableCells.Clear();
+        myKnight2.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(2));
+    }
+
+    [Test]
     public void PinnedByLanceCannotMove()
     {
         var world = new World(true);
