@@ -153,6 +153,21 @@ public class MoveTest
     }
 
     [Test]
+    public void PinnedByRookFromRightCannotMove()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourRook = PieceModelUtil.CreatePieceModel(Location.Create(9, 9), PieceType.Rook, Player.Black);
+        world.AddPiece(yourRook);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(7, 9), PieceType.SilverGeneral, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(0));
+    }
+
+    [Test]
     public void NotPinnedByRookInTheBackCannotMove()
     {
         var world = new World(true);

@@ -54,13 +54,9 @@
             }
             if (e.Row == d.Row && Location.Row == d.Row)
             {
-                //if (e.Column < s.Column)
-                //{
-                //    return Direction.DownRight;
-                //}
-                if (Location.Column < d.Column && d.Column < e.Column )
+                if ((Location.Column - d.Column) * (e.Column - d.Column) < 0)
                 {
-                    return Direction.Left;
+                    return Direction.Left | Direction.Right;
                 }
             }
             return Direction.None;
