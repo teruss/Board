@@ -123,8 +123,6 @@ namespace Board
             {
                 if (IsFriendly(l, p))
                     return;
-                if (IsPinnedBy(world, l, p))
-                    return;
             }
             var t = new TraversableCell(this, l);
             world.AddMovableCell(t);
@@ -141,28 +139,6 @@ namespace Board
         Move GetCurrentMove()
         {
             return promoted ? promotedMove : move;
-        }
-
-        private bool IsPinnedBy(World world, Location l, PieceModel piece)
-        {
-            var m = piece.GetCurrentMove();
-            if (!m.IsPinnable)
-            {
-                return false;
-            }
-            if (piece.Player != Player)
-            {
-                if (piece.CanCheckAfterMove(world, l, this))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public virtual bool CanCheckAfterMove(World world, Location l, PieceModel piece)
-        {
-            return false;
         }
 
         protected bool Check(World world, PieceModel piece, Func<int, Location> f)

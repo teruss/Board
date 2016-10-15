@@ -9,34 +9,6 @@ namespace Board
 
         }
 
-        public override bool CanCheckAfterMove(World world, Location l, PieceModel piece)
-        {
-            var enemyKing = world.PieceManager.GetEnemyKing(this);
-            if (enemyKing.Location.Column != Location.Column)
-            {
-                return false;
-            }
-            if (!IsOnTheLine(enemyKing))
-            {
-                return false;
-            }
-            if (Location.Column == l.Column)
-            {
-                return false;
-            }
-
-            var piecesBetween = world.PieceManager.GetPiecesBetween(this, enemyKing);
-            if (piecesBetween.Count != 1)
-            {
-                return false;
-            }
-            if (piecesBetween[0] != piece)
-            {
-                return false;
-            }
-            return true;
-        }
-
         public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
             if (promoted)

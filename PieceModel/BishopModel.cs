@@ -7,12 +7,6 @@
 
         }
 
-        public override bool CanCheckAfterMove(World world, Location l, PieceModel piece)
-        {
-            var enemyKing = world.PieceManager.GetEnemyKing(this);
-            return world.PieceManager.GetPiecesBetween(this, piece, l, enemyKing);
-        }
-
         public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
             var e = king.Location;
