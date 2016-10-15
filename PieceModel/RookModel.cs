@@ -14,34 +14,55 @@
             return piecesBetween.Count == 0;
         }
 
-        public Direction GetDirection(KingModel king, PieceModel piece)
+        public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
             var e = king.Location;
-            var s = Location;
-            var d = piece.Location;
-            if (e.Column == d.Column && s.Column == d.Column)
+
+            foreach (var p in manager.Pieces())
             {
-                //if (e.Row < s.Row)
+                if (p == king || p == piece)
+                    continue;
+                var l = p.Location;
+                if (e.Column == l.Column && Location.Column == l.Column)
+                {
+                    if (e.Row < l.Row && l.Row < Location.Row)
+                    {
+                        return Direction.None;
+                    }
+                }
+                //if (e.Row == l.Row && Location.Row == l.Row)
                 //{
-                //    return Direction.Up;
+                //    if (Location.Column < l.Column && l.Column < e.Column)
+                //    {
+                //        return Direction.None;
+                //    }
                 //}
-                if (e.Row > s.Row)
+            }
+
+            var d = piece.Location;
+
+            if (e.Column == d.Column && Location.Column == d.Column)
+            {
+                if (e.Row < Location.Row)
+                {
+                    return Direction.Up;
+                }
+                if (e.Row > Location.Row)
                 {
                     return Direction.Down;
                 }
             }
-            //var sum = s.Column + s.Row;
-            //if (e.Column + e.Row == sum && d.Column + d.Row == sum)
-            //{
-            //    if (e.Column < s.Column)
-            //    {
-            //        return Direction.DownRight;
-            //    }
-            //    if (e.Column > s.Column)
-            //    {
-            //        return Direction.UpLeft;
-            //    }
-            //}
+            if (e.Row == d.Row && Location.Row == d.Row)
+            {
+                //if (e.Column < s.Column)
+                //{
+                //    return Direction.DownRight;
+                //}
+                if (Location.Column < d.Column && d.Column < e.Column )
+                {
+                    return Direction.Left;
+                }
+            }
             return Direction.None;
         }
     }

@@ -13,7 +13,7 @@
             return world.PieceManager.GetPiecesBetween(this, piece, l, enemyKing);
         }
 
-        public Direction GetDirection(KingModel king, PieceModel piece)
+        public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
             var e = king.Location;
             var s = Location;

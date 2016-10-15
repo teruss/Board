@@ -39,13 +39,15 @@ namespace Board
         internal Direction GetPinnedDirection(PieceModel piece)
         {
             var king = GetFriendlyKing(piece);
-            var res = Direction.None;
             foreach (var pinnable in pinnables)
             {
-                var d = pinnable.GetDirection(king, piece);
-                res |= d;
+                var d = pinnable.GetDirection(this, king, piece);
+                if (d != Direction.None)
+                {
+                    return d;
+                }
             }
-            return res;
+            return Direction.None;
         }
 
         internal bool GetPiecesBetween(BishopModel bishopModel, PieceModel piece, Location target, KingModel enemyKing)

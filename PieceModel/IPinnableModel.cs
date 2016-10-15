@@ -2,6 +2,6 @@
 {
     public interface IPinnableModel
     {
-        Direction GetDirection(KingModel king, PieceModel piece);
+        Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece);
     }
 }
