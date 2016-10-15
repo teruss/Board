@@ -4,13 +4,6 @@ namespace Board
 {
     public class Dragon : Move
     {
-        public override bool IsPinnable
-        {
-            get
-            {
-                return true;
-            }
-        }
         public override void CreateMovable(World world, PieceModel piece)
         {
             var d = world.PieceManager.GetPinnedDirection(piece);

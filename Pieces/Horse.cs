@@ -4,13 +4,6 @@ namespace Board
 {
     public class Horse : Move
     {
-        public override bool IsPinnable
-        {
-            get
-            {
-                return true;
-            }
-        }
         public override void CreateMovable(World world, PieceModel piece)
         {
             for (int i = 0; i < 8; i++)

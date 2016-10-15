@@ -30,13 +30,6 @@ namespace Board
         }
         public Vector3 target { get; set; }
         public PieceType type { get; set; }
-        public bool HasPinnableMove
-        {
-            get
-            {
-                return move.IsPinnable || promotedMove.IsPinnable;
-            }
-        }
 
         public PieceModel(Move move, Move promotedMove, Location location, PieceType type, Player player)
         {
