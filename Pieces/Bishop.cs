@@ -13,7 +13,7 @@
         public override void CreateMovable(World world, PieceModel piece)
         {
             var d = world.PieceManager.GetPinnedDirection(piece);
-            if ((d & PieceManager.Direction.DownLeft) == 0)
+            if ((d & Direction.DownLeft) == 0)
                 for (int i = 0; i < 8; i++)
                 {
                     var l = Location.Create(piece.Location.Column + i + 1, piece.Location.Row + i + 1);
@@ -24,7 +24,7 @@
                     }
                 }
 
-            if ((d & PieceManager.Direction.UpLeft) == 0)
+            if ((d & Direction.UpLeft) == 0)
                 for (int i = 0; i < 8; i++)
                 {
                     var l = Location.Create(piece.Location.Column + i + 1, piece.Location.Row - i - 1);
@@ -35,7 +35,7 @@
                     }
                 }
 
-            if ((d & PieceManager.Direction.DownRight) == 0)
+            if ((d & Direction.DownRight) == 0)
                 for (int i = 0; i < 8; i++)
                 {
                     var l = Location.Create(piece.Location.Column - i - 1, piece.Location.Row + i + 1);
@@ -46,7 +46,7 @@
                     }
                 }
 
-            if ((d & PieceManager.Direction.UpRight) == 0)
+            if ((d & Direction.UpRight) == 0)
                 for (int i = 0; i < 8; i++)
                 {
                     var l = Location.Create(piece.Location.Column - i - 1, piece.Location.Row - i - 1);

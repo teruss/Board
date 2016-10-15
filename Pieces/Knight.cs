@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace Board
 {
@@ -15,7 +14,7 @@ namespace Board
         public override void CreateMovable(World world, PieceModel piece)
         {
             var d = world.PieceManager.GetPinnedDirection(piece);
-            if (d != PieceManager.Direction.None)
+            if (d != Direction.None)
             {
                 return;
             }
