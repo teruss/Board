@@ -1,13 +1,13 @@
 ﻿namespace Board
 {
-    public class RookModel : PieceModel, IPinnableModel
+    public class RookModel : PinnableModel
     {
         public RookModel(Location location, Player player) : base(Move.CreateInstance(PieceType.Rook), Move.CreateInstancePromoted(PieceType.Rook), location, PieceType.Rook, player)
         {
 
         }
 
-        public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
+        public override Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
             var e = king.Location;
 

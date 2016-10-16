@@ -2,14 +2,14 @@
 
 namespace Board
 {
-    public class LanceModel : PieceModel, IPinnableModel
+    public class LanceModel : PinnableModel
     {
         public LanceModel(Location location, Player player) : base(Move.CreateInstance(PieceType.Lance), Move.CreateInstancePromoted(PieceType.Lance), location, PieceType.Lance, player)
         {
 
         }
 
-        public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
+        public override Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
             if (promoted)
                 return Direction.AnyWhere;

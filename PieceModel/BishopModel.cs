@@ -1,13 +1,13 @@
 ﻿namespace Board
 {
-    public class BishopModel : PieceModel, IPinnableModel
+    public class BishopModel : PinnableModel
     {
         public BishopModel(Location location, Player player) : base(Move.CreateInstance(PieceType.Bishop), Move.CreateInstancePromoted(PieceType.Bishop), location, PieceType.Bishop, player)
         {
 
         }
 
-        public Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
+        public override Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
             var e = king.Location;
             var s = Location;

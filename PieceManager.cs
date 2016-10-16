@@ -41,6 +41,8 @@ namespace Board
             var king = GetFriendlyKing(piece);
             foreach (var pinnable in pinnables)
             {
+                if (pinnable.IsFriendlyWith(piece))
+                    continue;
                 var d = pinnable.GetDirection(this, king, piece);
                 if (d != Direction.AnyWhere)
                 {

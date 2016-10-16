@@ -198,6 +198,21 @@ public class MoveTest
     }
 
     [Test]
+    public void NotPinnedByFriendlyRook()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var whiteRook = PieceModelUtil.CreatePieceModel(Location.Create(9, 9), PieceType.Rook, Player.White);
+        world.AddPiece(whiteRook);
+        var myKnight = PieceModelUtil.CreatePieceModel(Location.Create(6, 9), PieceType.GoldGeneral, Player.White);
+        world.AddPiece(myKnight);
+
+        myKnight.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(4));
+    }
+
+    [Test]
     public void PinnedGoldGeneralByLanceFromUpCannotMoveHorizontally()
     {
         var world = new World(true);
