@@ -630,6 +630,26 @@ public class MoveTest
     }
 
     [Test]
+    public void NotPinnedByBishopBetweenThereAreSomePieces()
+    {
+        var world = new World(true);
+        var myKing = PieceModelUtil.CreatePieceModel(Location.Create(2, 8), PieceType.King, Player.White);
+        world.AddPiece(myKing);
+        var yourBishop = PieceModelUtil.CreatePieceModel(Location.Create(7, 3), PieceType.Bishop, Player.Black);
+        world.AddPiece(yourBishop);
+        var whitePawn = PieceModelUtil.CreatePieceModel(Location.Create(3, 7), PieceType.Pawn, Player.White);
+        world.AddPiece(whitePawn);
+        var whiteSilver = PieceModelUtil.CreatePieceModel(Location.Create(4, 6), PieceType.SilverGeneral, Player.White);
+        world.AddPiece(whiteSilver);
+
+        whitePawn.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(1));
+        world.TraversableCells.Clear();
+        whiteSilver.DropOrCreateMovable(world);
+        Assert.That(world.TraversableCells.Count, Is.EqualTo(4));
+    }
+
+    [Test]
     public void NotPinnedByBishopCanMoveFromLeft()
     {
         var world = new World(true);
