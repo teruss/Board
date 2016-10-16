@@ -13,7 +13,38 @@ namespace Board
         {
             if (promoted)
                 return Direction.AnyWhere;
-            return Direction.Up;
+            var e = king.Location;
+            if (e.Column == piece.Location.Column && e.Column == Location.Column)
+            {
+                foreach (var p in manager.Pieces())
+                {
+                    if (p == king || p == piece)
+                        continue;
+                    var l = p.Location;
+                    if (e.Column == l.Column && Location.Column == l.Column)
+                    {
+                        if ((e.Row - l.Row) * (Location.Row - l.Row) < 0)
+                        {
+                            return Direction.AnyWhere;
+                        }
+                    }
+                    if (e.Row == l.Row && Location.Row == l.Row)
+                    {
+                        if ((Location.Column - l.Column) * (e.Column - l.Column) < 0)
+                        {
+                            return Direction.AnyWhere;
+                        }
+                    }
+                }
+
+                if (piece.Player == Player.White)
+                    if (piece.Location.Row < king.Location.Row)
+                        return Direction.Vertical;
+                if (piece.Player == Player.Black)
+                    if (piece.Location.Row > king.Location.Row)
+                        return Direction.Vertical;
+            }
+            return Direction.AnyWhere;
         }
 
         private bool IsOnTheLine(KingModel enemyKing)

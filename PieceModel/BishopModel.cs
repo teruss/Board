@@ -9,31 +9,23 @@
 
         public override Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
-            var e = king.Location;
-            var s = Location;
-            var d = piece.Location;
-            var diff = s.Column - s.Row;
-            if (e.Column - e.Row == diff && d.Column - d.Row == diff)
+            var kingLocation = king.Location;
+            var bishopLocation = Location;
+            var pieceLocation = piece.Location;
+            var diff = bishopLocation.Column - bishopLocation.Row;
+            if (kingLocation.Column - kingLocation.Row == diff && pieceLocation.Column - pieceLocation.Row == diff)
             {
-                if (e.Column < s.Column)
+                if ((kingLocation.Column - pieceLocation.Column) * (bishopLocation.Column - pieceLocation.Column) < 0)
                 {
-                    return Direction.UpRight;
-                }
-                if (e.Column > s.Column)
-                {
-                    return Direction.DownLeft;
+                    return Direction.Slash;
                 }
             }
-            var sum = s.Column + s.Row;
-            if (e.Column + e.Row == sum && d.Column + d.Row == sum)
+            var sum = bishopLocation.Column + bishopLocation.Row;
+            if (kingLocation.Column + kingLocation.Row == sum && pieceLocation.Column + pieceLocation.Row == sum)
             {
-                if (e.Column < s.Column)
+                if ((kingLocation.Column - pieceLocation.Column) * (bishopLocation.Column - pieceLocation.Column) < 0)
                 {
-                    return Direction.DownRight;
-                }
-                if (e.Column > s.Column)
-                {
-                    return Direction.UpLeft;
+                    return Direction.BackSlash;
                 }
             }
             return Direction.AnyWhere;
