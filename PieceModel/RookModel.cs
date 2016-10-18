@@ -11,9 +11,11 @@ namespace Board
 
         public override Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
-            var dir = CalcDirection(king, piece);
+            var dir = CalcDirection(king);
             if (dir == Direction.AnyWhere)
                 return dir;
+            if (!IsBetween(dir, king, piece))
+                return Direction.AnyWhere;
 
             foreach (var p in manager.GetPiecesOnBoard())
             {
@@ -38,14 +40,12 @@ namespace Board
             return false;
         }
 
-        private Direction CalcDirection(KingModel king, PieceModel piece)
+        private Direction CalcDirection(KingModel king)
         {
-            if (king.Location.Column == piece.Location.Column && Location.Column == piece.Location.Column)
-                if ((king.Location.Row - piece.Location.Row) * (Location.Row - piece.Location.Row) < 0)
-                    return Direction.Vertical;
-            if (king.Location.Row == piece.Location.Row && Location.Row == piece.Location.Row)
-                if ((Location.Column - piece.Location.Column) * (king.Location.Column - piece.Location.Column) < 0)
-                    return Direction.Horizontal;
+            if (king.Location.Column == Location.Column)
+                return Direction.Vertical;
+            if (king.Location.Row == Location.Row)
+                return Direction.Horizontal;
             return Direction.AnyWhere;
         }
     }
