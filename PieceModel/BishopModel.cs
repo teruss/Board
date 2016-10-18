@@ -1,4 +1,8 @@
-﻿namespace Board
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Board
 {
     public class BishopModel : PinnableModel
     {
@@ -46,7 +50,7 @@
                     return Direction.AnyWhere;
                 }
 
-                foreach (var p in manager.Pieces())
+                foreach (var p in manager.GetPiecesOnBoard())
                 {
                     if (p == king || p == piece)
                         continue;

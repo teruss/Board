@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace Board
@@ -70,6 +71,11 @@ namespace Board
         internal void Clear()
         {
             pieces.Clear();
+        }
+
+        internal IEnumerable<PieceModel> GetPiecesOnBoard()
+        {
+            return pieces.Where(x => !x.captured);
         }
     }
 }

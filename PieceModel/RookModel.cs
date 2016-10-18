@@ -1,4 +1,6 @@
-﻿namespace Board
+﻿using System;
+
+namespace Board
 {
     public class RookModel : PinnableModel
     {
@@ -9,53 +11,41 @@
 
         public override Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
         {
-            var e = king.Location;
-            var d = piece.Location;
+            var dir = CalcDirection(king, piece);
+            if (dir == Direction.AnyWhere)
+                return dir;
 
-            if (e.Column == d.Column && Location.Column == d.Column)
+            foreach (var p in manager.GetPiecesOnBoard())
             {
-                if ((Location.Row - d.Row) * (e.Row - d.Row) >= 0)
-                {
+                if (p == king || p == piece)
+                    continue;
+                if (IsBetween(dir, king, p))
                     return Direction.AnyWhere;
-                }
-                foreach (var p in manager.Pieces())
-                {
-                    if (p == king || p == piece)
-                        continue;
-                    var l = p.Location;
-                    if (e.Column == l.Column && Location.Column == l.Column)
-                    {
-                        if ((e.Row - l.Row) * (Location.Row - l.Row) < 0)
-                        {
-                            return Direction.AnyWhere;
-                        }
-                    }
-                }
-                return Direction.Vertical;
             }
 
-            if (e.Row == d.Row && Location.Row == d.Row)
-            {
-                if ((Location.Column - d.Column) * (e.Column - d.Column) >= 0)
-                {
-                    return Direction.AnyWhere;
-                }
-                foreach (var p in manager.Pieces())
-                {
-                    if (p == king || p == piece)
-                        continue;
-                    var l = p.Location;
-                    if (e.Row == l.Row && Location.Row == l.Row)
-                    {
-                        if ((Location.Column - l.Column) * (e.Column - l.Column) < 0)
-                        {
-                            return Direction.AnyWhere;
-                        }
-                    }
-                }
-                return Direction.Horizontal;
-            }
+            return dir;
+        }
 
+        private bool IsBetween(Direction dir, KingModel king, PieceModel p)
+        {
+            var l = p.Location;
+            if (dir == Direction.Vertical)
+                if (king.Location.Column == l.Column && Location.Column == l.Column)
+                    return (king.Location.Row - l.Row) * (Location.Row - l.Row) < 0;
+            if (dir == Direction.Horizontal)
+                if (king.Location.Row == l.Row && Location.Row == l.Row)
+                    return (Location.Column - l.Column) * (king.Location.Column - l.Column) < 0;
+            return false;
+        }
+
+        private Direction CalcDirection(KingModel king, PieceModel piece)
+        {
+            if (king.Location.Column == piece.Location.Column && Location.Column == piece.Location.Column)
+                if ((king.Location.Row - piece.Location.Row) * (Location.Row - piece.Location.Row) < 0)
+                    return Direction.Vertical;
+            if (king.Location.Row == piece.Location.Row && Location.Row == piece.Location.Row)
+                if ((Location.Column - piece.Location.Column) * (king.Location.Column - piece.Location.Column) < 0)
+                    return Direction.Horizontal;
             return Direction.AnyWhere;
         }
     }
