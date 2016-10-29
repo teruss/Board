@@ -20,9 +20,13 @@ namespace Board
                 if (dir == Direction.Down)
                     return king.Location.Row > l.Row && l.Row > Location.Row;
             }
-            if (dir == Direction.Horizontal)
-                if (king.Location.Row == l.Row && Location.Row == l.Row)
-                    return (Location.Column - l.Column) * (king.Location.Column - l.Column) < 0;
+            if (king.Location.Row == l.Row && Location.Row == l.Row)
+            {
+                if (dir == Direction.Right)
+                    return king.Location.Column < l.Column && l.Column < Location.Column;
+                if (dir == Direction.Left)
+                    return king.Location.Column > l.Column && l.Column > Location.Column;
+            }
             return false;
         }
 
@@ -37,7 +41,12 @@ namespace Board
                     return Direction.Down;
             }
             if (king.Location.Row == Location.Row)
-                return Direction.Horizontal;
+            {
+                if (king.Location.Column < Location.Column)
+                    return Direction.Right;
+                else
+                    return Direction.Left;
+            }
             return Direction.AnyWhere;
         }
     }
