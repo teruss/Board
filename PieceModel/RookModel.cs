@@ -9,26 +9,7 @@ namespace Board
 
         }
 
-        public override Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
-        {
-            var dir = CalcDirection(king);
-            if (dir == Direction.AnyWhere)
-                return dir;
-            if (!IsBetween(dir, king, piece))
-                return Direction.AnyWhere;
-
-            foreach (var p in manager.GetPiecesOnBoard())
-            {
-                if (p == king || p == piece)
-                    continue;
-                if (IsBetween(dir, king, p))
-                    return Direction.AnyWhere;
-            }
-
-            return dir;
-        }
-
-        private bool IsBetween(Direction dir, KingModel king, PieceModel p)
+        internal override bool IsBetween(Direction dir, KingModel king, PieceModel p)
         {
             var l = p.Location;
             if (dir == Direction.Vertical)
@@ -40,7 +21,8 @@ namespace Board
             return false;
         }
 
-        private Direction CalcDirection(KingModel king)
+
+        internal override Direction CalcDirection(KingModel king)
         {
             if (king.Location.Column == Location.Column)
                 return Direction.Vertical;

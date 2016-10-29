@@ -1,4 +1,5 @@
-﻿using UnityEngine.Assertions;
+﻿using System;
+using UnityEngine.Assertions;
 
 namespace Board
 {
@@ -54,6 +55,16 @@ namespace Board
                 }
             }
             return Direction.AnyWhere;
+        }
+
+        internal override Direction CalcDirection(KingModel king)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override bool IsBetween(Direction dir, KingModel king, PieceModel piece)
+        {
+            throw new NotImplementedException();
         }
 
         private bool IsOnTheLine(KingModel enemyKing)

@@ -11,63 +11,25 @@ namespace Board
 
         }
 
-        public override Direction GetDirection(PieceManager manager, KingModel king, PieceModel piece)
+        internal override Direction CalcDirection(KingModel king)
         {
-            var kingLocation = king.Location;
-            var pieceLocation = piece.Location;
-            var bishopLocation = Location;
-            var diff = bishopLocation.Column - bishopLocation.Row;
-
-            if (kingLocation.Column - kingLocation.Row == diff && pieceLocation.Column - pieceLocation.Row == diff)
-            {
-                if ((kingLocation.Column - pieceLocation.Column) * (bishopLocation.Column - pieceLocation.Column) >= 0)
-                {
-                    return Direction.AnyWhere;
-                }
-
-                foreach (var p in manager.Pieces())
-                {
-                    if (p == king || p == piece)
-                        continue;
-                    var l = p.Location;
-                    if (l.Column - l.Row == diff)
-                    {
-                        if ((kingLocation.Row - l.Row) * (Location.Row - l.Row) < 0)
-                        {
-                            return Direction.AnyWhere;
-                        }
-                    }
-                }
-
+            if (king.Location.Column - king.Location.Row == Location.Column - Location.Row)
                 return Direction.Slash;
-            }
-
-            var sum = bishopLocation.Column + bishopLocation.Row;
-            if (kingLocation.Column + kingLocation.Row == sum && pieceLocation.Column + pieceLocation.Row == sum)
-            {
-                if ((kingLocation.Column - pieceLocation.Column) * (bishopLocation.Column - pieceLocation.Column) >= 0)
-                {
-                    return Direction.AnyWhere;
-                }
-
-                foreach (var p in manager.GetPiecesOnBoard())
-                {
-                    if (p == king || p == piece)
-                        continue;
-                    var l = p.Location;
-                    if (l.Column + l.Row == sum)
-                    {
-                        if ((Location.Column - l.Column) * (kingLocation.Column - l.Column) < 0)
-                        {
-                            return Direction.AnyWhere;
-                        }
-                    }
-                }
-
+            if (king.Location.Column + king.Location.Row == Location.Column + Location.Row)
                 return Direction.BackSlash;
-            }
-
             return Direction.AnyWhere;
+        }
+
+        internal override bool IsBetween(Direction dir, KingModel king, PieceModel piece)
+        {
+            var l = piece.Location;
+            if (dir == Direction.Slash)
+                if (king.Location.Column - king.Location.Row == l.Column - l.Row)
+                    return (king.Location.Row - l.Row) * (Location.Row - l.Row) < 0;
+            if (dir == Direction.BackSlash)
+                if (king.Location.Column + king.Location.Row == l.Column + l.Row)
+                    return (king.Location.Row - l.Row) * (Location.Row - l.Row) < 0;
+            return false;
         }
     }
 }
