@@ -16,7 +16,7 @@ namespace Board
                 return Direction.AnyWhere;
 
             if (king.Player == Player.White && Location.Row < king.Location.Row)
-                return Direction.Vertical;
+                return Direction.Down;
             if (king.Player == Player.Black && Location.Row > king.Location.Row)
                 return Direction.Vertical;
 
@@ -25,6 +25,10 @@ namespace Board
 
         internal override bool IsBetween(Direction dir, KingModel king, PieceModel piece)
         {
+            if (piece.Location.Column != Location.Column)
+                return false;
+            if (dir == Direction.Down)
+                return Location.Row < piece.Location.Row && piece.Location.Row < king.Location.Row;
             return (king.Location.Row - piece.Location.Row) * (Location.Row - piece.Location.Row) < 0;
         }
 
