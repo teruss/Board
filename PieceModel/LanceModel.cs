@@ -18,7 +18,7 @@ namespace Board
             if (king.Player == Player.White && Location.Row < king.Location.Row)
                 return Direction.Down;
             if (king.Player == Player.Black && Location.Row > king.Location.Row)
-                return Direction.Vertical;
+                return Direction.Up;
 
             return Direction.AnyWhere;
         }
@@ -29,7 +29,9 @@ namespace Board
                 return false;
             if (dir == Direction.Down)
                 return Location.Row < piece.Location.Row && piece.Location.Row < king.Location.Row;
-            return (king.Location.Row - piece.Location.Row) * (Location.Row - piece.Location.Row) < 0;
+            if (dir == Direction.Up)
+                return Location.Row > piece.Location.Row && piece.Location.Row > king.Location.Row;
+            return false;
         }
 
         private bool IsOnTheLine(KingModel enemyKing)
