@@ -25,11 +25,24 @@ namespace Board
             set
             {
                 _activated = value;
+                if (!value && captured)
+                {
+                    OnCaptureCompleted(EventArgs.Empty);
+                }
                 sleep = true;
             }
         }
         public Vector3 target { get; set; }
         public PieceType type { get; set; }
+
+        public EventHandler CaptureCompleted;
+        void OnCaptureCompleted(EventArgs e)
+        {
+            if (CaptureCompleted != null)
+            {
+                CaptureCompleted(this, e);
+            }
+        }
 
         public PieceModel(Move move, Move promotedMove, Location location, PieceType type, Player player)
         {
