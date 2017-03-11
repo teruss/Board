@@ -62,18 +62,4 @@ public class WorldTest
         world.MoveController.Redo();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
     }
-
-    [Test]
-    public void FinishOnKingKilledTest()
-    {
-        var world = new World();
-        bool b = false;
-        world.KingKilled += (sender, e) =>
-        {
-            b = true;
-        };
-        var king = PieceModelUtil.CreatePieceModel(Location.Create(5, 9), PieceType.King, Player.Black);
-        world.Capture(king);
-        Assert.That(b, Is.True);
-    }
 }

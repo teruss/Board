@@ -19,7 +19,7 @@ namespace Board
         public MoveController MoveController { get; private set; }
         public Player CurrentPlayer { get; set; }
         public ChoiceDialog ChoiseDialog { get; private set; }
-        public event EventHandler KingKilled, ChoiseDialogAppeared, ChoiceDialogDisappeared;
+        public event EventHandler ChoiseDialogAppeared, ChoiceDialogDisappeared;
 
         public PieceManager PieceManager { get; private set; }
 
@@ -151,15 +151,7 @@ namespace Board
         public void Capture(PieceModel piece)
         {
             piece.GetCaptured();
-
             GetKomadai(piece.Player).Accept(piece);
-            if (piece.type == PieceType.King)
-            {
-                if (KingKilled != null)
-                {
-                    KingKilled(this, EventArgs.Empty);
-                }
-            }
         }
     }
 }
