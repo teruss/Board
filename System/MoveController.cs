@@ -7,17 +7,6 @@ namespace Board
         Stack<Command> commands = new Stack<Command>();
         Stack<Command> undidCommands = new Stack<Command>();
 
-        public PieceModel PrevPiece
-        {
-            get
-            {
-                if (commands.Count == 0)
-                    return null;
-                var c = commands.Peek();
-                return c.Piece;
-            }
-        }
-
         public void Move(World world, PieceModel piece, Location location)
         {
             undidCommands.Clear();

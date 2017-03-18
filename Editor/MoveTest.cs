@@ -20,13 +20,6 @@ public class MoveTest
     }
 
     [Test]
-    public void AtFirstPrevPieceIsNull()
-    {
-        var c = new MoveController();
-        Assert.That(c.PrevPiece, Is.Null);
-    }
-
-    [Test]
     public void SecondTouchIsIgnored()
     {
         var world = new World(true);
