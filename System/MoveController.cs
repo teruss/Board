@@ -95,5 +95,15 @@ namespace Board
             while (undidCommands.Count > 0)
                 Redo();
         }
+
+        public override string ToString()
+        {
+            var list = new List<string>();
+            foreach(var command in commands)
+            {
+                list.Add(command.ToString());
+            }
+            return "[" + string.Join(",", list.ToArray()) + "]";
+        }
     }
 }
