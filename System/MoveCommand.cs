@@ -16,5 +16,10 @@
             Piece.activated = true;
             World.CurrentPlayer = Piece.Player.Opposed();
         }
+
+        public override string ToString()
+        {
+            return "{\"type\":\"move\",\"location\":" + location + "}";
+        }
     }
 }

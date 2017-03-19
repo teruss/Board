@@ -10,5 +10,10 @@
         {
             Piece.SetPromoted(true);
         }
+
+        public override string ToString()
+        {
+            return "{\"type\":\"promote\"}";
+        }
     }
 }

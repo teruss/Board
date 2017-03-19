@@ -22,6 +22,16 @@ namespace Board
             foreach (var command in commands)
                 command.Undo();
         }
+
+        public override string ToString()
+        {
+            var list = new List<string>();
+            foreach (var command in commands)
+            {
+                list.Add(command.ToString());
+            }
+            return "{\"type\":\"multi\",\"data\":[" + string.Join(",", list.ToArray()) + "]}";
+        }
     }
 }
 

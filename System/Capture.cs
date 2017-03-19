@@ -19,5 +19,10 @@
             world.GetKomadai(Piece.Player).Drop(Piece);
             base.Undo();
         }
+
+        public override string ToString()
+        {
+            return "{\"type\":\"capture\"}";
+        }
     }
 }

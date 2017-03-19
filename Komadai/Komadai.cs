@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace Board
+﻿namespace Board
 {
     public class Komadai
     {
