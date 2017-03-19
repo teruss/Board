@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Board
 {
@@ -103,12 +104,16 @@ namespace Board
             {
                 list.Add(command.ToString());
             }
-            return "[" + string.Join(",", list.ToArray()) + "]";
+            return string.Join("cmd", list.ToArray());
         }
 
         public void Load(string commandList)
         {
-
+            var list = commandList.Split(new [] { "cmd" }, StringSplitOptions.None);
+            foreach (var command in list)
+            {
+                UnityEngine.Debug.Log(command);
+            }
         }
     }
 }
