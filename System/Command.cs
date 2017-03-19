@@ -4,7 +4,7 @@ namespace Board
 {
     public abstract class Command
     {
-        Location location;
+        protected Location PrevLocation { get; private set; }
         bool prevCaptured, prevPromoted;
         Player prevPlayer;
         Vector3 prevTarget;
@@ -21,7 +21,7 @@ namespace Board
             this.World = world;
             prevWorldPlayer = world.CurrentPlayer;
             Piece = piece;
-            location = piece.Location;
+            PrevLocation = piece.Location;
             prevCaptured = piece.captured;
             prevPromoted = piece.promoted;
             prevPlayer = piece.Player;
@@ -31,7 +31,7 @@ namespace Board
         public virtual void Undo()
         {
             World.CurrentPlayer = prevWorldPlayer;
-            Piece.Location = location;
+            Piece.Location = PrevLocation;
             Piece.target = prevTarget;
             Piece.Player = prevPlayer;
             Piece.captured = prevCaptured;

@@ -216,7 +216,7 @@ namespace Board
 
         public override string ToString()
         {
-            return type.ToString();
+            return "{\"type\":\"" + type + "\",\"location\":" + Location + "}";
         }
     }
 }

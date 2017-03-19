@@ -19,7 +19,7 @@
 
         public override string ToString()
         {
-            return "{\"type\":\"move\",\"location\":" + location + "}";
+            return "{\"type\":\"move\",\"location\":" + location + ",\"prev\":" + PrevLocation + "}";
         }
     }
 }
