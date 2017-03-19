@@ -105,5 +105,10 @@ namespace Board
             }
             return "[" + string.Join(",", list.ToArray()) + "]";
         }
+
+        public void Load(string commandList)
+        {
+
+        }
     }
 }
