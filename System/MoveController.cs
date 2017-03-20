@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Board
@@ -101,24 +100,24 @@ namespace Board
 
         public override string ToString()
         {
-            var list = new Stack<string>();
+            var list = new List<string>();
             foreach (var command in commands)
             {
-                list.Push(command.ToString());
+                list.Add(command.ToString());
             }
             return string.Join("cmd", list.ToArray());
         }
 
-        public void Load(string commandList)
+        public void Load(World world, string commandList)
         {
             var list = commandList.Split(new[] { "cmd" }, StringSplitOptions.None);
             foreach (var command in list)
             {
-                commands.Push(CreateCommand(command));
+                undidCommands.Push(CreateCommand(world, command));
             }
         }
 
-        private Command CreateCommand(string command)
+        private Command CreateCommand(World world, string command)
         {
             UnityEngine.Debug.Log(command);
             if (command.StartsWith("<multi>"))
@@ -145,7 +144,7 @@ namespace Board
 
                     if (m == 0)
                     {
-                        multi.Add(CreateCommand(s.Substring(first, index - first)));
+                        multi.Add(CreateCommand(world, s.Substring(first, index - first)));
                         index += 5;
                     }
                 }
@@ -153,7 +152,9 @@ namespace Board
             }
             else if (command.StartsWith("move"))
             {
-                return JsonUtility.FromJson<MoveCommand>(command.Substring(4));
+                var move = JsonUtility.FromJson<MoveCommand>(command.Substring(4));
+                var piece = world.GetPiece(move.PrevLocation);
+                return new MoveCommand(world, piece, move.location);
             }
             else if (command.StartsWith("<capture>"))
             {
