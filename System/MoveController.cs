@@ -113,7 +113,9 @@ namespace Board
             var list = commandList.Split(new[] { "cmd" }, StringSplitOptions.None);
             foreach (var command in list)
             {
-                undidCommands.Push(CreateCommand(world, command));
+                var c = CreateCommand(world, command);
+                //undidCommands.Push(c);
+                Execute(c);
             }
         }
 
@@ -156,7 +158,7 @@ namespace Board
                 var move = JsonUtility.FromJson<MoveCommand>(command.Substring(4));
                 var piece = world.GetPiece(move.PrevLocation);
                 var cmd = new MoveCommand(world, piece, move.location);
-                Execute(cmd);
+                //Execute(cmd);
                 return cmd;
             }
             else if (command.StartsWith("<capture>"))
@@ -164,7 +166,7 @@ namespace Board
                 var capture = JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
                 var piece = world.GetPiece(capture.PrevLocation);
                 var cmd = new Capture(piece, world);
-                Execute(cmd);
+                //Execute(cmd);
                 return cmd;
             }
             else if(command.StartsWith("<promote>"))
@@ -172,7 +174,7 @@ namespace Board
                 var promote = JsonUtility.FromJson<Promote>(command.Substring(9, command.IndexOf("</promote>") - 9));
                 var piece = world.GetPiece(promote.PrevLocation);
                 var cmd = new Promote(world, piece);
-                Execute(cmd);
+                //Execute(cmd);
                 return cmd;
             }
             else
