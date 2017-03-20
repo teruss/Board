@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Board
 {
@@ -99,10 +101,10 @@ namespace Board
 
         public override string ToString()
         {
-            var list = new List<string>();
+            var list = new Stack<string>();
             foreach(var command in commands)
             {
-                list.Add(command.ToString());
+                list.Push(command.ToString());
             }
             return string.Join("cmd", list.ToArray());
         }
@@ -112,8 +114,33 @@ namespace Board
             var list = commandList.Split(new [] { "cmd" }, StringSplitOptions.None);
             foreach (var command in list)
             {
+                commands.Push(CreateCommand(command));
+            }
+        }
+
+        private Command CreateCommand(string command)
+        {
+            UnityEngine.Debug.Log(command);
+            if (command.StartsWith("multi"))
+            {
+                var multi = new MultiCommand();
+                //multi.Load(command.Substring(5));
+                multi.Add(CreateCommand(command.Substring(5)));
+                return multi;
+            }
+            else if (command.StartsWith("move"))
+            {
+                return JsonUtility.FromJson<MoveCommand>(command.Substring(4));
+            }
+            else if (command.StartsWith("<capture>"))
+            {
+                return JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
+            }
+            else
+            {
                 UnityEngine.Debug.Log(command);
             }
+            return null;
         }
     }
 }

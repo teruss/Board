@@ -1,8 +1,12 @@
-﻿namespace Board
+﻿using System;
+using UnityEngine;
+
+namespace Board
 {
+    [Serializable]
     public class MoveCommand : Command
     {
-        Location location;
+        public Location location;
 
         public MoveCommand(World world, PieceModel piece, Location location) : base(world, piece)
         {
@@ -19,7 +23,7 @@
 
         public override string ToString()
         {
-            return "{\"type\":\"move\",\"location\":" + location + ",\"prev\":" + PrevLocation + "}";
+            return "move" + JsonUtility.ToJson(this);
         }
     }
 }

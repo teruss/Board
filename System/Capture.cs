@@ -1,5 +1,9 @@
-﻿namespace Board
+﻿using System;
+using UnityEngine;
+
+namespace Board
 {
+    [Serializable]
     public class Capture : Command
     {
         World world;
@@ -22,7 +26,7 @@
 
         public override string ToString()
         {
-            return "{\"type\":\"capture\"}";
+            return "<capture>" + JsonUtility.ToJson(this) + "</capture>";
         }
     }
 }

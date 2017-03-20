@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Board
 {
+    [Serializable]
     public abstract class Command
     {
-        protected Location PrevLocation { get; private set; }
+        public Location PrevLocation;
         bool prevCaptured, prevPromoted;
         Player prevPlayer;
         Vector3 prevTarget;

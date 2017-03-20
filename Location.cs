@@ -1,5 +1,8 @@
-﻿namespace Board
+﻿using System;
+
+namespace Board
 {
+    [Serializable]
     public struct Location
     {
         public int Row, Column;

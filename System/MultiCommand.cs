@@ -30,7 +30,12 @@ namespace Board
             {
                 list.Add(command.ToString());
             }
-            return "{\"type\":\"multi\",\"data\":[" + string.Join(",", list.ToArray()) + "]}";
+            return "multi" + string.Join("mlt", list.ToArray());
+        }
+
+        public void Load(string command)
+        {
+            UnityEngine.Debug.Log("multi load:" + command);
         }
     }
 }
