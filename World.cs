@@ -87,6 +87,18 @@ namespace Board
             return null;
         }
 
+        public PieceModel GetPiece(int id)
+        {
+            foreach (var p in Pieces())
+            {
+                if (p.Id == id)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
         public void MoveAndPromote(TraversableCell cell)
         {
             MoveController.MoveAndPromote(this, cell.Piece, cell.Location);

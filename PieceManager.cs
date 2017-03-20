@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Assertions;
 
 namespace Board
 {
@@ -14,6 +12,7 @@ namespace Board
 
         internal void Add(PieceModel piece)
         {
+            piece.Id = pieces.Count;
             pieces.Add(piece);
 
             if (piece.Player == Player.Black)

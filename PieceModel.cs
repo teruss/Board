@@ -4,9 +4,11 @@ using UnityEngine.Assertions;
 
 namespace Board
 {
+    [Serializable]
     public class PieceModel : IComparable
     {
         public const float rowSize = 0.64f, columnSize = 0.6f;
+        public int Id;
 
         Move move, promotedMove;
         public event EventHandler OnUpdateSprite;

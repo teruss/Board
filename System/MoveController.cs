@@ -55,11 +55,6 @@ namespace Board
             Execute(new Capture(piece, world));
         }
 
-        void Drop(World world, PieceModel piece)
-        {
-            Execute(new Drop(piece, world));
-        }
-
         void Execute(Command command)
         {
             command.Execute();
@@ -113,16 +108,13 @@ namespace Board
             var list = commandList.Split(new[] { "cmd" }, StringSplitOptions.None);
             foreach (var command in list)
             {
-                var c = CreateCommand(world, command);
-                //undidCommands.Push(c);
-                Execute(c);
+                Execute(CreateCommand(world, command));
             }
             UndoAll();
         }
 
         private Command CreateCommand(World world, string command)
         {
-            UnityEngine.Debug.Log(command);
             if (command.StartsWith("<multi>"))
             {
                 var multi = new MultiCommand();
@@ -151,23 +143,19 @@ namespace Board
                         index += 5;
                     }
                 }
-                //Execute(multi);
                 return multi;
             }
             else if (command.StartsWith("move"))
             {
                 var move = JsonUtility.FromJson<MoveCommand>(command.Substring(4));
-                var piece = world.GetPiece(move.PrevLocation);
-                var cmd = new MoveCommand(world, piece, move.location);
-                //Execute(cmd);
-                return cmd;
+                var piece = world.GetPiece(move.Piece.Id);
+                return new MoveCommand(world, piece, move.location);
             }
             else if (command.StartsWith("<capture>"))
             {
                 var capture = JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
                 var piece = world.GetPiece(capture.PrevLocation);
-                var cmd = new Capture(piece, world);
-                return cmd;
+                return new Capture(piece, world);
             }
             else if (command.StartsWith("<drop>"))
             {
@@ -178,9 +166,7 @@ namespace Board
             {
                 var promote = JsonUtility.FromJson<Promote>(command.Substring(9, command.IndexOf("</promote>") - 9));
                 var piece = world.GetPiece(promote.PrevLocation);
-                var cmd = new Promote(world, piece);
-                //Execute(cmd);
-                return cmd;
+                return new Promote(world, piece);
             }
             else
             {

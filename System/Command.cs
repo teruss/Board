@@ -14,7 +14,7 @@ namespace Board
 
         public World World { get; private set; }
 
-        public PieceModel Piece { get; private set; }
+        public PieceModel Piece;
         public abstract void Execute();
         public Command() { }
 
