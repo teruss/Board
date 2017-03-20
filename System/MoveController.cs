@@ -154,18 +154,18 @@ namespace Board
             else if (command.StartsWith("<capture>"))
             {
                 var capture = JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
-                var piece = world.GetPiece(capture.PrevLocation);
+                var piece = world.GetPiece(capture.Piece.Id);
                 return new Capture(piece, world);
             }
             else if (command.StartsWith("<drop>"))
             {
                 var drop = JsonUtility.FromJson<Drop>(command.Substring(6, command.IndexOf("</drop>") - 6));
-                return new Drop(world.GetPiece(drop.PrevLocation), world);
+                return new Drop(world.GetPiece(drop.Piece.Id), world);
             }
             else if(command.StartsWith("<promote>"))
             {
                 var promote = JsonUtility.FromJson<Promote>(command.Substring(9, command.IndexOf("</promote>") - 9));
-                var piece = world.GetPiece(promote.PrevLocation);
+                var piece = world.GetPiece(promote.Piece.Id);
                 return new Promote(world, piece);
             }
             else
