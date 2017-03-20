@@ -158,7 +158,9 @@ namespace Board
             }
             else if (command.StartsWith("<capture>"))
             {
-                return JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
+                var capture = JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
+                var piece = world.GetPiece(capture.PrevLocation);
+                return new Capture(piece, world);
             }
             else if(command.StartsWith("<promote>"))
             {
