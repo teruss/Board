@@ -117,6 +117,7 @@ namespace Board
                 //undidCommands.Push(c);
                 Execute(c);
             }
+            UndoAll();
         }
 
         private Command CreateCommand(World world, string command)
@@ -166,8 +167,12 @@ namespace Board
                 var capture = JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
                 var piece = world.GetPiece(capture.PrevLocation);
                 var cmd = new Capture(piece, world);
-                //Execute(cmd);
                 return cmd;
+            }
+            else if (command.StartsWith("<drop>"))
+            {
+                var drop = JsonUtility.FromJson<Drop>(command.Substring(6, command.IndexOf("</drop>") - 6));
+                return new Drop(world.GetPiece(drop.PrevLocation), world);
             }
             else if(command.StartsWith("<promote>"))
             {
