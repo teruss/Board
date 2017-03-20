@@ -164,7 +164,9 @@ namespace Board
             }
             else if(command.StartsWith("<promote>"))
             {
-                return JsonUtility.FromJson<Promote>(command.Substring(9, command.IndexOf("</promote>") - 9));
+                var promote = JsonUtility.FromJson<Promote>(command.Substring(9, command.IndexOf("</promote>") - 9));
+                var piece = world.GetPiece(promote.PrevLocation);
+                return new Promote(world, piece);
             }
             else
             {
