@@ -19,8 +19,8 @@ namespace Board
         {
             undidCommands.Clear();
             var multi = new MultiCommand();
-            multi.Add(CreateMoveCommand(world, piece, location));
             multi.Add(new Promote(world, piece));
+            multi.Add(CreateMoveCommand(world, piece, location));
             Execute(multi);
         }
 
@@ -100,10 +100,10 @@ namespace Board
 
         public override string ToString()
         {
-            var list = new List<string>();
+            var list = new Stack<string>();
             foreach (var command in commands)
             {
-                list.Add(command.ToString());
+                list.Push(command.ToString());
             }
             return string.Join("cmd", list.ToArray());
         }
@@ -148,25 +148,32 @@ namespace Board
                         index += 5;
                     }
                 }
+                //Execute(multi);
                 return multi;
             }
             else if (command.StartsWith("move"))
             {
                 var move = JsonUtility.FromJson<MoveCommand>(command.Substring(4));
                 var piece = world.GetPiece(move.PrevLocation);
-                return new MoveCommand(world, piece, move.location);
+                var cmd = new MoveCommand(world, piece, move.location);
+                Execute(cmd);
+                return cmd;
             }
             else if (command.StartsWith("<capture>"))
             {
                 var capture = JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
                 var piece = world.GetPiece(capture.PrevLocation);
-                return new Capture(piece, world);
+                var cmd = new Capture(piece, world);
+                Execute(cmd);
+                return cmd;
             }
             else if(command.StartsWith("<promote>"))
             {
                 var promote = JsonUtility.FromJson<Promote>(command.Substring(9, command.IndexOf("</promote>") - 9));
                 var piece = world.GetPiece(promote.PrevLocation);
-                return new Promote(world, piece);
+                var cmd = new Promote(world, piece);
+                Execute(cmd);
+                return cmd;
             }
             else
             {
