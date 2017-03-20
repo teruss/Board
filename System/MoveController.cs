@@ -102,7 +102,7 @@ namespace Board
         public override string ToString()
         {
             var list = new Stack<string>();
-            foreach(var command in commands)
+            foreach (var command in commands)
             {
                 list.Push(command.ToString());
             }
@@ -111,7 +111,7 @@ namespace Board
 
         public void Load(string commandList)
         {
-            var list = commandList.Split(new [] { "cmd" }, StringSplitOptions.None);
+            var list = commandList.Split(new[] { "cmd" }, StringSplitOptions.None);
             foreach (var command in list)
             {
                 commands.Push(CreateCommand(command));
@@ -121,11 +121,34 @@ namespace Board
         private Command CreateCommand(string command)
         {
             UnityEngine.Debug.Log(command);
-            if (command.StartsWith("multi"))
+            if (command.StartsWith("<multi>"))
             {
                 var multi = new MultiCommand();
-                //multi.Load(command.Substring(5));
-                multi.Add(CreateCommand(command.Substring(5)));
+
+                var s = command.Substring(7, command.LastIndexOf("</multi>") - 7);
+                int m = 0;
+                int first = 0;
+                for (int index = 0; index < s.Length; index++)
+                {
+                    if (s.Substring(index, 5) == "<mlt>")
+                    {
+                        if (m == 0)
+                        {
+                            first = index + 5;
+                        }
+                        m++;
+                    }
+                    if (s.Substring(index, 6) == "</mlt>")
+                    {
+                        m--;
+                    }
+
+                    if (m == 0)
+                    {
+                        multi.Add(CreateCommand(s.Substring(first, index - first)));
+                        index += 5;
+                    }
+                }
                 return multi;
             }
             else if (command.StartsWith("move"))
@@ -135,6 +158,10 @@ namespace Board
             else if (command.StartsWith("<capture>"))
             {
                 return JsonUtility.FromJson<Capture>(command.Substring(9, command.IndexOf("</capture>") - 9));
+            }
+            else if(command.StartsWith("<promote>"))
+            {
+                return JsonUtility.FromJson<Promote>(command.Substring(9, command.IndexOf("</promote>") - 9));
             }
             else
             {

@@ -28,9 +28,9 @@ namespace Board
             var list = new List<string>();
             foreach (var command in commands)
             {
-                list.Add(command.ToString());
+                list.Add("<mlt>" + command.ToString() + "</mlt>");
             }
-            return "multi" + string.Join("mlt", list.ToArray());
+            return "<multi>" + string.Join("", list.ToArray()) + "</multi>";
         }
 
         public void Load(string command)
