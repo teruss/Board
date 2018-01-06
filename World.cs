@@ -19,7 +19,7 @@ namespace Board
         public MoveController MoveController { get; private set; }
         public Player CurrentPlayer { get; set; }
         public ChoiceDialog ChoiseDialog { get; private set; }
-        public event EventHandler ChoiseDialogAppeared, ChoiceDialogDisappeared;
+        public event EventHandler ChoiseDialogAppeared, ChoiceDialogDisappeared, MovedTwice;
 
         public PieceManager PieceManager { get; private set; }
 
@@ -148,6 +148,14 @@ namespace Board
             if (ChoiceDialogDisappeared != null)
             {
                 ChoiceDialogDisappeared(this, EventArgs.Empty);
+            }
+        }
+
+        public void OnMovedTwice()
+        {
+            if (MovedTwice != null)
+            {
+                MovedTwice(this, EventArgs.Empty);
             }
         }
 

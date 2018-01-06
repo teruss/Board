@@ -111,8 +111,12 @@ namespace Board
 
         public void DropOrCreateMovable(World world)
         {
-            if (world.Alternate && world.CurrentPlayer != Player && world.CurrentPlayer != Player.Gray)
-                return;
+            if (world.CurrentPlayer != Player && world.CurrentPlayer != Player.Gray)
+            {
+                if (world.Alternate)
+                    return;
+                world.OnMovedTwice();
+            }
 
             if (captured)
             {
