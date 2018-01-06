@@ -12,7 +12,7 @@ namespace Board
     {
         Komadai komadai = new Komadai(false);
         Komadai opposedKomadai = new Komadai(true);
-        public bool Alternate { get; private set; }
+        public bool Alternate { get; set; }
 
         public SpriteController SpriteController { get; set; }
         public IList<TraversableCell> TraversableCells { get; private set; }
