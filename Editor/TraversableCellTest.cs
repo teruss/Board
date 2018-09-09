@@ -14,10 +14,10 @@ public class TraversableCellTest
         bishop.DropOrCreateMovable(world);
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
         Assert.That(cell.Piece.Player, Is.EqualTo(Player.Black));
-        Assert.That(world.ChoiseDialog, Is.Null);
+        Assert.That(world.ChoiceDialog, Is.Null);
         world.Select(cell, () => { });
-        Assert.That(world.ChoiseDialog, Is.Not.Null);
-        world.ChoiseDialog.Promoted.Execute();
+        Assert.That(world.ChoiceDialog, Is.Not.Null);
+        world.ChoiceDialog.Promoted.Execute();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
     }
 }

@@ -18,8 +18,8 @@ namespace Board
         public IList<TraversableCell> TraversableCells { get; private set; }
         public MoveController MoveController { get; private set; }
         public Player CurrentPlayer { get; set; }
-        public ChoiceDialog ChoiseDialog { get; private set; }
-        public event EventHandler ChoiseDialogAppeared, ChoiceDialogDisappeared, MovedTwice;
+        public ChoiceDialog ChoiceDialog { get; private set; }
+        public event EventHandler ChoiceDialogAppeared, ChoiceDialogDisappeared, MovedTwice;
 
         public PieceManager PieceManager { get; private set; }
 
@@ -113,21 +113,21 @@ namespace Board
         {
             if (cell.IsPromotable)
             {
-                ChoiseDialog = new ChoiceDialog();
-                if (ChoiseDialogAppeared != null)
+                ChoiceDialog = new ChoiceDialog();
+                if (ChoiceDialogAppeared != null)
                 {
-                    ChoiseDialogAppeared(this, EventArgs.Empty);
+                    ChoiceDialogAppeared(this, EventArgs.Empty);
                 }
-                ChoiseDialog.Promoted.Executed += (sender, e) =>
+                ChoiceDialog.Promoted.Executed += (sender, e) =>
                 {
                     MoveAndPromote(cell);
-                    ChoiseDialog = null;
+                    ChoiceDialog = null;
                     OnChoiceDialogDisappeared();
                 };
-                ChoiseDialog.NotPromoted.Executed += (sender, e) =>
+                ChoiceDialog.NotPromoted.Executed += (sender, e) =>
                 {
                     Move(cell);
-                    ChoiseDialog = null;
+                    ChoiceDialog = null;
                     OnChoiceDialogDisappeared();
                 };
 

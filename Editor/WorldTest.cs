@@ -22,7 +22,7 @@ public class WorldTest
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
         Assert.That(cell.Piece.Player, Is.EqualTo(Player.Black));
         world.Select(cell, () => { });
-        world.ChoiseDialog.Promoted.Execute();
+        world.ChoiceDialog.Promoted.Execute();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
     }
 
@@ -37,7 +37,7 @@ public class WorldTest
         var cell = world.TraversableCells.Single(c => c.Location == Location.Create(3, 3));
         Assert.That(cell.Piece.Player, Is.EqualTo(Player.Black));
         world.Select(cell, () => { });
-        world.ChoiseDialog.Promoted.Execute();
+        world.ChoiceDialog.Promoted.Execute();
         Assert.That(world.CurrentPlayer, Is.EqualTo(Player.White));
 
         world.MoveController.Undo();
