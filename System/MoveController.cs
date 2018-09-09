@@ -6,18 +6,21 @@ namespace Board
 {
     public class MoveController
     {
-        Stack<Command> commands = new Stack<Command>();
-        Stack<Command> undidCommands = new Stack<Command>();
+        Stack<Command> undoCommands = new Stack<Command>();
+        Stack<Command> redoCommands = new Stack<Command>();
+
+        public Stack<Command> UndoCommands { get { return undoCommands; } }
+        public Stack<Command> RedoCommands { get { return redoCommands; } }
 
         public void Move(World world, PieceModel piece, Location location)
         {
-            undidCommands.Clear();
+            redoCommands.Clear();
             Execute(CreateMoveCommand(world, piece, location));
         }
 
         public void MoveAndPromote(World world, PieceModel piece, Location location)
         {
-            undidCommands.Clear();
+            redoCommands.Clear();
             var multi = new MultiCommand();
             multi.Add(new Promote(world, piece));
             multi.Add(CreateMoveCommand(world, piece, location));
@@ -58,45 +61,37 @@ namespace Board
         void Execute(Command command)
         {
             command.Execute();
-            commands.Push(command);
+            undoCommands.Push(command);
         }
 
         public void Undo()
         {
-            if (commands.Count == 0)
-                return;
-
-            var command = commands.Pop();
+            var command = undoCommands.Pop();
             command.Undo();
-            undidCommands.Push(command);
+            redoCommands.Push(command);
         }
 
         public void UndoAll()
         {
-            while (commands.Count > 0)
-            {
+            while (undoCommands.Count > 0)
                 Undo();
-            }
         }
 
         public void Redo()
         {
-            if (undidCommands.Count == 0)
-                return;
-
-            Execute(undidCommands.Pop());
+            Execute(redoCommands.Pop());
         }
 
         public void RedoAll()
         {
-            while (undidCommands.Count > 0)
+            while (redoCommands.Count > 0)
                 Redo();
         }
 
         public override string ToString()
         {
             var list = new Stack<string>();
-            foreach (var command in commands)
+            foreach (var command in undoCommands)
             {
                 list.Push(command.ToString());
             }
